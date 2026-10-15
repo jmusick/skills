@@ -6,6 +6,7 @@ Agent skills I write and use with Claude Code, Codex, and other agents that supp
 
 | Skill | What it does |
 | --- | --- |
+| [daily-budget](skills/daily-budget/SKILL.md) | Sweeps Firelands Current's sources for new stories, events and images, drafts the best leads with newsroom, and builds a dated review packet for the editor. |
 | [humanize](skills/humanize/SKILL.md) | Rewrites or audits text so it stops reading as AI-generated, keeping the meaning and the writer's voice. |
 | [minor](skills/minor/SKILL.md) | Cuts a minor release: bumps `X.Y.Z` to `X.Y+1.0`, updates the changelog, commits, tags, and pushes. |
 | [newsroom](skills/newsroom/SKILL.md) | Writes, edits, and checks news stories for Firelands Current in AP style, with house rules, story-type playbooks, and editor flags. |
