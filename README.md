@@ -41,7 +41,7 @@ skills/
     references/     # optional docs the skill loads on demand
 ```
 
-Each skill folder is self-contained so it can be copied anywhere on its own.
+Each skill folder holds all of its own files, so it can be copied anywhere on its own. Some skills call another skill: daily-budget needs newsroom installed too.
 
 ## Credits
 

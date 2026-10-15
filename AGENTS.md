@@ -14,11 +14,11 @@ This repo holds agent skills in the [Agent Skills](https://agentskills.io) forma
 - Frontmatter needs `name` (lowercase, hyphens) and `description`. The description is what the agent sees when deciding whether to use the skill. Say what the skill does, list the phrases and situations that should trigger it, and say what it is *not* for, so it doesn't fire on near misses.
 - Keep `SKILL.md` short enough to read in one pass (under ~500 lines). Move long reference material into `references/` and link to it.
 - Write instructions in the imperative, and explain why a step exists when the reason isn't obvious. Agents follow rules better when they know what the rule protects.
-- Each skill must be self-contained. It gets copied or symlinked on its own, so it can't reference files outside its own folder.
+- A skill gets copied or symlinked on its own, so it can't reference files outside its own folder. It can call another skill by name (daily-budget uses newsroom); say so in the README so people install both.
 
 ## Shared code
 
-`skills/minor/scripts/version_info.py` and `skills/patch/scripts/version_info.py` are intentionally identical copies, because each skill has to work alone. If you change one, make the same change in the other.
+`skills/minor/scripts/version_info.py` and `skills/patch/scripts/version_info.py` are intentionally identical copies, because a skill can't read files from another skill's folder. If you change one, make the same change in the other.
 
 ## Scripts
 
