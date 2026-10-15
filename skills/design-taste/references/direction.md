@@ -1,0 +1,10 @@
+# Direction
+
+Use this in build mode when no other skill has set a direction, and in polish when the user asks for a redesign rather than a cleanup.
+
+1. **Name the subject, the audience, and the one job of the surface.** If the request is vague, decide and state your reading in one line. Ask only when a missing fact blocks the work, such as no product name.
+2. **Inventory the subject.** List 6 to 10 things that belong to this client and no competitor: its name and what it means, its place, its materials and colors, the numbers in the brief, the constraint it lives with, its rituals and hours, the printed things of its world (a ticket, a label, a manual). Distinctive choices come from this list. Test each idea by putting the nearest competitor's name in it; if the idea still works, it belongs to the category, not the client.
+3. **Know what kind of surface it is.** Marketing and portfolio pages can be expressive, and the visitor must know what this is and what to do within seconds. Working screens (dashboards, settings, editors) favor scannability, consistency, and density, with personality in precise details. Reading surfaces (docs, articles) favor measure, structure, and wayfinding. Pick light or dark from where and under what light people use it, not from the category.
+4. **Declare the system before code.** Write a short plan: 4 to 6 named colors with hex values and roles; one or two typefaces with roles and a scale of five sizes or fewer; a spacing base; one radius strategy decided once; how surfaces separate (tone steps, shadows, or borders); and the one motion moment, if any. Sketch the first viewport as an ASCII wireframe. Save it to the project's design doc (`DESIGN.md` if none exists) so later sessions follow the same decisions.
+5. **Check the plan against the default.** Ask whether you'd have produced the same plan for any similar brief. Revise every part that would, and say what you changed and why.
+6. **Spend boldness in one place.** One element is the memorable thing. Keep everything around it quiet and disciplined.

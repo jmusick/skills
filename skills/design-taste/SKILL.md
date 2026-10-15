@@ -5,7 +5,7 @@ description: Audit, polish, or check web UI so it stops reading as AI-generated.
 
 # Design taste
 
-Find and remove what makes an interface read as generated, and hold it to the quality floor that careful designers ship by default. This skill keeps only what the most-used design and taste skills agree on: Anthropic's frontend-design, Leonxlnx/taste-skill, pbakaus/impeccable, Vercel's web-interface-guidelines, ui-ux-pro-max, emilkowalski/skills, jakubkrehel/skills, Google's stitch taste-design, and ConardLi's web-design-engineer. Where they disagree, the section "Judgment calls" says so instead of picking a side.
+Find and remove what makes an interface read as generated, and hold it to the quality floor that careful designers ship by default.
 
 ## Why generated UI looks the way it does
 
@@ -15,7 +15,7 @@ A model builds the average of every page it has seen: a centered headline, a sma
 
 - **Audit** (default when pointed at existing UI, or when the user says "review", "flag only", or "does this look AI"): report findings and change nothing. Use the report format at the end.
 - **Polish:** fix in place with the smallest changes that clear the findings. Keep the project's components, tokens, density, and identity.
-- **Build:** a new page or screen. If frontend-design is installed, let it set the direction, then use this skill for the floor and the critique loop. Otherwise run "Direction" below first.
+- **Build:** a new page or screen. If frontend-design is installed, let it set the direction, then use this skill for the floor and the critique loop. Otherwise follow `references/direction.md` first, and also when a polish request is really a redesign.
 
 ## Hard rules
 
@@ -25,20 +25,9 @@ A model builds the average of every page it has seen: a centered headline, a sma
 4. **Removal is half the job.** A page stripped of its ornaments and given nothing in their place reads as thin and unfinished. Fill the space with scale (make the main thing bigger), the full real content, a real picture of the subject, or one deliberate empty area. Never fill it with a different ornament.
 5. **Report only checks you ran.** If you couldn't take screenshots or run the lint script, say "not verified" for those checks.
 
-## Direction
-
-Use this in build mode when no other skill has set a direction, and in polish when the user asks for a redesign rather than a cleanup.
-
-1. **Name the subject, the audience, and the one job of the surface.** If the request is vague, decide and state your reading in one line. Ask only when a missing fact blocks the work, such as no product name.
-2. **Inventory the subject.** List 6 to 10 things that belong to this client and no competitor: its name and what it means, its place, its materials and colors, the numbers in the brief, the constraint it lives with, its rituals and hours, the printed things of its world (a ticket, a label, a manual). Distinctive choices come from this list. Test each idea by putting the nearest competitor's name in it; if the idea still works, it belongs to the category, not the client.
-3. **Know what kind of surface it is.** Marketing and portfolio pages can be expressive, and the visitor must know what this is and what to do within seconds. Working screens (dashboards, settings, editors) favor scannability, consistency, and density, with personality in precise details. Reading surfaces (docs, articles) favor measure, structure, and wayfinding. Pick light or dark from where and under what light people use it, not from the category.
-4. **Declare the system before code.** Write a short plan: 4 to 6 named colors with hex values and roles; one or two typefaces with roles and a scale of five sizes or fewer; a spacing base; one radius strategy decided once; how surfaces separate (tone steps, shadows, or borders); and the one motion moment, if any. Sketch the first viewport as an ASCII wireframe. Save it to the project's design doc (`DESIGN.md` if none exists) so later sessions follow the same decisions.
-5. **Check the plan against the default.** Ask whether you'd have produced the same plan for any similar brief. Revise every part that would, and say what you changed and why.
-6. **Spend boldness in one place.** One element is the memorable thing. Keep everything around it quiet and disciplined.
-
 ## The tells
 
-Each of these appears in most of the source skills' lists. Treat a single hit as a question and a cluster as a finding. `references/tells.md` has the dated registry, the reason each one reads as generated, what to do instead, and when it's fine.
+Treat a single hit as a question and a cluster as a finding. `references/tells.md` has the dated registry, the reason each one reads as generated, what to do instead, and when it's fine.
 
 **Structure**
 - Same-size cards of icon, heading, and text as the page's structure; cards nested in cards.
@@ -91,29 +80,7 @@ Build to this without announcing it, and check it on the result. `references/flo
 
 ## Motion
 
-Before animating anything, ask how often the user will see it. `references/motion.md` has the easing curves, recipes, and performance rules.
-
-| How often | Decision |
-| --- | --- |
-| Hundreds of times a day (keyboard shortcuts, command palette, typing) | No animation |
-| Tens of times a day (hovers, list navigation, tab switches) | None, or 150ms or less on opacity or color |
-| Occasionally (menus, modals, drawers, toasts) | Standard animation |
-| Rarely (first load, onboarding, success) | Room for one expressive moment |
-
-| Element | Duration |
-| --- | --- |
-| Button press | 100 to 160ms |
-| Tooltip, small popover | 125 to 200ms |
-| Dropdown, select | 150 to 250ms |
-| Modal, drawer | 200 to 400ms |
-
-- Every animation has a purpose you can name: feedback, state change, spatial continuity, or explanation. "It looks nice" is not one for anything users see often.
-- Entering and exiting elements use a strong ease-out. Never `ease-in` for UI; it delays the first movement, which is the moment the user is watching.
-- Animate `transform` and `opacity` only, and name the properties. Never `transition: all`.
-- Exits are shorter than entrances. Nothing animates from `scale(0)`; start near `0.95` with opacity.
-- Use transitions, not keyframes, for interactive state, so a reversed action reverses smoothly.
-- Every movement has a `prefers-reduced-motion` fallback that keeps the content and drops the travel.
-- One orchestrated moment on a page beats effects scattered across every section.
+Before animating anything, read `references/motion.md`. It has the frequency rule (the more often the user sees something, the less it moves, and anything seen hundreds of times a day doesn't animate at all), durations, easing, recipes, and reduced-motion and performance rules. One orchestrated moment on a page beats effects scattered across every section.
 
 ## Critique loop
 
@@ -129,10 +96,10 @@ Before animating anything, ask how often the user will see it. `references/motio
 
 ## Judgment calls
 
-The source skills disagree on these. Decide per project and say what you decided.
+These have no single right answer. Decide per project and say what you decided.
 
-- **Named fonts.** Some skills recommend specific "premium" faces and others ban those same faces as the new defaults. Every published list has become the next wave of tells within months. Don't use a list in either direction: choose a face whose character fits the subject, and avoid the one you'd pick for any project.
-- **How much motion.** Some skills require a minimum number of moving elements; others call per-section entrances a tell. There is no quota. Use the frequency rule and the one-moment rule.
+- **Named fonts.** Lists of "premium" faces and lists of banned faces both exist, and every published list has become the next wave of tells within months. Don't use a list in either direction: choose a face whose character fits the subject, and avoid the one you'd pick for any project.
+- **How much motion.** There is no quota of moving elements, and per-section entrances are a tell. Use the frequency rule and the one-moment rule.
 - **Monospace, hairline rules, and numbering.** These are common on award-winning sites and are also what generators copy first. They're tells when they decorate and fine when they carry information: code, data, real tables, a real sequence.
 - **Restraint versus richness.** "Remove one accessory" and "a stripped page loses to a fuller one" are both true. Remove ornament, then add real content and scale until each screen is full.
 - **Small conventions.** Pure black versus near-black, sentence case versus Title Case, shadows versus borders for depth, square versus pill buttons. Follow the project's existing convention. The same detail done two ways in one project is a finding; a consistent choice is not.

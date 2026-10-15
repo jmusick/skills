@@ -5,7 +5,7 @@ description: Write, edit, or check news copy for Firelands Current in AP style, 
 
 # Newsroom
 
-Write and edit news the way a careful local editor would: accurate first, then clear, then tight. This skill builds on jamditis/claude-skills-journalism `newsroom-style` (MIT) and keeps only the rules that most published newsroom skills agree on, with Firelands Current's own rules layered on top.
+Write and edit news the way a careful local editor would: accurate first, then clear, then tight.
 
 ## Before you write
 

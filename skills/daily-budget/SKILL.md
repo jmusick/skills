@@ -33,8 +33,8 @@ It creates `editorial/<today>/` in the library, snapshots existing stories, even
 
 - **Stories from the last 21 days.** Don't repeat them. An update to one of them is a different thing (step 5).
 - **Section balance.** Sections marked thin need stories most. The site wants at least three current stories in each section so every homepage block fills in.
-- **Upcoming events**, so you don't list one twice.
-- **Media library photos** you could reuse.
+- **Events in the next 30 days**, so you don't list one twice. For an event further out, search `existing-content.json` first.
+- **The newest library photos** you could reuse. Search `existing-content.json` for older photos of a subject.
 - **Style samples.** Match their voice: direct news ledes, short paragraphs, the primary source linked inline, practical details (time, place, cost, registration, accessibility), and explicit attribution.
 
 Then open yesterday's `review.md` (the newest earlier folder in `editorial/`). Its held leads and follow-ups are today's first leads.
@@ -44,13 +44,13 @@ Then open yesterday's `review.md` (the newest earlier folder in `editorial/`). I
 Work in this order, and note the date on everything you find:
 
 1. **Follow-ups.** Yesterday's held leads, plus anything new about stories published in the last few days (a route announced, a time changed, a vote taken).
-2. **Reliable sources** in `news-sources.md`, newest notes first.
+2. **Reliable sources** in `news-sources.md`.
 3. **Social.** Use the signed-in browser available to you (Codex's in-app Browser, Claude in Chrome, or the built-in browser) for the official Facebook Pages and X accounts listed in `news-sources.md`, plus Facebook event search. Use Google News's local section for leads. **Read only:** don't post, comment, react, message, follow or join anything. Don't download or reuse images from social posts.
 4. **Promising sources** from `news-sources.md` that haven't produced a story yet.
 
 ### 3. Scout for new sources
 
-Spend part of the sweep looking for sources the paper doesn't use yet, aimed at the thin sections and at places in the coverage area with no source listed. Try villages, townships, school districts, libraries, parks, chambers, nonprofits, hospitals and venues. Log each useful one in `docs/news-sources.md` under a dated heading like the existing ones (`### Sources checked Oct. 15, 2026`): what it's good for, how to read it, and any trap you hit. This repo file is the one you edit. Don't commit it; the editor does.
+Spend part of the sweep looking for sources the paper doesn't use yet, aimed at the thin sections and at places in the coverage area with no source listed. Try villages, townships, school districts, libraries, parks, chambers, nonprofits, hospitals and venues. Add each useful one to `docs/news-sources.md` as one entry in the list it belongs to ("Reliable and open" or "Promising, not yet used"): what it's good for, how to read it, and any trap you hit. When a source you already list changes, edit its entry in place. Don't add dated sections; the day's scouting notes go in `review.md` under "Useful new sources." Every run reads this file, so it should stay a reference that only grows when the paper adds a source, not a daily log. This repo file is the one you edit. Don't commit it; the editor does.
 
 ### 4. Verify every lead
 

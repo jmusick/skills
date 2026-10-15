@@ -1,6 +1,6 @@
 # Motion
 
-Motion is for the user, not for the page. Most of this comes from emilkowalski/skills and jakubkrehel/skills, and the other source skills agree with it. Values marked "exact" are worth copying as given. The rest are ranges to judge by eye.
+Motion is for the user, not for the page. Values marked "exact" are worth copying as given. The rest are ranges to judge by eye.
 
 ## Contents
 

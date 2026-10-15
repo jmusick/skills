@@ -5,67 +5,40 @@ description: Renames the current chat session so its title reflects what actuall
 
 # Title
 
-Chats drift. A session that opens with "fix the login button" can end up as a rewrite of the auth middleware, and the auto-generated title still says "Fix login button". This skill looks back over the whole conversation and renames the session to match what was really done, so the user can find it later in their sidebar.
+Chats drift, and the auto-generated title only reflects the opening request. Rename the session to match what was really done, so the user can find it later in their sidebar. This is quick housekeeping: don't redo or re-verify any work. Read, decide, rename, report.
 
-This is a quick housekeeping task. Don't redo or re-verify any of the work, and don't write a long summary. Read, decide, rename, report.
+## 1. Review the whole conversation
 
-## Steps
+Read from the first message to now. A compacted summary counts as the record of the beginning; it's often the only place the original intent survives. Work out:
 
-### 1. Review the whole conversation
+- **Where it ended up:** what was built, fixed, decided, or learned. This weighs most, because it's what the user will search for.
+- **The main thread vs. detours:** weight topics by how much of the session they took and how much they mattered to the result.
+- **Concrete anchors:** project, feature, tool, or the bug's symptom. Specific nouns make a title findable.
 
-Go through the conversation from the first message to now. If earlier parts were compacted into a summary, treat that summary as the record of the beginning of the chat; it is often the only place the original intent survives.
+Text passed with the command (`/title focus on the deploy fix`) is guidance on emphasis. An exact title (`/title Stripe webhook retry fix`) is used as written.
 
-Work out:
-- **Where it ended up.** What was built, fixed, decided, or learned by the end. This carries the most weight, because it's what the user will be looking for when they search for this chat later.
-- **The main thread vs. detours.** A ten-minute tangent about a lint error doesn't belong in the title of a session about migrating a database. Weight topics by how much of the session they took up and how much they mattered to the result.
-- **Concrete anchors.** Project names, feature names, the tool or library involved, the bug's symptom. Specific nouns make a title findable.
+## 2. Check the current title
 
-If the user passed text with the command (e.g. `/title focus on the deploy fix`), treat it as guidance on emphasis. If they gave an exact title (e.g. `/title Stripe webhook retry fix`), use it as written.
+In the Claude desktop app, call `mcp__ccd_session_mgmt__get_session` with `session_id: "self"`. If the session tools are deferred, load them first with `ToolSearch` using `select:mcp__ccd_session_mgmt__get_session,mcp__ccd_session_mgmt__set_session_title`. Elsewhere there's usually no way to read the title; skip this step.
 
-### 2. Check the current title
+If the current title already fits, say so and leave it alone.
 
-Find out what the session is called now, using whatever your environment offers:
+## 3. Write the new title
 
-- **Claude desktop app (Claude Code tab):** call `mcp__ccd_session_mgmt__get_session` with `session_id: "self"`. These session tools are often deferred; if so, load them first with `ToolSearch` using `select:mcp__ccd_session_mgmt__get_session,mcp__ccd_session_mgmt__set_session_title`.
-- **Anywhere else (Codex, the plain `claude` CLI, other agents):** there is usually no tool for reading the title. Skip this check and move on.
+- 3 to 8 words, under about 60 characters, because sidebars truncate.
+- Lead with the outcome or subject, not the conversation: "Fix race condition in upload queue", not "Chat about upload issues".
+- Sentence case, no trailing period, quotes, or emoji.
+- Two separate threads can be joined ("Add CSV export + fix date parsing"). With more than two, name the one that mattered most.
+- If the work ended unfinished, don't claim it was done: "Debugging flaky Playwright login test", not "Fix ...".
 
-If you can see the current title and it already describes the session well, say so and leave it alone. Renaming for the sake of it isn't helpful.
+For example, a chat that started as "why is my build slow" and ended with a circular import removed becomes "Fix circular import slowing Vite build".
 
-### 3. Write the new title
+## 4. Rename and report
 
-Aim for something the user would recognize at a glance in a list of fifty sessions:
-
-- **3 to 8 words, under about 60 characters.** Sidebars truncate long titles.
-- **Lead with the outcome or subject**, not the conversation. "Fix race condition in upload queue", not "Chat about upload issues" or "Helping with a bug".
-- **Be specific.** "Migrate billing tables to Postgres 16" beats "Database work".
-- **Sentence case, no trailing period, no quotes or emoji.**
-- **Two genuinely separate threads?** Join them: "Add CSV export + fix date parsing". If there are more than two, name the one that mattered most.
-- **If the chat ended unfinished**, name what was being worked on; don't claim it was completed. "Debugging flaky Playwright login test" is honest; "Fix flaky Playwright login test" isn't, if it's still flaky.
-
-Examples:
-
-| Started as | Actually became | Good title |
-|---|---|---|
-| "why is my build slow" | Found and removed a circular import, then set up a Vite cache | Fix circular import slowing Vite build |
-| "help me write a cover letter" | Cover letter, then reworked the whole resume for a PM role | Resume and cover letter for PM role |
-| "create a skill called title" | Built and tested a session-renaming skill | Create /title session-rename skill |
-
-### 4. Rename and report
-
-**If you have a tool that renames the current session, use it.** In the Claude desktop app, that's `mcp__ccd_session_mgmt__set_session_title` with `session_id: "self"` and the new title. If the user set the current title by hand, the app may ask them to approve the change. That's expected; let it happen. Other agents may expose their own rename tool; look for one before falling back.
-
-Then reply in one or two lines, showing the change:
+If you have a tool that renames the current session, use it. In the Claude desktop app that's `mcp__ccd_session_mgmt__set_session_title` with `session_id: "self"`. If the user set the title by hand, the app may ask them to approve; let it. Then reply in one line:
 
 > Renamed: **Old title** → **New title**
 
-Add a short clause on why only if the change isn't self-explanatory (e.g. "the session moved from the login bug to the auth middleware rewrite").
+Add a short clause on why only if the change isn't self-explanatory.
 
-**If no rename tool is available** (Codex, the plain `claude` CLI, and most other agents), you can't change the title yourself. Give the user the title in a form that's easy to copy, and tell them where to apply it:
-
-> Suggested title: `Fix circular import slowing Vite build`
-
-- **Claude Code CLI:** run `/rename <title>`.
-- **Codex app:** rename the thread from its entry in the sidebar.
-- **Other tools:** use their rename option for the chat or thread.
-
-Keep it to that. Don't pretend the rename happened.
+If there's no rename tool, don't pretend the rename happened. Give the title in a form that's easy to copy (`Suggested title: \`...\``) and say where to apply it: `/rename <title>` in the Claude Code CLI, or the sidebar's rename option in the Codex app and other tools.

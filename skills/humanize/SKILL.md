@@ -5,8 +5,7 @@ description: Rewrite or audit text so it stops reading as AI-generated, keeping 
 
 # Humanize
 
-Remove the patterns that make prose read as machine-written, without changing what it says. This skill is the consensus of the ten most-used anti-AI-writing skills (blader/humanizer, stop-slop, no-ai-slop, Cursor's unslop, avoid-ai-writing, sepia, academic-humanizer, antislop, theclaymethod/unslop, anti-ai-slop-writing). Each rule below appears in most of them.
-
+Remove the patterns that make prose read as machine-written, without changing what it says.
 ## Why AI text sounds the way it does
 
 A model picks the most likely next word, so by default it makes the choice that fits the widest range of readers. Human writers choose for one reader and one subject, so their choices are uneven and specific. Nearly every tell is a form of that default: staging a point instead of making it, rhythm applied by rule, ordinary facts dressed up as significant, and decoration on every item. The goal is writing a careful person would produce, not beating an AI detector.

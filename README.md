@@ -41,3 +41,11 @@ skills/
 ```
 
 Each skill folder is self-contained so it can be copied anywhere on its own.
+
+## Credits
+
+Some skills distill what the most-used public skills on the same subject agree on. These notes live here rather than in each `SKILL.md`, because an agent loads `SKILL.md` into its context and gets nothing from them.
+
+- **humanize:** the consensus of ten anti-AI-writing skills: blader/humanizer, stop-slop, no-ai-slop, Cursor's unslop, avoid-ai-writing, sepia, academic-humanizer, antislop, theclaymethod/unslop, and anti-ai-slop-writing. Each rule appears in most of them.
+- **design-taste:** what Anthropic's frontend-design, Leonxlnx/taste-skill, pbakaus/impeccable, Vercel's web-interface-guidelines, ui-ux-pro-max, emilkowalski/skills, jakubkrehel/skills, Google's stitch taste-design, and ConardLi's web-design-engineer agree on. Most of the motion guidance comes from emilkowalski/skills and jakubkrehel/skills.
+- **newsroom:** builds on the `newsroom-style` skill in [jamditis/claude-skills-journalism](https://github.com/jamditis/claude-skills-journalism) (MIT; see [NOTICE.md](skills/newsroom/NOTICE.md)), keeping the rules that most published newsroom skills agree on, with Firelands Current's own rules on top.

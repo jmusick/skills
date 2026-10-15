@@ -3,10 +3,12 @@
 Read-only against the local D1 database. Creates the dated packet folders in the
 project library, snapshots existing stories, events and media to
 evidence/existing-content.json, and prints a briefing: section balance, recent
-stories, upcoming events, reusable library photos, and recent stories in full as
-style samples.
+stories, events in the next few weeks, the newest library photos, and recent
+stories in full as style samples. The lists are capped so the briefing stays the
+same size as the site grows; the snapshot has everything.
 
-Usage: python start_day.py [--repo PATH] [--library PATH] [--date YYYY-MM-DD] [--style N]
+Usage: python start_day.py [--repo PATH] [--library PATH] [--date YYYY-MM-DD]
+                           [--style N] [--event-days N] [--media N]
 """
 import argparse
 import json
@@ -57,6 +59,8 @@ def main():
     parser.add_argument('--library')
     parser.add_argument('--date', default=date.today().isoformat())
     parser.add_argument('--style', type=int, default=3, help='recent stories to print in full')
+    parser.add_argument('--event-days', type=int, default=30, help='days ahead of events to list')
+    parser.add_argument('--media', type=int, default=20, help='newest library photos to list')
     args = parser.parse_args()
     sys.stdout.reconfigure(encoding='utf-8')
 
@@ -105,16 +109,22 @@ def main():
         featured = 'featured' if a['featured'] else '-'
         print(f"- {d} | {a['section']} | {photo} | {featured} | {a['headline']} | {a['slug']}")
 
-    print('\n## Upcoming and current events (start | end | title | community | status)')
-    for e in events:
-        last = e['ends_on'] or e['starts_on']
-        if last and last >= args.date:
-            print(f"- {e['starts_on']} | {e['ends_on'] or '-'} | {e['title']} | {e['community'] or '-'} | {e['status']}")
+    horizon = (today + timedelta(days=args.event_days)).isoformat()
+    current = [e for e in events if (e['ends_on'] or e['starts_on'] or '') >= args.date]
+    soon = [e for e in current if (e['starts_on'] or '') <= horizon]
+    print(f'\n## Current events and events in the next {args.event_days} days (start | end | title | community | status)')
+    for e in soon:
+        print(f"- {e['starts_on']} | {e['ends_on'] or '-'} | {e['title']} | {e['community'] or '-'} | {e['status']}")
+    if len(current) > len(soon):
+        print(f'({len(current) - len(soon)} later events are in evidence/existing-content.json. '
+              'Search it before adding an event past this window.)')
 
-    print('\n## Media library (id | credit | caption)')
-    for m in media:
+    print(f'\n## Media library, newest {min(args.media, len(media))} of {len(media)} (id | credit | caption)')
+    for m in media[:args.media]:
         caption = (m['caption'] or m['alt'] or m['filename'] or '').replace('\n', ' ')[:110]
         print(f"- {m['id']} | {(m['credit'] or '-')[:60]} | {caption}")
+    if len(media) > args.media:
+        print('(Search evidence/existing-content.json for older photos of a specific subject.)')
 
     print(f'\n## Style samples: the {args.style} newest published stories')
     for a in published[:args.style]:
