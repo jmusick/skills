@@ -18,7 +18,7 @@ This repo holds agent skills in the [Agent Skills](https://agentskills.io) forma
 
 ## Shared code
 
-`skills/minor/scripts/version_info.py` and `skills/patch/scripts/version_info.py` are intentionally identical copies, because a skill can't read files from another skill's folder. If you change one, make the same change in the other.
+`skills/minor/scripts/version_info.py`, `skills/patch/scripts/version_info.py` and `skills/issue/scripts/version_info.py` are intentionally identical copies, because a skill can't read files from another skill's folder. If you change one, make the same change in the others.
 
 ## Scripts
 
