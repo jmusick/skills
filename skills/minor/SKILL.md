@@ -1,6 +1,6 @@
 ---
 name: minor
-description: Cut a minor release of the current git repo. Bumps the version (X.Y.Z to X.Y+1.0) in the project's version files and changelog, commits everything with the subject "vX.Y.Z - <summary of the session's work>", tags it vX.Y.Z, and pushes the branch and tag. Use when the user types /minor or $minor, or asks to "bump the minor version", "cut a minor release", "release this as a minor", or "minor bump and push". Not for patch or major releases (/patch handles patch bumps), and not for a "minor fix" or "minor change" that doesn't ask for a release.
+description: Cut a minor release of the current git repo. Bumps the version (X.Y.Z to X.Y+1.0) in the project's version files and changelog, commits everything with the subject "vX.Y.Z - [summary of the session's work]", tags it vX.Y.Z, and pushes the branch and tag. Use when the user types /minor or $minor, or asks to "bump the minor version", "cut a minor release", "release this as a minor", or "minor bump and push". Not for patch or major releases (/patch handles patch bumps), and not for a "minor fix" or "minor change" that doesn't ask for a release.
 ---
 
 # Minor release

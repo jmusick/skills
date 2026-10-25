@@ -1,6 +1,6 @@
 ---
 name: patch
-description: Cut a patch release of the current git repo. Bumps the version (X.Y.Z to X.Y.Z+1) in the project's version files and changelog, commits everything with the subject "vX.Y.Z - <summary of the session's work>", tags it vX.Y.Z, and pushes the branch and tag. Use when the user types /patch or $patch, or asks to "bump the patch version", "cut a patch release", "release this as a patch", or "patch bump and push". Not for minor or major releases (/minor handles minor bumps), and not for applying a code patch, a diff, or a "patch file" that doesn't ask for a release.
+description: Cut a patch release of the current git repo. Bumps the version (X.Y.Z to X.Y.Z+1) in the project's version files and changelog, commits everything with the subject "vX.Y.Z - [summary of the session's work]", tags it vX.Y.Z, and pushes the branch and tag. Use when the user types /patch or $patch, or asks to "bump the patch version", "cut a patch release", "release this as a patch", or "patch bump and push". Not for minor or major releases (/minor handles minor bumps), and not for applying a code patch, a diff, or a "patch file" that doesn't ask for a release.
 ---
 
 # Patch release
