@@ -9,14 +9,14 @@ Agent skills I write and use with Claude Code, Codex, and other agents that supp
 | [daily-budget](skills/daily-budget/SKILL.md) | Sweeps Firelands Current's sources for new stories, events and images, drafts the best leads with newsroom, and builds a dated review packet for the editor. |
 | [design-taste](skills/design-taste/SKILL.md) | Audits, polishes, or checks web UI so it stops reading as AI-generated: the dated tells registry, the accessibility and typography floor, motion timing, and a two-round screenshot critique. |
 | [humanize](skills/humanize/SKILL.md) | Rewrites or audits text so it stops reading as AI-generated, keeping the meaning and the writer's voice. |
-| [issue](skills/issue/SKILL.md) | Picks a GitHub issue, offers a cheaper model when the job is small, does the work in its own worktree, reviews it, bumps the version in the PR, squash-merges it as one `vX.Y.Z` release commit, tags it, and cleans up its branches. |
+| [issue](skills/issue/SKILL.md) | Picks a GitHub issue, offers a cheaper model when the job is small, does the work in its own worktree, reviews it, pauses for you to test it in local dev, bumps the version in the PR, squash-merges it as one `vX.Y.Z` release commit, tags it, and cleans up its branches. |
 | [minor](skills/minor/SKILL.md) | Cuts a minor release: bumps `X.Y.Z` to `X.Y+1.0`, updates the changelog, commits, tags, and pushes. |
 | [music-creation](skills/music-creation/SKILL.md) | Writes, revises, and critiques songs, lyrics, melodies, and arrangements, prepares ready-to-paste Suno packages, and can plan an EP or album. |
 | [newsroom](skills/newsroom/SKILL.md) | Writes, edits, and checks news stories for Firelands Current in AP style, with house rules, story-type playbooks, and editor flags. |
 | [patch](skills/patch/SKILL.md) | Cuts a patch release: bumps `X.Y.Z` to `X.Y.Z+1`, updates the changelog, commits, tags, and pushes. |
 | [title](skills/title/SKILL.md) | Renames the current chat session to match what actually happened in it. |
 | [update-docs](skills/update-docs/SKILL.md) | Audits README, AGENTS.md, CLAUDE.md, CHANGELOG, the privacy policy, and other docs against the code and fixes what's wrong or out of date. |
-| [wave](skills/wave/SKILL.md) | Picks a wave of non-overlapping GitHub issues, hands each to a subagent on the model and effort its size calls for, reviews every diff, and ships each issue one at a time as its own squash-merged, tagged `vX.Y.Z` release. |
+| [wave](skills/wave/SKILL.md) | Picks a wave of non-overlapping GitHub issues, hands each to a subagent on the model and effort its size calls for, reviews every diff, pauses for you to test each one in local dev, and ships each issue one at a time as its own squash-merged, tagged `vX.Y.Z` release. |
 
 ## Install
 

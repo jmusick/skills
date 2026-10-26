@@ -1,19 +1,20 @@
 ---
 name: issue
 description: >-
-  Take one GitHub issue in the current repo from open to released: pick and claim it, do the work in its own worktree, review it, open a PR, wait for CI, and squash-merge it as a tagged `vX.Y.Z - Summary` release commit. Use when the user types /issue or $issue (optionally with an issue number), or asks to work, fix, pick up, grab, or knock out an issue, "the next issue", "something from the backlog", or "issue #42", even if they don't mention PRs or releases. Not for several issues at once (use /wave), for filing, triaging, or labeling issues without doing the work, for reviewing someone else's PR, for a release with no issue (use /patch or /minor), or when "issue" just means a problem the user is having.
+  Take one GitHub issue in the current repo from open to released: pick and claim it, do the work in its own worktree, review it, pause for the user to test it in local dev, open a PR, wait for CI, and squash-merge it as a tagged `vX.Y.Z - Summary` release commit. Use when the user types /issue or $issue (optionally with an issue number), or asks to work, fix, pick up, grab, or knock out an issue, "the next issue", "something from the backlog", or "issue #42", even if they don't mention PRs or releases. Not for several issues at once (use /wave), for filing, triaging, or labeling issues without doing the work, for reviewing someone else's PR, for a release with no issue (use /patch or /minor), or when "issue" just means a problem the user is having.
 ---
 
 # Work an issue end to end
 
-One run takes one GitHub issue from open to released: pick, size, claim, work, review, bump, PR, CI, merge, tag, clean up. Each issue lands on the default branch as exactly one commit: the squash merge carries both the change and the version bump, under the release subject `vX.Y.Z - <Summary>`, and the release tag points at it. Typing the command is the user's go-ahead for every step, including the comments, pushes, merge, tag, and branch deletions, so don't stop to confirm routine steps. Stop only where this file says to. Those stops protect things that are hard to undo: a merged PR, a pushed tag, or someone else's work.
+One run takes one GitHub issue from open to released: pick, size, claim, work, review, test in local dev, bump, PR, CI, merge, tag, clean up. Each issue lands on the default branch as exactly one commit: the squash merge carries both the change and the version bump, under the release subject `vX.Y.Z - <Summary>`, and the release tag points at it. Once the user has tested the change in local dev (step 7), their go there covers every step after it, including the pushes, merge, tag, and branch deletions, so don't stop to confirm routine steps. Stop only where this file says to. Those stops protect things that are hard to undo: a released change the user never tried, a merged PR, a pushed tag, or someone else's work.
 
 Arguments:
 - `/issue 42` works issue 42. A bare `/issue` picks one.
+- `--no-test` skips the local-dev test pause in step 7, for unattended runs. Use it only when the user passes it.
 - `--no-merge` stops once the PR is open and CI has passed. The PR carries no version bump.
 - `--no-ship` merges without a version bump or tag.
 
-Work on one issue per run. To get through a backlog, the user can run `/loop /issue`, or `/wave` to work several issues in parallel with subagents.
+Work on one issue per run. To get through a backlog, the user can run `/loop /issue` (add `--no-test` to let it run unattended), or `/wave` to work several issues in parallel with subagents.
 
 Keep track of everything this run creates (the claim, worktree, branches, PR, and tag). Cleanup and the final report both depend on that list.
 
@@ -104,11 +105,27 @@ You wrote the code, so look at it again as a reviewer rather than trusting what 
 
 Fix what you find, commit, and run the checks again. Stop after two review rounds. If it still isn't right by then, take the failure path below.
 
-## 7. Bump the version on the PR branch
+## 7. Pause for the user to test it in local dev
 
-The release goes into the PR itself, so the squash merge in step 9 is the release commit. Don't run `/patch` or `/minor` here or after the merge: they commit, tag, and push the branch they run on, which would make a second commit.
+This is a stop, every run unless `--no-test` was passed. Nothing has been pushed yet, and once the PR merges the change is released, so the user tries it in a running copy of the app first. Checks and review catch what's wrong in the code; they don't catch "that's not what I meant" or a page that looks broken.
 
-Skip this step, the release subject in step 9, and step 10 if any of these is true. The merge is then a plain squash with GitHub's default subject.
+1. Find how the repo runs locally: its README, AGENTS.md / CLAUDE.md, `package.json` scripts, a Makefile, `docker-compose.yml`, or `.claude/launch.json`. If you can't tell, ask the user instead of guessing.
+2. Get the worktree ready to run. A fresh worktree has no installed dependencies and none of the gitignored local config the user's checkout has, such as `.env` files. Install dependencies in the worktree, and copy the gitignored config the app needs from the user's checkout. Never commit those files, and tell the user which ones you copied.
+3. Start the app from the worktree, in the background, not from the user's checkout. If the default port is taken (often by the user's own dev server), use another one. Wait until it actually serves, and note the URL. For something with no server, such as a CLI or a library, have the exact commands ready for the user to run in the worktree instead.
+4. Tell the user it's ready, then stop and wait. Give them the URL or commands, the worktree path, a few lines on what changed, and a short checklist of what to try, drawn from the acceptance criteria in step 5 plus the edge cases most likely to break. Say plainly that nothing has been pushed and that their go releases it.
+
+Then act on the answer:
+- **Go:** stop the dev server and move on to step 8.
+- **Something's wrong:** fix it in the worktree, run the checks, commit, and read the new diff. Then reload or restart the app and ask the user to test again. These rounds don't count against the two review rounds, since the user is driving them.
+- **Stop or not now:** stop the dev server and take the failure path, with what the user found in the PR or issue comment.
+
+If the change has nothing to run, such as docs or comment wording, still stop: show the diff, or the rendered page, and wait for the go. The point of this step is that nothing ships before the user has seen it.
+
+## 8. Bump the version on the PR branch
+
+The release goes into the PR itself, so the squash merge in step 10 is the release commit. Don't run `/patch` or `/minor` here or after the merge: they commit, tag, and push the branch they run on, which would make a second commit.
+
+Skip this step, the release subject in step 10, and step 11 if any of these is true. The merge is then a plain squash with GitHub's default subject.
 - `--no-ship` or `--no-merge` was passed. With `--no-merge` the user merges later, possibly from the GitHub UI, so a bump in the PR could go stale or land under the wrong subject. The follow-up is to merge, then run `/patch` or `/minor`.
 - The repo has no release tags yet (`has_release_tags` false). Ask before creating its first tag, because "shipping" may mean something else in that repo.
 
@@ -129,24 +146,24 @@ It prints JSON: current and next version, `next_tag`, the latest tag and its `ta
 - If the repo has a changelog, add a section at the top matching its format exactly, with today's date, written for readers. Don't create one.
 - Follow any release steps in the repo's AGENTS.md / CLAUDE.md.
 
-Commit it on the branch as `Bump version to X.Y.Z`. The squash merge folds it into the one release commit, so its subject never reaches the default branch. Re-run the repo's checks if the bump touched anything they read, such as a lockfile. If the helper found no version files and no changelog, there's nothing to bump and nothing to commit: the release subject and the tag carry the version on their own, and the version-file checks in steps 9 and 10 don't apply.
+Commit it on the branch as `Bump version to X.Y.Z`. The squash merge folds it into the one release commit, so its subject never reaches the default branch. Re-run the repo's checks if the bump touched anything they read, such as a lockfile. If the helper found no version files and no changelog, there's nothing to bump and nothing to commit: the release subject and the tag carry the version on their own, and the version-file checks in steps 10 and 11 don't apply.
 
-Write down the version, the tag, and a release summary for step 9: an imperative, capitalized subject under about 60 characters with no trailing period, describing the issue's change for a reader of the history (for example `Reset hCaptcha after a failed contact-form send`).
+Write down the version, the tag, and a release summary for step 10: an imperative, capitalized subject under about 60 characters with no trailing period, describing the issue's change for a reader of the history (for example `Reset hCaptcha after a failed contact-form send`).
 
-## 8. Open the PR and wait for CI
+## 9. Open the PR and wait for CI
 
 ```bash
 git -C <worktree> push -u origin <branch>
 gh pr create --base <default> --head <branch> --title "<imperative title>" --body-file <file>
 ```
 
-The PR body has: `Closes #N`, which makes GitHub close the issue on merge; a short summary of the change; how you verified it; the size, and the model and effort the work ran on; and the version it releases (`Releases vX.Y.Z (patch)`). Follow any attribution rules in the user's or the repo's instructions. Write the body file in a temp directory, not in the repo or next to it, and delete it once the PR is open.
+The PR body has: `Closes #N`, which makes GitHub close the issue on merge; a short summary of the change; how you verified it, including that the user tested it in local dev (or that `--no-test` skipped that); the size, and the model and effort the work ran on; and the version it releases (`Releases vX.Y.Z (patch)`). Follow any attribution rules in the user's or the repo's instructions. Write the body file in a temp directory, not in the repo or next to it, and delete it once the PR is open.
 
 Then wait for checks: `gh pr checks <pr> --watch --fail-fast`. GitHub can take a few seconds to register checks on a new PR. If it says no checks were reported but the repo has workflows in `.github/workflows/`, wait about 15 seconds and run it again before deciding there's no CI. If there are truly no checks configured, move on. If a check fails, read the log (`gh run view <run-id> --log-failed`), fix it, and push again. Stop after two attempts.
 
-With `--no-merge`, stop here, clean up the worktree (step 11), and report.
+With `--no-merge`, stop here, clean up the worktree (step 12), and report.
 
-## 9. Merge as the release commit
+## 10. Merge as the release commit
 
 First make sure the bump is still the next version. Someone may have released while CI ran:
 
@@ -156,7 +173,7 @@ git ls-remote --tags origin vX.Y.Z                  # must print nothing
 git -C <worktree> show origin/<default>:package.json | grep '"version"'   # or the repo's version file; must still be the old version
 ```
 
-If the tag now exists or `<default>` has moved to a newer version, merge `origin/<default>` into the branch (`git -C <worktree> merge --no-edit origin/<default>`; never rebase or force-push), redo step 7 with the new next version, push, and wait for CI again.
+If the tag now exists or `<default>` has moved to a newer version, merge `origin/<default>` into the branch (`git -C <worktree> merge --no-edit origin/<default>`; never rebase or force-push), redo step 8 with the new next version, push, and wait for CI again.
 
 Then squash-merge with the release subject and body. Pin the head commit (`git -C <worktree> rev-parse HEAD`) so you merge exactly what you reviewed and CI tested:
 
@@ -167,11 +184,11 @@ gh pr merge <pr> --squash --match-head-commit <head sha> \
 
 The body file (temp directory, deleted afterward) has a few sentences on what's in this version and anything a future reader needs (checks that passed, migrations), then a line `Closes #N via PR #<pr>.` The release commit follows the release skills' rule: no `Co-Authored-By`, "Generated with", or other AI attribution, whatever the attribution reminder says for PRs. Passing `--body-file` also stops GitHub from appending its default list of squashed commit subjects.
 
-Use squash if the repo allows it. If it doesn't, use the first method in `merge_methods` without the release subject, then fall back to the old two-commit release: run `/patch` or `/minor` from `<default>` after the merge and say so in the report. Don't delete the branch yet; step 11 does that once the worktree is gone. Never pass `--admin` or bypass a failing check. If the merge is blocked because the PR needs an approving review, that approval is the user's to give, so take the failure path and name it as the follow-up.
+Use squash if the repo allows it. If it doesn't, use the first method in `merge_methods` without the release subject, then fall back to the old two-commit release: run `/patch` or `/minor` from `<default>` after the merge and say so in the report. Don't delete the branch yet; step 12 does that once the worktree is gone. Never pass `--admin` or bypass a failing check. If the merge is blocked because the PR needs an approving review, that approval is the user's to give, so take the failure path and name it as the follow-up.
 
 Afterward, confirm the issue closed (`gh issue view N --json state`). If it didn't close, close it with a comment that links the PR.
 
-## 10. Tag the release
+## 11. Tag the release
 
 Tag the squash-merge commit itself. Nothing is pushed to `<default>` in this step, so branch protection doesn't get in the way.
 
@@ -187,9 +204,9 @@ git push origin vX.Y.Z
 
 If the subject or the version doesn't match, don't tag. Report it and give the fix as the follow-up. If the tag push is rejected, leave the local tag, report it, and put `git push origin vX.Y.Z` in the follow-up.
 
-## 11. Clean up
+## 12. Clean up
 
-Remove only what this run created:
+Remove only what this run created. Stop any dev server step 7 started first; a running process can hold files open and make the worktree removal fail, on Windows especially.
 
 ```bash
 git worktree remove <worktree path>
@@ -208,16 +225,17 @@ Don't throw work away. Leave it where the user can pick it up:
 - **A PR exists:** mark it as a draft (`gh pr ready <pr> --undo`) and comment with what's done, what's blocking, and the exact next step. Leave the issue assigned.
 - **Commits but no PR:** push the branch and open a draft PR as described above, so the work is visible.
 - **Nothing written yet:** unassign yourself (`gh issue edit N --remove-assignee @me`) and comment on the issue with what you learned and what's needed.
-- Clean up the worktree as in step 11 once everything is pushed. Keep the branch.
-- **Merged but not tagged:** say so first in the report, with the merge commit's SHA and the exact `git tag` and `git push` commands from step 10.
+- Clean up the worktree as in step 12 once everything is pushed. Keep the branch.
+- **Merged but not tagged:** say so first in the report, with the merge commit's SHA and the exact `git tag` and `git push` commands from step 11.
 
-## 12. Report
+## 13. Report
 
 End with this report, every time. It's short, and the **Follow-up** section is required. That section is how the user knows what's theirs to do. If nothing needs doing, write "None".
 
 ```
 Shipped #42 - Fix login redirect after password reset
 - Size: normal (two files, existing tests to follow); ran on sonnet at medium effort
+- Tested by you in local dev; one fix round (the redirect dropped the query string)
 - PR #57 squash-merged after 1 review round as "v1.4.3 - Fix login redirect after password reset"; CI passed
 - Released v1.4.3 (patch): tagged the merge commit 3f2a9c1 and pushed the tag
 - Cleaned up: worktree, local and remote branch issue-42-fix-login-redirect

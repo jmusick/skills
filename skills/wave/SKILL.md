@@ -1,24 +1,25 @@
 ---
 name: wave
 description: >-
-  Work several GitHub issues in the current repo in parallel and ship each as its own release: pick a wave of issues that don't overlap, hand each to a subagent on the model and effort its size needs, review every diff, open a PR per issue, and squash-merge them one at a time as tagged `vX.Y.Z - Summary` release commits. Use when the user types /wave or $wave (optionally with issue numbers), or asks to work a batch, wave, or handful of issues, knock out several issues at once, or clear part of the backlog with agents. Not for a single issue (use /issue), for triaging, labeling, prioritizing, or closing issues without doing the work, for filing issues, for reviewing someone else's PR, or for a release with no issue (use /patch or /minor).
+  Work several GitHub issues in the current repo in parallel and ship each as its own release: pick a wave of issues that don't overlap, hand each to a subagent on the model and effort its size needs, review every diff, pause for the user to test them in local dev, open a PR per issue, and squash-merge them one at a time as tagged `vX.Y.Z - Summary` release commits. Use when the user types /wave or $wave (optionally with issue numbers), or asks to work a batch, wave, or handful of issues, knock out several issues at once, or clear part of the backlog with agents. Not for a single issue (use /issue), for triaging, labeling, prioritizing, or closing issues without doing the work, for filing issues, for reviewing someone else's PR, or for a release with no issue (use /patch or /minor).
 ---
 
 # Work a wave of issues
 
-One run takes a wave of GitHub issues from open to released: survey, pick the wave, size and claim, delegate in parallel, review, PR, CI, then ship each issue one at a time as its own release commit, and clean up. The main session doesn't write the issues' code, apart from tiny review fixes and merge conflicts. It picks, briefs, reviews, and releases, and each subagent works one issue on the model its size calls for. That keeps the token-heavy work on cheaper models and leaves the main session's context clear for reviewing several diffs.
+One run takes a wave of GitHub issues from open to released: survey, pick the wave, size and claim, delegate in parallel, review, test in local dev, PR, CI, then ship each issue one at a time as its own release commit, and clean up. The main session doesn't write the issues' code, apart from tiny review fixes and merge conflicts. It picks, briefs, reviews, and releases, and each subagent works one issue on the model its size calls for. That keeps the token-heavy work on cheaper models and leaves the main session's context clear for reviewing several diffs.
 
-Typing the command is the user's go-ahead for every step, including the comments, pushes, merges, tags, and branch deletions, so don't stop to confirm routine steps. Stop only where this file says to. Those stops protect things that are hard to undo: a merged PR, a pushed tag, or someone else's work.
+Once the user has tested an issue's change in local dev (step 7), their go there covers every step after it for that issue, including the pushes, merge, tag, and branch deletions, so don't stop to confirm routine steps. Stop only where this file says to. Those stops protect things that are hard to undo: a released change the user never tried, a merged PR, a pushed tag, or someone else's work.
 
 Arguments:
 - `/wave 12 15 18` works those issues. A bare `/wave` picks the wave.
-- `--max N` caps the wave at N issues (default 4). Issues the user names aren't capped. More parallel work means more diffs to review and a longer queue at merge time.
+- `--max N` caps the wave at N issues (default 4). Issues the user names aren't capped. More parallel work means more diffs to review, more apps to test, and a longer queue at merge time.
+- `--no-test` skips the local-dev test pause in step 7, for unattended runs. Use it only when the user passes it.
 - `--no-merge` stops once every PR is open and CI has passed. The PRs carry no version bump.
 - `--no-ship` merges without version bumps or tags.
 
-Work one wave per run. To keep going, the user can run `/loop /wave`. For a single issue, `/issue` is simpler and doesn't spawn subagents.
+Work one wave per run. To keep going, the user can run `/loop /wave` (add `--no-test` to let it run unattended). For a single issue, `/issue` is simpler and doesn't spawn subagents.
 
-Keep a ledger for every issue in the wave: its size and model, claim, worktree, branch, subagent, PR, review rounds, version, and tag. Shipping, cleanup, and the final report all depend on it.
+Keep a ledger for every issue in the wave: its size and model, claim, worktree, branch, subagent, review rounds, local-dev test result, PR, version, and tag. Shipping, cleanup, and the final report all depend on it.
 
 ## 1. Survey
 
@@ -126,22 +127,40 @@ Review each issue as its subagent reports, without waiting for the rest. Don't t
 
 Send problems back to the same subagent (it still has its context) and let it fix them. Make tiny fixes yourself. Stop after two review rounds. An issue that still isn't right by then takes the failure path below; the rest of the wave carries on.
 
-## 7. Open the PRs and wait for CI
+## 7. Pause for the user to test in local dev
 
-As each issue passes review, push it and open its PR, without a version bump yet:
+This is a stop, every run unless `--no-test` was passed. Nothing has been pushed yet, and once a PR merges its change is released, so the user tries each issue in a running copy of the app first. Checks and review catch what's wrong in the code; they don't catch "that's not what I meant" or a page that looks broken.
+
+Wait until every issue in the wave has passed review or dropped out, then stop once for all of them rather than once per issue. The main session runs the apps, not the subagents.
+
+1. Find how the repo runs locally: its README, AGENTS.md / CLAUDE.md, `package.json` scripts, a Makefile, `docker-compose.yml`, or `.claude/launch.json`. If you can't tell, ask the user instead of guessing.
+2. Get each worktree ready to run. A fresh worktree has no installed dependencies and none of the gitignored local config the user's checkout has, such as `.env` files. Install dependencies in each worktree, and copy the gitignored config the app needs from the user's checkout. Never commit those files, and tell the user which ones you copied.
+3. Start each issue's app from its own worktree, in the background, each on its own port that the user's own dev server isn't using. Wait until each one actually serves, and note its URL. If copies can't run side by side (a fixed port, a shared local database, a Docker stack), run one at a time and move to the next issue after the user's verdict on the current one. For something with no server, such as a CLI or a library, have the exact commands ready for the user to run in each worktree instead.
+4. Tell the user they're ready, then stop and wait. For each issue give the URL or commands, the worktree path, a few lines on what changed, and a short checklist of what to try, drawn from its acceptance criteria in step 5 plus the edge cases most likely to break. Say plainly that nothing has been pushed and that their go releases it.
+
+The user answers per issue, and an issue doesn't have to wait for the others' verdicts:
+- **Go:** stop that issue's dev server and move it on to step 8.
+- **Something's wrong:** send what the user found to that issue's subagent, or fix it yourself if it's tiny. Run the checks and read the new diff, then reload or restart that app and ask the user to test it again. These rounds don't count against the two review rounds, since the user is driving them.
+- **Drop it:** stop that issue's dev server and take the failure path for it, with what the user found in the PR or issue comment. The rest of the wave carries on.
+
+If an issue's change has nothing to run, such as docs or comment wording, still include it: show the diff, or the rendered page, and wait for the go. The point of this step is that nothing ships before the user has seen it.
+
+## 8. Open the PRs and wait for CI
+
+As the user gives each issue the go, push it and open its PR, without a version bump yet:
 
 ```bash
 git -C <worktree> push -u origin <branch>
 gh pr create --base <default> --head <branch> --title "<imperative title>" --body-file <file>
 ```
 
-The PR body has: `Closes #N`, which makes GitHub close the issue on merge; a short summary of the change; how you verified it; the size, model, and effort you chose; and a note that it ships as its own release. Follow any attribution rules in the user's or the repo's instructions. Write the body file in a temp directory, not in the repo or next to it, and delete it once the PR is open.
+The PR body has: `Closes #N`, which makes GitHub close the issue on merge; a short summary of the change; how you verified it, including that the user tested it in local dev (or that `--no-test` skipped that); the size, model, and effort you chose; and a note that it ships as its own release. Follow any attribution rules in the user's or the repo's instructions. Write the body file in a temp directory, not in the repo or next to it, and delete it once the PR is open.
 
 Wait for each PR's checks: `gh pr checks <pr> --watch --fail-fast`. GitHub can take a few seconds to register checks on a new PR. If it says no checks were reported but the repo has workflows in `.github/workflows/`, wait about 15 seconds and run it again before deciding there's no CI. If a check fails, read the log (`gh run view <run-id> --log-failed`), have that issue's subagent fix it or fix it yourself, and push again. Stop after two attempts for that issue.
 
-With `--no-merge`, stop once every PR is open and green, clean up the worktrees (step 9), and report.
+With `--no-merge`, stop once every PR is open and green, clean up the worktrees (step 10), and report.
 
-## 8. Ship one at a time
+## 9. Ship one at a time
 
 Each issue lands on the default branch as exactly one commit: the squash merge carries both the change and its version bump, under the release subject `vX.Y.Z - <Summary>`, and the release tag points at it. The bumps can't be made up front, because each release's version depends on the one before it. So ship the PRs one at a time, in priority order, running this whole step for one PR before starting the next. Don't run `/patch` or `/minor` here: they commit, tag, and push the branch they run on, which would make a second commit.
 
@@ -154,7 +173,7 @@ git -C <worktree> fetch origin --tags
 git -C <worktree> merge --no-edit origin/<default>
 ```
 
-Never rebase or force-push. If the merge conflicts and the fix is mechanical, resolve it, run the checks, and commit. If it isn't, send it back to that issue's subagent with the conflict, and review the result as in step 6.
+Never rebase or force-push. If the merge conflicts and the fix is mechanical, resolve it, run the checks, and commit. If it isn't, send it back to that issue's subagent with the conflict, and review the result as in step 6. If the resolution changed how the issue's change behaves, not just where its lines sit, have the user test it again as in step 7 before you ship it.
 
 **b. Bump the version.** Choose the bump from the issue:
 - **Patch:** bug fixes, docs, chores, and small tweaks that add nothing new for users.
@@ -209,9 +228,9 @@ If the subject or the version doesn't match, don't tag, and stop shipping: the n
 
 Then move on to the next PR in the queue.
 
-## 9. Clean up
+## 10. Clean up
 
-Remove only what this run created, for each issue:
+Remove only what this run created, for each issue. Stop any dev server step 7 started first; a running process can hold files open and make the worktree removal fail, on Windows especially.
 
 ```bash
 git worktree remove <worktree path>
@@ -223,23 +242,23 @@ Then `git fetch --prune`, switch to the default branch and `git pull --ff-only` 
 
 ## When an issue can't be finished: the failure path
 
-One issue failing doesn't stop the wave, except where step 8d says to stop shipping. Don't throw the work away. Leave it where the user can pick it up:
+One issue failing doesn't stop the wave, except where step 9d says to stop shipping. Don't throw the work away. Leave it where the user can pick it up:
 
 - **A PR exists:** mark it as a draft (`gh pr ready <pr> --undo`) and comment with what's done, what's blocking, and the exact next step. Leave the issue assigned.
 - **Commits but no PR:** push the branch and open a draft PR as described above, so the work is visible.
 - **Nothing written yet:** unassign yourself (`gh issue edit N --remove-assignee @me`) and comment on the issue with what you learned and what's needed.
-- Clean up the worktree as in step 9 once everything is pushed. Keep the branch.
-- **Merged but not tagged:** say so first in the report, with the merge commit's SHA and the exact `git tag` and `git push` commands from step 8d. Any PRs still queued behind it stay open and unbumped; list them in the follow-up.
+- Clean up the worktree as in step 10 once everything is pushed. Keep the branch.
+- **Merged but not tagged:** say so first in the report, with the merge commit's SHA and the exact `git tag` and `git push` commands from step 9d. Any PRs still queued behind it stay open and unbumped; list them in the follow-up.
 
-## 10. Report
+## 11. Report
 
 End with this report, every time. It's short, and the **Follow-up** section is required. That section is how the user knows what's theirs to do. If nothing needs doing, write "None".
 
 ```
 Shipped 3 of 4 issues in this wave
-- #42 Fix login redirect after password reset: normal, sonnet/medium; PR #57, 1 review round; v1.4.3 (patch)
-- #44 Fix typo in install docs: trivial, haiku/low; PR #58; v1.4.4 (patch)
-- #47 Add CSV export: normal, sonnet/medium; PR #59, 2 review rounds; v1.5.0 (minor)
+- #42 Fix login redirect after password reset: normal, sonnet/medium; PR #57, 1 review round, tested by you; v1.4.3 (patch)
+- #44 Fix typo in install docs: trivial, haiku/low; PR #58, diff checked by you; v1.4.4 (patch)
+- #47 Add CSV export: normal, sonnet/medium; PR #59, 2 review rounds, tested by you after 1 fix; v1.5.0 (minor)
 - #45 Retry failed webhook deliveries: stopped, PR #60 left as draft (needs a retry-limit decision)
 - Left for the next wave: #46 (touches the same files as #42)
 - Cleaned up: worktrees and branches for #42, #44, #47; kept issue-45-retry-webhooks
