@@ -1,12 +1,12 @@
 ---
 name: wave
 description: >-
-  Work several GitHub issues in the current repo in parallel and ship each as its own release: pick a wave of issues that don't overlap, hand each to a subagent on the model and effort its size needs, review every diff, pause for the user to test them in local dev, open a PR per issue, and squash-merge them one at a time as tagged `vX.Y.Z - Summary` release commits. Use when the user types /wave or $wave (optionally with issue numbers), or asks to work a batch, wave, or handful of issues, knock out several issues at once, or clear part of the backlog with agents. Not for a single issue (use /issue), for triaging, labeling, prioritizing, or closing issues without doing the work, for filing issues, for reviewing someone else's PR, or for a release with no issue (use /patch or /minor).
+  Work several GitHub issues in the current repo in parallel and ship each as its own release: pick a wave of issues that don't overlap, hand each to a subagent on the model and effort its size needs, review every diff and catch its docs up, pause for the user to test them in local dev, open a PR per issue, and squash-merge them one at a time as tagged `vX.Y.Z - Summary` release commits. Use when the user types /wave or $wave (optionally with issue numbers), or asks to work a batch, wave, or handful of issues, knock out several issues at once, or clear part of the backlog with agents. Not for a single issue (use /issue), for triaging, labeling, prioritizing, or closing issues without doing the work, for filing issues, for reviewing someone else's PR, or for a release with no issue (use /patch or /minor).
 ---
 
 # Work a wave of issues
 
-One run takes a wave of GitHub issues from open to released: survey, pick the wave, size and claim, delegate in parallel, review, test in local dev, PR, CI, then ship each issue one at a time as its own release commit, and clean up. The main session doesn't write the issues' code, apart from tiny review fixes and merge conflicts. It picks, briefs, reviews, and releases, and each subagent works one issue on the model its size calls for. That keeps the token-heavy work on cheaper models and leaves the main session's context clear for reviewing several diffs.
+One run takes a wave of GitHub issues from open to released: survey, pick the wave, size and claim, delegate in parallel, review, update docs, test in local dev, PR, CI, then ship each issue one at a time as its own release commit, clean up, and retitle. The main session doesn't write the issues' code, apart from tiny review fixes and merge conflicts. It picks, briefs, reviews, and releases, and each subagent works one issue on the model its size calls for. That keeps the token-heavy work on cheaper models and leaves the main session's context clear for reviewing several diffs.
 
 Once the user has tested an issue's change in local dev (step 7), their go there covers every step after it for that issue, including the pushes, merge, tag, and branch deletions, so don't stop to confirm routine steps. Stop only where this file says to. Those stops protect things that are hard to undo: a released change the user never tried, a merged PR, a pushed tag, or someone else's work.
 
@@ -127,6 +127,15 @@ Review each issue as its subagent reports, without waiting for the rest. Don't t
 
 Send problems back to the same subagent (it still has its context) and let it fix them. Make tiny fixes yourself. Stop after two review rounds. An issue that still isn't right by then takes the failure path below; the rest of the wave carries on.
 
+Once an issue's code is right, catch its docs up so they ship in the same release as the change. Do this yourself, not in the subagent: you've read every diff in the wave, so you can keep the doc edits consistent across issues. Run `/update-docs` and tell it:
+- Work in `<worktree path>` (with `git -C <worktree>`), not the user's checkout.
+- Check only the docs this branch's diff (`origin/<default>...HEAD`) could have made wrong, not the whole repo. A full audit per issue is slow and pulls unrelated edits into the PR.
+- Skip the changelog. Step 9b writes this release's changelog section, so an `Unreleased` entry would list the change twice.
+
+Read its edits as you read the code. If it changed anything, run the checks and commit as `Update docs for #N`. If nothing needed changing, move on. If `/update-docs` isn't available, check by hand that the README, AGENTS.md / CLAUDE.md, and any doc that names what changed still tell the truth.
+
+Doc edits are the likeliest place for wave members to collide even when their code doesn't, for example two issues each adding a row to the same README table. Keep each issue's doc edits to its own lines; step 9a resolves the overlap, which is usually mechanical.
+
 ## 7. Pause for the user to test in local dev
 
 This is a stop, every run unless `--no-test` was passed. Nothing has been pushed yet, and once a PR merges its change is released, so the user tries each issue in a running copy of the app first. Checks and review catch what's wrong in the code; they don't catch "that's not what I meant" or a page that looks broken.
@@ -136,7 +145,7 @@ Wait until every issue in the wave has passed review or dropped out, then stop o
 1. Find how the repo runs locally: its README, AGENTS.md / CLAUDE.md, `package.json` scripts, a Makefile, `docker-compose.yml`, or `.claude/launch.json`. If you can't tell, ask the user instead of guessing.
 2. Get each worktree ready to run. A fresh worktree has no installed dependencies and none of the gitignored local config the user's checkout has, such as `.env` files. Install dependencies in each worktree, and copy the gitignored config the app needs from the user's checkout. Never commit those files, and tell the user which ones you copied.
 3. Start each issue's app from its own worktree, in the background, each on its own port that the user's own dev server isn't using. Wait until each one actually serves, and note its URL. If copies can't run side by side (a fixed port, a shared local database, a Docker stack), run one at a time and move to the next issue after the user's verdict on the current one. For something with no server, such as a CLI or a library, have the exact commands ready for the user to run in each worktree instead.
-4. Tell the user they're ready, then stop and wait. For each issue give the URL or commands, the worktree path, a few lines on what changed, and a short checklist of what to try, drawn from its acceptance criteria in step 5 plus the edge cases most likely to break. Say plainly that nothing has been pushed and that their go releases it.
+4. Tell the user they're ready, then stop and wait. For each issue give the URL or commands, the worktree path, a few lines on what changed (including any doc edits), and a short checklist of what to try, drawn from its acceptance criteria in step 5 plus the edge cases most likely to break. Say plainly that nothing has been pushed and that their go releases it.
 
 The user answers per issue, and an issue doesn't have to wait for the others' verdicts:
 - **Go:** stop that issue's dev server and move it on to step 8.
@@ -250,7 +259,11 @@ One issue failing doesn't stop the wave, except where step 9d says to stop shipp
 - Clean up the worktree as in step 10 once everything is pushed. Keep the branch.
 - **Merged but not tagged:** say so first in the report, with the merge commit's SHA and the exact `git tag` and `git push` commands from step 9d. Any PRs still queued behind it stay open and unbumped; list them in the follow-up.
 
-## 11. Report
+## 11. Retitle the session
+
+Run `/title` once for the whole wave, with guidance to focus on what shipped and how the run ended, such as `/title shipped #42 #44 #47, #45 left as draft`, so the chat's name in the sidebar says what happened rather than echoing the opening `/wave`. Do it every run, including `--no-merge` and runs that stopped early, and do it before the report so the report stays the last thing the user reads. If `/title` isn't available, skip it.
+
+## 12. Report
 
 End with this report, every time. It's short, and the **Follow-up** section is required. That section is how the user knows what's theirs to do. If nothing needs doing, write "None".
 

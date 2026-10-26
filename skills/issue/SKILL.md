@@ -1,12 +1,12 @@
 ---
 name: issue
 description: >-
-  Take one GitHub issue in the current repo from open to released: pick and claim it, do the work in its own worktree, review it, pause for the user to test it in local dev, open a PR, wait for CI, and squash-merge it as a tagged `vX.Y.Z - Summary` release commit. Use when the user types /issue or $issue (optionally with an issue number), or asks to work, fix, pick up, grab, or knock out an issue, "the next issue", "something from the backlog", or "issue #42", even if they don't mention PRs or releases. Not for several issues at once (use /wave), for filing, triaging, or labeling issues without doing the work, for reviewing someone else's PR, for a release with no issue (use /patch or /minor), or when "issue" just means a problem the user is having.
+  Take one GitHub issue in the current repo from open to released: pick and claim it, do the work in its own worktree, review it, catch the docs up, pause for the user to test it in local dev, open a PR, wait for CI, and squash-merge it as a tagged `vX.Y.Z - Summary` release commit. Use when the user types /issue or $issue (optionally with an issue number), or asks to work, fix, pick up, grab, or knock out an issue, "the next issue", "something from the backlog", or "issue #42", even if they don't mention PRs or releases. Not for several issues at once (use /wave), for filing, triaging, or labeling issues without doing the work, for reviewing someone else's PR, for a release with no issue (use /patch or /minor), or when "issue" just means a problem the user is having.
 ---
 
 # Work an issue end to end
 
-One run takes one GitHub issue from open to released: pick, size, claim, work, review, test in local dev, bump, PR, CI, merge, tag, clean up. Each issue lands on the default branch as exactly one commit: the squash merge carries both the change and the version bump, under the release subject `vX.Y.Z - <Summary>`, and the release tag points at it. Once the user has tested the change in local dev (step 7), their go there covers every step after it, including the pushes, merge, tag, and branch deletions, so don't stop to confirm routine steps. Stop only where this file says to. Those stops protect things that are hard to undo: a released change the user never tried, a merged PR, a pushed tag, or someone else's work.
+One run takes one GitHub issue from open to released: pick, size, claim, work, review, update docs, test in local dev, bump, PR, CI, merge, tag, clean up, retitle. Each issue lands on the default branch as exactly one commit: the squash merge carries both the change and the version bump, under the release subject `vX.Y.Z - <Summary>`, and the release tag points at it. Once the user has tested the change in local dev (step 7), their go there covers every step after it, including the pushes, merge, tag, and branch deletions, so don't stop to confirm routine steps. Stop only where this file says to. Those stops protect things that are hard to undo: a released change the user never tried, a merged PR, a pushed tag, or someone else's work.
 
 Arguments:
 - `/issue 42` works issue 42. A bare `/issue` picks one.
@@ -105,6 +105,13 @@ You wrote the code, so look at it again as a reviewer rather than trusting what 
 
 Fix what you find, commit, and run the checks again. Stop after two review rounds. If it still isn't right by then, take the failure path below.
 
+Once the code is right, catch the docs up so they ship in the same release as the change. Run `/update-docs` and tell it:
+- Work in `<worktree path>` (with `git -C <worktree>`), not the user's checkout.
+- Check only the docs this branch's diff (`origin/<default>...HEAD`) could have made wrong, not the whole repo. A full audit on every issue is slow and pulls unrelated edits into the PR.
+- Skip the changelog. Step 8 writes this release's changelog section, so an `Unreleased` entry would list the change twice.
+
+Read its edits as you read the code. If it changed anything, run the checks and commit as `Update docs for #N`. If nothing needed changing, move on. If `/update-docs` isn't available, check by hand that the README, AGENTS.md / CLAUDE.md, and any doc that names what you changed still tell the truth.
+
 ## 7. Pause for the user to test it in local dev
 
 This is a stop, every run unless `--no-test` was passed. Nothing has been pushed yet, and once the PR merges the change is released, so the user tries it in a running copy of the app first. Checks and review catch what's wrong in the code; they don't catch "that's not what I meant" or a page that looks broken.
@@ -112,7 +119,7 @@ This is a stop, every run unless `--no-test` was passed. Nothing has been pushed
 1. Find how the repo runs locally: its README, AGENTS.md / CLAUDE.md, `package.json` scripts, a Makefile, `docker-compose.yml`, or `.claude/launch.json`. If you can't tell, ask the user instead of guessing.
 2. Get the worktree ready to run. A fresh worktree has no installed dependencies and none of the gitignored local config the user's checkout has, such as `.env` files. Install dependencies in the worktree, and copy the gitignored config the app needs from the user's checkout. Never commit those files, and tell the user which ones you copied.
 3. Start the app from the worktree, in the background, not from the user's checkout. If the default port is taken (often by the user's own dev server), use another one. Wait until it actually serves, and note the URL. For something with no server, such as a CLI or a library, have the exact commands ready for the user to run in the worktree instead.
-4. Tell the user it's ready, then stop and wait. Give them the URL or commands, the worktree path, a few lines on what changed, and a short checklist of what to try, drawn from the acceptance criteria in step 5 plus the edge cases most likely to break. Say plainly that nothing has been pushed and that their go releases it.
+4. Tell the user it's ready, then stop and wait. Give them the URL or commands, the worktree path, a few lines on what changed (including any doc edits), and a short checklist of what to try, drawn from the acceptance criteria in step 5 plus the edge cases most likely to break. Say plainly that nothing has been pushed and that their go releases it.
 
 Then act on the answer:
 - **Go:** stop the dev server and move on to step 8.
@@ -228,7 +235,11 @@ Don't throw work away. Leave it where the user can pick it up:
 - Clean up the worktree as in step 12 once everything is pushed. Keep the branch.
 - **Merged but not tagged:** say so first in the report, with the merge commit's SHA and the exact `git tag` and `git push` commands from step 11.
 
-## 13. Report
+## 13. Retitle the session
+
+Run `/title` with guidance to focus on the issue and how the run ended, such as `/title shipped #42 as v1.4.3` or `/title stopped on #61, PR left as draft`, so the chat's name in the sidebar says what happened rather than echoing the opening `/issue`. Do it every run, including `--no-merge` and the failure path, and do it before the report so the report stays the last thing the user reads. If `/title` isn't available, skip it.
+
+## 14. Report
 
 End with this report, every time. It's short, and the **Follow-up** section is required. That section is how the user knows what's theirs to do. If nothing needs doing, write "None".
 
