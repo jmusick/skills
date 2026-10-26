@@ -1,7 +1,7 @@
 ---
 name: issue
 description: >-
-  Pick a GitHub issue in the current repo and take it all the way to a release. Ranks open issues, sizes one and offers a switch to a cheaper model and effort when one fits, claims it, does the work in its own branch and worktree, reviews the diff, bumps the version on the PR branch, opens a PR that closes the issue, waits for CI, squash-merges it as a single `vX.Y.Z - Summary` release commit, tags that commit, and cleans up the branches and worktree behind it. Use when the user types /issue or $issue (optionally with an issue number), or asks to work, fix, pick up, grab, or knock out an issue, "the next issue", "something from the backlog", or "issue #42", even if they don't mention PRs or releases. Not for filing new issues, triaging or labeling without doing the work, reviewing someone else's PR, cutting a release with no issue (use /patch or /minor), or a conversation where "issue" just means a problem the user is having.
+  Pick a GitHub issue in the current repo and take it all the way to a release. Ranks open issues, sizes one and offers a switch to a cheaper model and effort when one fits, claims it, does the work in its own branch and worktree, reviews the diff, bumps the version on the PR branch, opens a PR that closes the issue, waits for CI, squash-merges it as a single `vX.Y.Z - Summary` release commit, tags that commit, and cleans up the branches and worktree behind it. Use when the user types /issue or $issue (optionally with an issue number), or asks to work, fix, pick up, grab, or knock out an issue, "the next issue", "something from the backlog", or "issue #42", even if they don't mention PRs or releases. Not for working several issues in one batch (use /triage), filing new issues, triaging or labeling without doing the work, reviewing someone else's PR, cutting a release with no issue (use /patch or /minor), or a conversation where "issue" just means a problem the user is having.
 ---
 
 # Work an issue end to end
@@ -13,7 +13,7 @@ Arguments:
 - `--no-merge` stops once the PR is open and CI has passed. The PR carries no version bump.
 - `--no-ship` merges without a version bump or tag.
 
-Work on one issue per run. To get through a backlog, the user can run `/loop /issue`.
+Work on one issue per run. To get through a backlog, the user can run `/loop /issue`, or `/triage` to work several issues in parallel with subagents.
 
 Keep track of everything this run creates (the claim, worktree, branches, PR, and tag). Cleanup and the final report both depend on that list.
 

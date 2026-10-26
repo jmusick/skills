@@ -15,6 +15,7 @@ Agent skills I write and use with Claude Code, Codex, and other agents that supp
 | [newsroom](skills/newsroom/SKILL.md) | Writes, edits, and checks news stories for Firelands Current in AP style, with house rules, story-type playbooks, and editor flags. |
 | [patch](skills/patch/SKILL.md) | Cuts a patch release: bumps `X.Y.Z` to `X.Y.Z+1`, updates the changelog, commits, tags, and pushes. |
 | [title](skills/title/SKILL.md) | Renames the current chat session to match what actually happened in it. |
+| [triage](skills/triage/SKILL.md) | Picks a wave of non-overlapping GitHub issues, hands each to a subagent on the model and effort its size calls for, reviews every diff, and ships each issue one at a time as its own squash-merged, tagged `vX.Y.Z` release. |
 | [update-docs](skills/update-docs/SKILL.md) | Audits README, AGENTS.md, CLAUDE.md, CHANGELOG, the privacy policy, and other docs against the code and fixes what's wrong or out of date. |
 
 ## Install
@@ -43,7 +44,7 @@ skills/
     references/     # optional docs the skill loads on demand
 ```
 
-Each skill folder holds all of its own files, so it can be copied anywhere on its own. Some skills call another skill: daily-budget needs newsroom installed too, and issue falls back to patch and minor when a repo can't squash-merge or the user merges a PR themselves.
+Each skill folder holds all of its own files, so it can be copied anywhere on its own. Some skills call another skill: daily-budget needs newsroom installed too, and issue and triage fall back to patch and minor when a repo can't squash-merge or the user merges a PR themselves.
 
 ## Credits
 
