@@ -148,12 +148,12 @@ git -C <worktree> fetch origin --tags
 cd <worktree> && python <this skill's directory>/scripts/version_info.py <patch|minor>
 ```
 
-It prints JSON: current and next version, `next_tag`, the latest tag and its `tag_style`, the version files with `in_lockstep`, and the changelog path. Stop and ask if `versions_disagree` is true or `next_tag` already exists (`git ls-remote --tags origin <next_tag>` prints anything). Then make the bump in the worktree, the same edits `/patch` and `/minor` make:
+It prints JSON: current and next version, `next_tag`, the latest tag and its `tag_style`, the version files with `in_lockstep`, and the changelog path. Stop and ask if `versions_disagree` or `next_tag_exists_locally` is true (the fetch just brought down origin's tags). Then make the bump in the worktree, the same edits `/patch` and `/minor` make:
 - Every version file with `in_lockstep` true, using the `update` hint the helper gives for it. For `package.json`, run `npm version <X.Y.Z> --no-git-tag-version` (it updates the lockfile too), then check that only the version lines changed. Leave independently versioned files alone and mention them in the report.
 - If the repo has a changelog, add a section at the top matching its format exactly, with today's date, written for readers. Don't create one.
 - Follow any release steps in the repo's AGENTS.md / CLAUDE.md.
 
-Commit it on the branch as `Bump version to X.Y.Z`. The squash merge folds it into the one release commit, so its subject never reaches the default branch. Re-run the repo's checks if the bump touched anything they read, such as a lockfile. If the helper found no version files and no changelog, there's nothing to bump and nothing to commit: the release subject and the tag carry the version on their own, and the version-file checks in steps 10 and 11 don't apply.
+Commit it on the branch as `Bump version to X.Y.Z`. The squash merge folds it into the one release commit, so its subject never reaches the default branch. Re-run the repo's checks if the bump touched anything they read, such as a lockfile. If the helper found no version files and no changelog, there's nothing to bump and nothing to commit: the release subject and the tag carry the version on their own.
 
 Write down the version, the tag, and a release summary for step 10: an imperative, capitalized subject under about 60 characters with no trailing period, describing the issue's change for a reader of the history (for example `Reset hCaptcha after a failed contact-form send`).
 
@@ -176,11 +176,10 @@ First make sure the bump is still the next version. Someone may have released wh
 
 ```bash
 git -C <worktree> fetch origin --tags
-git ls-remote --tags origin vX.Y.Z                  # must print nothing
-git -C <worktree> show origin/<default>:package.json | grep '"version"'   # or the repo's version file; must still be the old version
+cd <worktree> && python <this skill's directory>/scripts/version_info.py --verify X.Y.Z --ref origin/<default>
 ```
 
-If the tag now exists or `<default>` has moved to a newer version, merge `origin/<default>` into the branch (`git -C <worktree> merge --no-edit origin/<default>`; never rebase or force-push), redo step 8 with the new next version, push, and wait for CI again.
+It checks origin's tags and the version files on `<default>`. If `ready_to_merge` is false (`problems` says why), merge `origin/<default>` into the branch (`git -C <worktree> merge --no-edit origin/<default>`; never rebase or force-push), redo step 8 with the new next version, push, and wait for CI again.
 
 Then squash-merge with the release subject and body. Pin the head commit (`git -C <worktree> rev-parse HEAD`) so you merge exactly what you reviewed and CI tested:
 
@@ -203,13 +202,12 @@ Tag the squash-merge commit itself. Nothing is pushed to `<default>` in this ste
 git switch <default>
 git pull --ff-only
 sha=$(gh pr view <pr> --json mergeCommit --jq .mergeCommit.oid)
-git log -1 --format=%s "$sha"           # must be "vX.Y.Z - <Summary>"
-git show "$sha":package.json | grep '"version"'   # or the repo's version file; must be X.Y.Z
+python <this skill's directory>/scripts/version_info.py --verify X.Y.Z --ref "$sha"   # ready_to_tag must be true
 git tag -a vX.Y.Z "$sha" -m "vX.Y.Z - <Summary>"  # lightweight `git tag vX.Y.Z "$sha"` if tag_style is lightweight
 git push origin vX.Y.Z
 ```
 
-If the subject or the version doesn't match, don't tag. Report it and give the fix as the follow-up. If the tag push is rejected, leave the local tag, report it, and put `git push origin vX.Y.Z` in the follow-up.
+The check confirms the merge commit's subject is `vX.Y.Z - <Summary>`, its version files say X.Y.Z, and the tag is still free. If `ready_to_tag` is false, don't tag. Report its `problems` and give the fix as the follow-up. If the tag push is rejected, leave the local tag, report it, and put `git push origin vX.Y.Z` in the follow-up.
 
 ## 12. Clean up
 

@@ -42,6 +42,7 @@ skills/
     SKILL.md        # frontmatter (name, description) + instructions
     scripts/        # optional helper scripts the skill runs
     references/     # optional docs the skill loads on demand
+    evals/          # optional test cases for skill-creator or `claude plugin eval`
 ```
 
 Each skill folder holds all of its own files, so it can be copied anywhere on its own. Some skills call another skill: daily-budget needs newsroom installed too. Issue and wave run update-docs on each change before you test it and title at the end of the run, so install those alongside them; without them, issue and wave check the docs by hand and leave the chat's title alone. They also fall back to patch and minor when a repo can't squash-merge or the user merges a PR themselves.

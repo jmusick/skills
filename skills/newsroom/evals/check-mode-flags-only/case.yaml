@@ -1,0 +1,7 @@
+schema_version: "1.1"
+name: check-mode-flags-only
+expected_outcome: |
+  Check mode: a list of flags with short fixes and no rewritten story. It catches the quote lede,
+  the loaded "slammed", the unattributed "mismanaged" claim, the wrong name for Sandusky's
+  governing body, and the style errors ("Over 200", "85 thousand dollars", "Sept. 5th", "6:30 PM",
+  "Oh.").

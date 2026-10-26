@@ -1,11 +1,12 @@
 ---
 name: humanize
-description: Rewrite or audit text so it stops reading as AI-generated, keeping the meaning, facts, and the writer's voice. Use when the user types /humanize, or asks to humanize, de-AI, de-slop, unslop, or "make this sound less like ChatGPT/AI"; when they paste a draft and say it sounds robotic, generic, or AI-written; when they ask whether a piece reads as AI; or when they want a post, email, doc, README, essay, or reply cleaned up before publishing. Also use when drafting new prose that must not read as machine-written.
+description: Rewrite or audit text so it stops reading as AI-generated, keeping the meaning, facts, and the writer's voice. Use when the user types /humanize, or asks to humanize, de-AI, de-slop, unslop, or "make this sound less like ChatGPT/AI"; when they paste a draft and say it sounds robotic, generic, or AI-written; when they ask whether a piece reads as AI; or when they want a post, email, doc, README, essay, or reply cleaned up before publishing. Also use when drafting new prose that must not read as machine-written. Not for news stories or AP checks (use newsroom, which has its own AI-tells pass), for the copy or look of a web page or app (use design-taste), for proofreading spelling and grammar alone, or for translation.
 ---
 
 # Humanize
 
 Remove the patterns that make prose read as machine-written, without changing what it says.
+
 ## Why AI text sounds the way it does
 
 A model picks the most likely next word, so by default it makes the choice that fits the widest range of readers. Human writers choose for one reader and one subject, so their choices are uneven and specific. Nearly every tell is a form of that default: staging a point instead of making it, rhythm applied by rule, ordinary facts dressed up as significant, and decoration on every item. The goal is writing a careful person would produce, not beating an AI detector.

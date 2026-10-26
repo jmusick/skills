@@ -1,0 +1,5 @@
+schema_version: "1.1"
+name: clean-text-left-alone
+expected_outcome: |
+  The paragraph is already plain technical prose with no AI tells. The response says so and
+  returns it unchanged or nearly unchanged, with the command, version, and env var intact.

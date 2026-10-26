@@ -1,0 +1,7 @@
+schema_version: "1.1"
+name: meeting-notes-no-invented-names
+expected_outcome: |
+  A short news story in AP and house style that leads with the water-rate increase and its cost to
+  households, keeps the Kessler quote verbatim, marks Kessler's missing first name with a
+  [NEED: ...] placeholder or flag instead of inventing one, and returns headlines, story, notes,
+  and flags.

@@ -1,0 +1,7 @@
+schema_version: "1.1"
+name: rewrite-keeps-every-fact
+expected_outcome: |
+  A plainer version of the post that keeps every fact (18 months, Brightline Logistics, RouteWise,
+  42 carriers, Ohio and Indiana, 23% fewer empty miles, 6 hours a week, Priya Raman, Marcus Bell),
+  adds none, drops the stock phrases and the empty commitment line, and ends with a short
+  "What changed" list.

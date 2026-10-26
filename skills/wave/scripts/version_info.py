@@ -2,10 +2,17 @@
 """Read-only release survey for the current git repo.
 
 Usage: python version_info.py <major|minor|patch>
+       python version_info.py --verify <X.Y.Z> [--ref <commit>]
 
 Prints JSON describing the current version (from semver tags and tracked
 version files), the next version for the requested bump, where the version
 lives, the repo's tag style, and the state of the branch. Changes nothing.
+
+With --verify, checks one planned release against a commit (HEAD by default)
+and origin's tags instead: `ready_to_merge` says nothing has released X.Y.Z
+or anything newer yet (pass --ref origin/<default>), and `ready_to_tag` says
+the commit is the X.Y.Z release commit and its tag is still free (pass the
+merge commit). `problems` explains each false.
 """
 import json
 import os
@@ -106,21 +113,121 @@ CANDIDATES = {
 }
 
 
-def main():
-    kind = (sys.argv[1] if len(sys.argv) > 1 else "").lower()
-    if kind not in ("major", "minor", "patch"):
-        sys.exit("usage: version_info.py <major|minor|patch>")
+def find_version_files(paths, read_text):
+    """Version files among `paths`, read with `read_text(path)`."""
+    files = []
+    for path in paths:
+        if any(seg in path for seg in SKIP_DIRS):
+            continue
+        name = os.path.basename(path)
+        # Unity regenerates Assembly-CSharp*.csproj; they never hold the release version.
+        if name.startswith("Assembly-CSharp"):
+            continue
+        if name in CANDIDATES or name.endswith(".csproj"):
+            text = read_text(path)
+            found = version_in(path, text) if text is not None else None
+            if found:
+                files.append({"path": path, "version": found[0], "update": found[1]})
+    return files
 
-    root = git("rev-parse", "--show-toplevel", check=True)
-    os.chdir(root)
 
-    # Tags
+def local_tags():
     tags = []
     for t in (git("tag", "--list") or "").splitlines():
         p = parse(t)
         if p:
             tags.append((p, t))
     tags.sort()
+    return tags
+
+
+def verify(version, ref):
+    want = parse(version)
+    if not want:
+        sys.exit(json.dumps({"error": f"not a version: {version}"}))
+
+    root = git("rev-parse", "--show-toplevel", check=True)
+    os.chdir(root)
+
+    tags = local_tags()
+    tag = f"{'v' if not tags or tags[-1][1].startswith('v') else ''}{fmt(want)}"
+    sha = git("rev-parse", "--verify", f"{ref}^{{commit}}", check=True)
+    subject = git("log", "-1", "--format=%s", sha) or ""
+    def read_at_ref(path):
+        text = git("show", f"{sha}:{path}")
+        return text.lstrip("﻿") if text is not None else None
+
+    files = find_version_files((git("ls-tree", "-r", "--name-only", sha) or "").splitlines(), read_at_ref)
+    for f in files:
+        del f["update"]
+    file_versions = {parse(f["version"]) for f in files} - {None}
+    local_tag_sha = git("rev-parse", "-q", "--verify", f"refs/tags/{tag}^{{commit}}")
+
+    remote = git("ls-remote", "--tags", "origin")
+    remote_tags = None
+    if remote is not None:
+        remote_tags = set()
+        for line in remote.splitlines():
+            name = line.split("refs/tags/", 1)[-1]
+            name = name[:-3] if name.endswith("^{}") else name
+            if parse(name):
+                remote_tags.add(name)
+
+    problems_merge, problems_tag = [], []
+    if remote_tags is None:
+        problems_merge.append("couldn't list origin's tags")
+        problems_tag.append("couldn't list origin's tags")
+    else:
+        if tag in remote_tags:
+            problems_merge.append(f"{tag} already exists on origin")
+            problems_tag.append(f"{tag} already exists on origin")
+        newer = sorted((t for t in remote_tags if parse(t) > want), key=parse)
+        if newer:
+            problems_merge.append(f"origin already has newer release tags: {', '.join(newer)}")
+    newer_local = [t for p, t in tags if p > want]
+    if newer_local:
+        problems_merge.append(f"newer release tags exist locally: {', '.join(newer_local)}")
+    if local_tag_sha:
+        problems_merge.append(f"{tag} already exists locally")
+        if local_tag_sha != sha:
+            problems_tag.append(f"{tag} already exists locally on another commit")
+    if file_versions and max(file_versions) >= want:
+        problems_merge.append(f"{ref} already has version {fmt(max(file_versions))}")
+    if not subject.startswith(f"{tag} - "):
+        problems_tag.append(f'{ref} subject is "{subject}", not "{tag} - <Summary>"')
+    if files and want not in file_versions:
+        problems_tag.append(f"no version file at {ref} says {fmt(want)}")
+
+    out = {
+        "version": fmt(want),
+        "tag": tag,
+        "ref": ref,
+        "ref_sha": sha,
+        "ref_subject": subject,
+        "ref_version_files": files,
+        "tag_exists_locally": local_tag_sha is not None,
+        "tag_exists_on_origin": None if remote_tags is None else tag in remote_tags,
+        "ready_to_merge": not problems_merge,
+        "ready_to_tag": not problems_tag,
+        "problems": {"merge": problems_merge, "tag": problems_tag},
+    }
+    print(json.dumps(out, indent=2))
+
+
+def main():
+    if len(sys.argv) > 2 and sys.argv[1] == "--verify":
+        ref = sys.argv[4] if len(sys.argv) > 4 and sys.argv[3] == "--ref" else "HEAD"
+        return verify(sys.argv[2], ref)
+    kind = (sys.argv[1] if len(sys.argv) > 1 else "").lower()
+    if kind not in ("major", "minor", "patch"):
+        sys.exit("usage: version_info.py <major|minor|patch>\n"
+                 "       version_info.py --verify <X.Y.Z> [--ref <commit>]")
+
+    root = git("rev-parse", "--show-toplevel", check=True)
+    os.chdir(root)
+
+    # Tags
+    tags = local_tags()
     latest_tag = tags[-1][1] if tags else None
     tag_style = None
     if latest_tag:
@@ -128,18 +235,7 @@ def main():
     tag_prefix = "v" if (latest_tag is None or latest_tag.startswith("v")) else ""
 
     # Version files (tracked only)
-    files = []
-    for path in (git("ls-files") or "").splitlines():
-        if any(seg in path for seg in SKIP_DIRS):
-            continue
-        name = os.path.basename(path)
-        if name in CANDIDATES or name.endswith(".csproj"):
-            text = read(path)
-            found = version_in(path, text) if text is not None else None
-            if found:
-                files.append({"path": path, "version": found[0], "update": found[1]})
-    # Unity regenerates Assembly-CSharp*.csproj; they never hold the release version.
-    files = [f for f in files if not os.path.basename(f["path"]).startswith("Assembly-CSharp")]
+    files = find_version_files((git("ls-files") or "").splitlines(), read)
 
     candidates = [p for p, _ in tags[-1:]] + [parse(f["version"]) for f in files if parse(f["version"])]
     current = max(candidates) if candidates else (0, 0, 0)

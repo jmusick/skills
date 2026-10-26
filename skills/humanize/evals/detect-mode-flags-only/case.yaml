@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: detect-mode-flags-only
+expected_outcome: |
+  Detect mode: the response quotes each pattern it finds (throat-clearing opener, not-X-but-Y,
+  em dash, AI vocabulary, rule of three, hidden actor, punchy closer) with a short fix, does not
+  rewrite the paragraph, and does not claim to know who or what wrote it.
