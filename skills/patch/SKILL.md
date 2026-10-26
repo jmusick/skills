@@ -5,7 +5,7 @@ description: Cut a patch release of the current git repo. Bumps the version (X.Y
 
 # Patch release
 
-Ship the work in this repo as the next **patch** version: `X.Y.Z` becomes `X.Y.(Z+1)`. Typing the command is the user's go-ahead to commit, tag, and push, so don't ask for confirmation along the way. Stop and ask only for the cases under "When to stop", because a pushed tag is awkward to take back.
+Ship the work in this repo as the next **patch** version: `X.Y.Z` becomes `X.Y.(Z+1)`. Typing the command is the go-ahead to commit, tag, and push, so don't confirm along the way. Stop only for the cases under "When to stop", because a pushed tag is awkward to take back.
 
 Convention: one commit holds the session's work and the version bump, subject `vX.Y.Z - <summary>` (e.g. `v1.20.5 - Secure staff story previews`), tagged `vX.Y.Z`.
 
@@ -17,13 +17,13 @@ Run the read-only script from anywhere inside the repo (`python3` if `python` is
 python <this skill's directory>/scripts/version_info.py patch
 ```
 
-It prints JSON: current and next version, latest tag and its `tag_style`, tracked version files (with `in_lockstep`), changelog path, branch and upstream, uncommitted changes, and commits since the latest tag. If it can't run, gather the same with git (`git tag --list 'v*' --sort=-v:refname`, `git status --porcelain`, `git log <tag>..HEAD --oneline`) and the usual version files (`package.json`, `ProjectSettings/ProjectSettings.asset`, `pyproject.toml`, `Cargo.toml`, `*.csproj`, `VERSION`).
+It prints JSON: current and next version, latest tag and `tag_style`, version files with `in_lockstep`, changelog path, branch and upstream, uncommitted changes, and commits since the tag. If it can't run, gather the same with git (`git tag --list 'v*' --sort=-v:refname`, `git status --porcelain`, `git log <tag>..HEAD --oneline`) and the usual version files (`package.json`, `ProjectSettings/ProjectSettings.asset`, `pyproject.toml`, `Cargo.toml`, `*.csproj`, `VERSION`).
 
 Skim `AGENTS.md` / `CLAUDE.md` for a release section; follow any project-specific steps. If `versions_disagree` is true, see "When to stop".
 
 ## 2. Understand what's being released
 
-The release covers everything since the last tag. Combine the conversation (intent) with `git diff`, `git diff --staged`, and `git log <tag>..HEAD` (what actually changed). Check the working tree before staging, since everything goes in: no `.env` files, credentials, large build output, or debug junk.
+The release covers everything since the last tag. Combine the conversation (intent) with `git diff`, `git diff --staged`, and `git log <tag>..HEAD` (what changed). Everything gets staged, so check the tree for `.env` files, credentials, large build output, or debug junk.
 
 ## 3. Bump the version
 
