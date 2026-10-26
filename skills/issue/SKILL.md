@@ -1,7 +1,7 @@
 ---
 name: issue
 description: >-
-  Pick a GitHub issue in the current repo and take it all the way to a release. Ranks open issues, sizes one and offers a switch to a cheaper model and effort when one fits, claims it, does the work in its own branch and worktree, reviews the diff, bumps the version on the PR branch, opens a PR that closes the issue, waits for CI, squash-merges it as a single `vX.Y.Z - Summary` release commit, tags that commit, and cleans up the branches and worktree behind it. Use when the user types /issue or $issue (optionally with an issue number), or asks to work, fix, pick up, grab, or knock out an issue, "the next issue", "something from the backlog", or "issue #42", even if they don't mention PRs or releases. Not for working several issues in one batch (use /triage), filing new issues, triaging or labeling without doing the work, reviewing someone else's PR, cutting a release with no issue (use /patch or /minor), or a conversation where "issue" just means a problem the user is having.
+  Take one GitHub issue in the current repo from open to released: pick and claim it, do the work in its own worktree, review it, open a PR, wait for CI, and squash-merge it as a tagged `vX.Y.Z - Summary` release commit. Use when the user types /issue or $issue (optionally with an issue number), or asks to work, fix, pick up, grab, or knock out an issue, "the next issue", "something from the backlog", or "issue #42", even if they don't mention PRs or releases. Not for several issues at once (use /wave), for filing, triaging, or labeling issues without doing the work, for reviewing someone else's PR, for a release with no issue (use /patch or /minor), or when "issue" just means a problem the user is having.
 ---
 
 # Work an issue end to end
@@ -13,7 +13,7 @@ Arguments:
 - `--no-merge` stops once the PR is open and CI has passed. The PR carries no version bump.
 - `--no-ship` merges without a version bump or tag.
 
-Work on one issue per run. To get through a backlog, the user can run `/loop /issue`, or `/triage` to work several issues in parallel with subagents.
+Work on one issue per run. To get through a backlog, the user can run `/loop /issue`, or `/wave` to work several issues in parallel with subagents.
 
 Keep track of everything this run creates (the claim, worktree, branches, PR, and tag). Cleanup and the final report both depend on that list.
 
@@ -61,7 +61,7 @@ Size the work to find the model and effort it needs:
 
 On an agent that isn't Claude, read the columns as its small, mid, and top tiers. When you're unsure, go up a size. A model that's too weak costs a review round, which costs more than the stronger model would have. Write down the size and your reason, because they go in the PR and the report.
 
-Compare that with the model and effort this session is running on. If the size calls for a lower model or effort, stop and tell the user before claiming or writing anything, for example: "#42 looks trivial (a one-line config fix). Haiku at low effort can handle it. Switch in the model menu (`/model` in the CLI) and say go, or say go to stay on the current model." Do the same when a hard issue meets a model or effort below the table's. You can't switch your own model or effort; only the user can. Ask now because the context is still small: switching models drops the prompt cache, so a switch later in the run costs more. If the session already fits, or you can't tell what it's running on, don't stop.
+Compare that with the model and effort this session is running on. If the size calls for a lower model or effort, stop and tell the user before claiming or writing anything, for example: "#42 looks trivial (a one-line config fix). Haiku at low effort can handle it. Switch in the model menu (`/model` in the CLI) and say go, or say go to stay on the current model." Do the same when a hard issue meets a model or effort below the table's. You can't switch your own model or effort; only the user can. Ask now because the context is still small: switching models drops the prompt cache, so a switch later in the run costs more. If you're already asking the user questions from step 2, put this in the same message so the run stops once, not twice. If the session already fits, or you can't tell what it's running on, don't stop.
 
 Then claim the issue (after the user's go, if you stopped) so a parallel run or a teammate doesn't take it too:
 
@@ -129,7 +129,7 @@ It prints JSON: current and next version, `next_tag`, the latest tag and its `ta
 - If the repo has a changelog, add a section at the top matching its format exactly, with today's date, written for readers. Don't create one.
 - Follow any release steps in the repo's AGENTS.md / CLAUDE.md.
 
-Commit it on the branch as `Bump version to X.Y.Z`. The squash merge folds it into the one release commit, so its subject never reaches the default branch. Re-run the repo's checks if the bump touched anything they read, such as a lockfile.
+Commit it on the branch as `Bump version to X.Y.Z`. The squash merge folds it into the one release commit, so its subject never reaches the default branch. Re-run the repo's checks if the bump touched anything they read, such as a lockfile. If the helper found no version files and no changelog, there's nothing to bump and nothing to commit: the release subject and the tag carry the version on their own, and the version-file checks in steps 9 and 10 don't apply.
 
 Write down the version, the tag, and a release summary for step 9: an imperative, capitalized subject under about 60 characters with no trailing period, describing the issue's change for a reader of the history (for example `Reset hCaptcha after a failed contact-form send`).
 
@@ -156,7 +156,7 @@ git ls-remote --tags origin vX.Y.Z                  # must print nothing
 git -C <worktree> show origin/<default>:package.json | grep '"version"'   # or the repo's version file; must still be the old version
 ```
 
-If the tag now exists or `<default>` has moved to a newer version, merge `origin/<default>` into the branch (never rebase or force-push), redo step 7 with the new next version, push, and wait for CI again.
+If the tag now exists or `<default>` has moved to a newer version, merge `origin/<default>` into the branch (`git -C <worktree> merge --no-edit origin/<default>`; never rebase or force-push), redo step 7 with the new next version, push, and wait for CI again.
 
 Then squash-merge with the release subject and body. Pin the head commit (`git -C <worktree> rev-parse HEAD`) so you merge exactly what you reviewed and CI tested:
 
@@ -192,7 +192,7 @@ If the subject or the version doesn't match, don't tag. Report it and give the f
 Remove only what this run created:
 
 ```bash
-git worktree remove ../<repo>-issue-N
+git worktree remove <worktree path>
 git branch -D <branch>                   # -D because a squash merge leaves it looking unmerged
 git push origin --delete <branch>        # skip if the repo auto-deleted it
 git fetch --prune

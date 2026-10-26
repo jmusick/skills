@@ -1,22 +1,22 @@
 ---
-name: triage
+name: wave
 description: >-
-  Work a wave of GitHub issues in the current repo at once and take each to its own release. Ranks open issues, picks several that don't overlap, sizes each one, claims them, hands each to a subagent with the model and effort that size calls for, working in parallel in separate branches and worktrees, then reviews every diff, opens a PR per issue, waits for CI, and ships them one at a time: each PR is bumped and squash-merged as its own `vX.Y.Z - Summary` release commit and tagged, before the branches and worktrees are cleaned up. Use when the user types /triage or $triage (optionally with issue numbers), or asks to work a batch, wave, or handful of issues, knock out several issues in parallel, or clear part of the backlog with agents. Not for a single issue (use /issue), for labeling, prioritizing, or closing issues without doing the work, for filing new issues, for reviewing someone else's PR, or for cutting a release with no issue (use /patch or /minor).
+  Work several GitHub issues in the current repo in parallel and ship each as its own release: pick a wave of issues that don't overlap, hand each to a subagent on the model and effort its size needs, review every diff, open a PR per issue, and squash-merge them one at a time as tagged `vX.Y.Z - Summary` release commits. Use when the user types /wave or $wave (optionally with issue numbers), or asks to work a batch, wave, or handful of issues, knock out several issues at once, or clear part of the backlog with agents. Not for a single issue (use /issue), for triaging, labeling, prioritizing, or closing issues without doing the work, for filing issues, for reviewing someone else's PR, or for a release with no issue (use /patch or /minor).
 ---
 
 # Work a wave of issues
 
-One run takes a wave of GitHub issues from open to released: survey, pick the wave, size and claim, delegate in parallel, review, PR, CI, then ship each issue one at a time as its own release commit, and clean up. The main session never writes the code. It picks, briefs, reviews, and releases, and each subagent works one issue on the model its size calls for. That keeps the token-heavy work on cheaper models and leaves the main session's context clear for reviewing several diffs.
+One run takes a wave of GitHub issues from open to released: survey, pick the wave, size and claim, delegate in parallel, review, PR, CI, then ship each issue one at a time as its own release commit, and clean up. The main session doesn't write the issues' code, apart from tiny review fixes and merge conflicts. It picks, briefs, reviews, and releases, and each subagent works one issue on the model its size calls for. That keeps the token-heavy work on cheaper models and leaves the main session's context clear for reviewing several diffs.
 
 Typing the command is the user's go-ahead for every step, including the comments, pushes, merges, tags, and branch deletions, so don't stop to confirm routine steps. Stop only where this file says to. Those stops protect things that are hard to undo: a merged PR, a pushed tag, or someone else's work.
 
 Arguments:
-- `/triage 12 15 18` works those issues. A bare `/triage` picks the wave.
-- `--max N` caps the wave at N issues (default 4). More parallel work means more diffs to review and a longer queue at merge time.
+- `/wave 12 15 18` works those issues. A bare `/wave` picks the wave.
+- `--max N` caps the wave at N issues (default 4). Issues the user names aren't capped. More parallel work means more diffs to review and a longer queue at merge time.
 - `--no-merge` stops once every PR is open and CI has passed. The PRs carry no version bump.
 - `--no-ship` merges without version bumps or tags.
 
-Work one wave per run. To keep going, the user can run `/loop /triage`. For a single issue, `/issue` is simpler and doesn't spawn subagents.
+Work one wave per run. To keep going, the user can run `/loop /wave`. For a single issue, `/issue` is simpler and doesn't spawn subagents.
 
 Keep a ledger for every issue in the wave: its size and model, claim, worktree, branch, subagent, PR, review rounds, version, and tag. Shipping, cleanup, and the final report all depend on it.
 
@@ -151,7 +151,7 @@ With `--no-ship`, or when the user declined a first release tag in step 2, skip 
 
 ```bash
 git -C <worktree> fetch origin --tags
-git -C <worktree> merge origin/<default>
+git -C <worktree> merge --no-edit origin/<default>
 ```
 
 Never rebase or force-push. If the merge conflicts and the fix is mechanical, resolve it, run the checks, and commit. If it isn't, send it back to that issue's subagent with the conflict, and review the result as in step 6.
@@ -171,7 +171,7 @@ It prints JSON: current and next version, `next_tag`, the latest tag and its `ta
 - If the repo has a changelog, add a section at the top matching its format exactly, with today's date, written for readers. Don't create one.
 - Follow any release steps in the repo's AGENTS.md / CLAUDE.md.
 
-Commit it as `Bump version to X.Y.Z`, push, and wait for CI again (`gh pr checks <pr> --watch --fail-fast`). Write down the version, the tag, and a release summary: an imperative, capitalized subject under about 60 characters with no trailing period, describing the issue's change for a reader of the history (for example `Reset hCaptcha after a failed contact-form send`).
+Commit it as `Bump version to X.Y.Z`, push, and wait for CI again (`gh pr checks <pr> --watch --fail-fast`). If the helper found no version files and no changelog, there's nothing to bump or commit, so just push the merge from a and wait for CI. The release subject and the tag carry the version on their own, and the version-file checks in c and d don't apply. Write down the version, the tag, and a release summary: an imperative, capitalized subject under about 60 characters with no trailing period, describing the issue's change for a reader of the history (for example `Reset hCaptcha after a failed contact-form send`).
 
 **c. Merge as the release commit.** Make sure the bump is still the next version, in case someone else released while CI ran:
 
