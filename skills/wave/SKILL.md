@@ -60,13 +60,23 @@ Put every question into one message now, before claiming: decisions a high-prior
 
 ## 3. Size and claim
 
-| Size | Examples | Model | Effort |
+| Size | Examples | Claude (model / effort) | Codex (model / effort) |
 | --- | --- | --- | --- |
-| Trivial | Typo, docs wording, config value, one-line fix | haiku | low |
-| Normal | A bug or small feature in one area, a few files, existing tests to follow | sonnet | medium |
-| Hard | Changes across several modules, new design, concurrency, security, data migrations, a bug with an unclear cause | opus | high |
+| Trivial | Typo, docs wording, config value, one-line fix | haiku / low | gpt-6-luna / low |
+| Small | A bug with an obvious cause in one function, a small change with a pattern to copy | sonnet / low | gpt-6-luna / high |
+| Normal | A bug or small feature in one area, a few files, existing tests to follow | sonnet / medium | gpt-6.1-sol / low |
+| Large | A feature that spans a few modules, new tests to write, some design choices | opus / high | gpt-6.1-sol / medium |
+| Hard | Changes across several modules, new design, concurrency, security, data migrations, a bug with an unclear cause | opus / xhigh | gpt-6.1-sol / high |
+| Hardest | Only a Hard issue that clears the bar below | fable / medium | gpt-6-astra / medium |
 
-On a non-Claude agent, read the columns as its small, mid, and top tiers. When unsure, go up a size: a too-weak model costs a review round, which costs more. Record each size and reason in the ledger.
+Hardest has a high bar because the top models cost far more per token. Difficulty alone stops at Hard, and so does going up a size when unsure. Use Hardest only for a Hard issue where one of these holds:
+- The user asked for the top model on this issue.
+- An earlier attempt at Hard failed, as the issue's comments or a closed PR show.
+- A miss couldn't be undone after release, such as a migration that rewrites production data.
+
+Record the condition in the ledger.
+
+Don't go to `max` or `ultra` by default: they spend far more for the last bit of quality, and Codex's `ultra` spawns its own subagents. If an issue seems to need them, ask the user. On another agent, map the rows onto its small, mid, and top tiers. Model lineups change, so if a listed model isn't offered, use the nearest tier that is. When unsure, go up a size: a too-weak model costs a review round, which costs more. Record each size and reason in the ledger.
 
 Post the wave in a few lines (issue, size, model and effort, likely files) and carry on without waiting. Claim each issue:
 
@@ -90,7 +100,7 @@ Take each absolute path from `git worktree list` and use it in briefs and cleanu
 
 ## 5. Delegate in parallel
 
-Start one subagent per issue, all at once, in the background, with the model and effort from step 3 (in Claude Code, the Agent tool's `model` and `effort`; if effort can't be set, set the model). Each starts with no context, so brief it fully:
+Start one subagent per issue, all at once, in the background, with the model and effort from step 3 (in Claude Code, the Agent tool's `model` and `effort`; in Codex, the spawn's model and reasoning effort; if effort can't be set, set the model). Each starts with no context, so brief it fully:
 
 ```
 Resolve GitHub issue #N in <repo>: <title>
