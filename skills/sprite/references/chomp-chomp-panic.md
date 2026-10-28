@@ -22,7 +22,7 @@ Frame sizes are game pixels (64 px per Unity unit). Counts are what the game use
 
 | Asset | Frame | Clips (frames) | Anchor | Notes |
 | --- | --- | --- | --- | --- |
-| Kaiju (playable, rivals, boss) | 64 x 64 | `idle` 4, `walk` 6, `chomp` 4, `death` 6 (5 drawn + 1 blank) | bottom, baseline 57 (Chompy) or 62 (the hand-drawn kaiju), height ~52 | Plus the evolved look: the same four clips as `<prefix>_evo_<clip>.png`, a bigger, spikier version of the same design. |
+| Kaiju (playable, rivals, boss) | 64 x 64 | `idle` 4, `walk` 6, `chomp` 4, `death` 6 (5 drawn + 1 blank) | bottom, baseline 57 (Chompy) or 59 (the hand-drawn kaiju, whose `#0B0E1C` ground shadow fills rows 60-62 under the feet), height ~52 | Plus the evolved look: the same four clips as `<prefix>_evo_<clip>.png`, a bigger, spikier version of the same design. |
 | People | 32 x 32 | `run` 6, `idle` 4 | bottom, baseline 26 | Stage reskins use `nyc_person_<kind>_<clip>.png`. |
 | Police officer, soldiers | 32 x 32 | `run` 6, `idle` 2, `shoot` 3 | bottom, baseline 26 | |
 | Bikes | 48 x 32 | `side`, `up`, `down`, 4 each | bottom | |

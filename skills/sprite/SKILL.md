@@ -30,7 +30,7 @@ Settle these before generating anything, from the user's request, the house rule
 - **Palette:** an existing palette for an existing family, or a new 12-20 color list for a new character (house rules say how to build one).
 - **Background key:** magenta `#FF00FF`, or green `#00FF00` if the design has pink or purple.
 
-For a redo of existing art, look at the current preview first and say what the new version should fix. Then run `sprite_clean.py inspect` on the current strip and copy its feet row (each box's bottom edge minus 1) and figure height into the spec. The game places sprites by their frame, so a redo that stands even 3 px higher than the old one floats.
+For a redo of existing art, look at the current preview first and say what the new version should fix. Then run `sprite_clean.py inspect` on the current strip and copy its feet row (each box's bottom edge minus 1) and figure height into the spec. Look at the strip's bottom rows first: the hand-drawn kaiju stand on a soft `#0B0E1C` ground shadow that inspect counts as part of the figure, so their feet are on row 59 even though the box reaches row 62. The game places sprites by their frame, so a redo whose feet sit even 3 px off the old row floats or sinks into the street.
 
 ## 2. Model sheet (new characters only)
 

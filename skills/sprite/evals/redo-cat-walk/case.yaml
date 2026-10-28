@@ -4,6 +4,6 @@ expected_outcome: |
   The agent treats this as a redo of an existing kaiju: it looks at the current cat preview, skips
   the model sheet, and generates one Codex sheet for a 6-frame walk with the current cat as the
   reference. It cleans it with the skill's script onto 64x64 frames in the cat's existing colors
-  with the navy outline and its feet on row 62 like the current cat, writes the strip, spec, preview
+  with the navy outline and its feet on row 59 like the current cat, writes the strip, spec, preview
   and source sheet into test_output, and reports the paths and prompt without writing into the game
   repo.

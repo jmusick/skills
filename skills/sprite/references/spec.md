@@ -8,7 +8,7 @@
 {
   "frame": [64, 64],
   "anchor": "bottom",
-  "baseline": 62,
+  "baseline": 59,
   "height": 52,
   "margin": 2,
   "palette": ["#10152D", "#203353", "#075275", "#066C96", "#0788B2", "#39B4D7", "#99E0EF", "#F1FCFF", "#643473", "#C37CD0"],
