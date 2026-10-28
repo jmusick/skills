@@ -1,0 +1,9 @@
+schema_version: "1.1"
+name: redo-office-worker
+expected_outcome: |
+  The agent treats this as a redo of an existing character: it looks at the current office worker
+  preview, skips the model sheet, and generates one Codex sheet each for run (6 frames) and idle
+  (4 frames) with the current sprite as the reference. It cleans both with the skill's script onto
+  32x32 frames in the people palette with the navy outline and feet on row 26, writes the strips,
+  spec and preview into test_output, and reports the paths and prompts without writing into the
+  game repo.

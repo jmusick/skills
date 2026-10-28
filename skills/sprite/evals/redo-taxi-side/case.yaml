@@ -1,0 +1,8 @@
+schema_version: "1.1"
+name: redo-taxi-side
+expected_outcome: |
+  The agent treats this as a redo of an existing vehicle: it looks at the current taxi, skips the
+  model sheet, and generates one Codex sheet for the 4-frame side view with the current taxi as the
+  reference. It cleans it with the skill's script onto 64x32 frames in the cars' existing colors
+  with the navy outline and the wheels on row 26, writes the strip, spec, preview and source sheet
+  into test_output, and reports the paths and prompt without writing into the game repo.
