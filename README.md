@@ -16,7 +16,7 @@ Agent skills I write and use with Claude Code, Codex, and other agents that supp
 | [patch](skills/patch/SKILL.md) | Cuts a patch release: bumps `X.Y.Z` to `X.Y.Z+1`, updates the changelog, commits, tags, and pushes. |
 | [sprite](skills/sprite/SKILL.md) | Makes pixel-art sprites for Chomp Chomp Panic!: generates each animation with Codex CLI's image tool from a structured prompt and a reference image, then snaps it onto the game's frame grid, palette and outline and writes the strips the Unity importer expects. Needs [Codex CLI](https://github.com/openai/codex) installed and logged in. |
 | [title](skills/title/SKILL.md) | Renames the current chat session to match what actually happened in it. |
-| [update-docs](skills/update-docs/SKILL.md) | Audits README, AGENTS.md, CLAUDE.md, CHANGELOG, the privacy policy, and other docs against the code and fixes what's wrong or out of date. |
+| [update-docs](skills/update-docs/SKILL.md) | Audits README, AGENTS.md, CLAUDE.md, CHANGELOG, the privacy policy, and other docs against the code and fixes what's wrong or out of date, then finds contradictions, stale records, and docs to consolidate or delete, and proposes structural changes for approval. |
 | [wave](skills/wave/SKILL.md) | Picks a wave of non-overlapping GitHub issues, hands each to a subagent on the model and effort its size calls for, reviews every diff and updates the docs it affected, ships each issue one at a time as its own squash-merged, tagged `vX.Y.Z` release, and retitles the chat. |
 
 ## Install
