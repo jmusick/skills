@@ -7,6 +7,11 @@ Prints JSON: whether gh is ready, the repo and its default branch, merge
 settings, rules that guard the default branch, the local checkout's state,
 and open issues ranked for picking (or just issue N with --issue). Changes
 nothing.
+
+An issue whose open PR is the viewer's own carries `resume` (and with --issue
+isn't excluded), so an earlier run's work can be picked back up. An issue
+whose latest comment carries WAITING_MARKER is excluded from the ranking: an
+earlier run left it waiting on a reply, and a loop shouldn't retry it.
 """
 import argparse
 import json
@@ -27,6 +32,9 @@ NEEDS_INPUT = re.compile(r"question|discussion|needs[- ]?(design|decision|input|
 BUG = re.compile(r"bug|regression|defect|crash|(^|[^a-z])fix")
 FEATURE = re.compile(r"enhancement|feature|improvement")
 BREAKING = re.compile(r"breaking")
+SEMVER_TAG = re.compile(r"^v?\d+\.\d+\.\d+$")
+# The issue and wave skills end the comment they leave on an issue they couldn't do with this.
+WAITING_MARKER = "<!-- agent-waiting-for-reply -->"
 
 
 def run(*args):
@@ -68,7 +76,7 @@ def checkout_state():
     }
 
 
-def classify(issue, me, linked):
+def classify(issue, me, linked, single=False):
     labels = [l["name"] for l in issue.get("labels", [])]
     low = [l.lower() for l in labels]
     joined = " ".join(low)
@@ -81,8 +89,18 @@ def classify(issue, me, linked):
         reasons.append("skip label")
     if assignees and me not in assignees:
         reasons.append(f"assigned to {', '.join(assignees)}")
-    if issue["number"] in linked:
-        reasons.append(f"open PR #{linked[issue['number']]}")
+    pr = linked.get(issue["number"])
+    resume = None
+    if pr and me and pr["author"] == me:
+        resume = pr
+        if not single:
+            reasons.append(f"your open PR #{pr['number']}; /issue {issue['number']} resumes it")
+    elif pr:
+        reasons.append(f"open PR #{pr['number']}")
+    comments = issue.get("comments") or []
+    waiting = bool(comments) and WAITING_MARKER in (comments[-1].get("body") or "")
+    if waiting and not single:
+        reasons.append("waiting on a reply to an earlier run's comment")
     if BREAKING.search(joined):
         kind = "breaking"
     elif BUG.search(joined):
@@ -102,7 +120,9 @@ def classify(issue, me, linked):
         "needs_input": bool(NEEDS_INPUT.search(joined)) or not body.strip(),
         "assigned_to_me": me in assignees,
         "created_at": issue.get("createdAt"),
-        "comments": len(issue.get("comments") or []),
+        "comments": len(comments),
+        "awaiting_reply": waiting,
+        "resume": resume,
         "body_chars": len(body),
         "body_preview": body[:400],
         "excluded": reasons or None,
@@ -110,11 +130,12 @@ def classify(issue, me, linked):
 
 
 def linked_prs():
-    """Map issue number -> open PR number, from closing references and branch names."""
+    """Map issue number -> its open PR, from closing references and branch names."""
+    fields = "number,headRefName,body,author,isDraft"
     prs, err = gh_json("pr", "list", "--state", "open", "--limit", "200",
-                       "--json", "number,headRefName,body,closingIssuesReferences")
+                       "--json", fields + ",closingIssuesReferences")
     if prs is None:
-        prs, err = gh_json("pr", "list", "--state", "open", "--limit", "200", "--json", "number,headRefName,body")
+        prs, err = gh_json("pr", "list", "--state", "open", "--limit", "200", "--json", fields)
     linked = {}
     for pr in prs or []:
         nums = {ref["number"] for ref in pr.get("closingIssuesReferences") or []}
@@ -122,9 +143,39 @@ def linked_prs():
         m = re.search(r"(?i)issue[-_/]?(\d+)", pr.get("headRefName") or "")
         if m:
             nums.add(int(m.group(1)))
+        info = {"number": pr["number"], "branch": pr.get("headRefName"),
+                "author": (pr.get("author") or {}).get("login"), "draft": pr.get("isDraft")}
         for n in nums:
-            linked.setdefault(n, pr["number"])
+            linked.setdefault(n, info)
     return linked, err
+
+
+def has_release_tags():
+    """Whether any semver tag (v1.2.3 or 1.2.3) exists locally or on origin; None if neither could be read."""
+    code, out, _ = run("git", "tag", "--list")
+    if code == 0 and any(SEMVER_TAG.match(t) for t in out.splitlines()):
+        return True
+    remote_code, remote, _ = run("git", "ls-remote", "--tags", "origin")
+    if remote_code == 0:
+        names = (line.split("refs/tags/", 1)[-1] for line in remote.splitlines())
+        return any(SEMVER_TAG.match(n[:-3] if n.endswith("^{}") else n) for n in names)
+    return False if code == 0 else None
+
+
+def required_approvals(rules, protected, classic_reviews):
+    """Approving reviews a PR into the default branch needs, or None if it couldn't be read.
+
+    `rules` is the rules/branches response (readable by any collaborator). Classic branch
+    protection's review settings usually need admin to read, so `classic_reviews` is None
+    when that read failed; it only matters when the branch is protected.
+    """
+    counts = [(r.get("parameters") or {}).get("required_approving_review_count") or 0
+              for r in rules or [] if r.get("type") == "pull_request"]
+    if protected:
+        if classic_reviews is None:
+            return max(counts) if any(counts) else None
+        counts.append(classic_reviews.get("required_approving_review_count") or 0)
+    return max(counts, default=0)
 
 
 def main():
@@ -162,6 +213,12 @@ def main():
     branch, _ = gh_json("api", f"repos/{nwo}/branches/{default}")
     rule_types = sorted({r.get("type") for r in rules or [] if r.get("type")})
     protected = bool((branch or {}).get("protected"))
+    classic_reviews = None
+    if protected:
+        classic_reviews, _ = gh_json("api", f"repos/{nwo}/branches/{default}/protection/required_pull_request_reviews")
+        # An admin can always read it, so a failed read there means no review rule is set.
+        if classic_reviews is None and repo.get("viewerPermission") == "ADMIN":
+            classic_reviews = {}
     result["repo"] = {
         "name": nwo,
         "default_branch": default,
@@ -172,11 +229,13 @@ def main():
         "delete_branch_on_merge": repo.get("deleteBranchOnMerge"),
         "default_branch_protected": protected,
         "default_branch_rules": rule_types,
+        # Approving reviews a PR needs before merge; None means protection exists but couldn't be read.
+        # GitHub doesn't let a PR's author approve it, so any nonzero count stops the run at merge.
+        "required_approvals": required_approvals(rules, protected, classic_reviews),
         # A pull_request rule or classic protection usually rejects the release push straight to the default branch.
         "direct_push_may_be_blocked": protected or "pull_request" in rule_types,
     }
-    code, tags, _ = run("git", "tag", "--list", "v*")
-    result["repo"]["has_release_tags"] = bool(tags.strip()) if code == 0 else None
+    result["repo"]["has_release_tags"] = has_release_tags()
 
     linked, pr_err = linked_prs()
     fields = "number,title,url,labels,assignees,body,createdAt,comments"
@@ -185,7 +244,7 @@ def main():
         if issue is None:
             result["error"] = f"could not read issue #{args.issue}: {err}"
         else:
-            c = classify(issue, me, linked)
+            c = classify(issue, me, linked, single=True)
             c["state"] = issue.get("state")
             c["body_preview"] = (issue.get("body") or "")[:2000]
             result["issue"] = c

@@ -1,7 +1,6 @@
 ---
 name: sprite
-description: >-
-  Make game-ready pixel-art sprites for Chomp Chomp Panic!: generate the art with Codex CLI's image tool from a structured prompt and a reference image, then snap it onto the game's frame grid, palette and outline with a bundled cleanup script, and drop the strips into the Unity project. Use when the user types /sprite or $sprite, or asks to make, draw, generate, redo, or improve a sprite, sprite sheet, animation, kaiju, character, prey, vehicle, powerup, icon, or effect for the game, says the current sprites look bad or low quality, or wants a new kaiju's art, even if they never say "sprite." Not for the city atlas or stage-select cards (those come from the city scripts), the logo, the pixel font, sound, or game code; and not for recoloring an existing kaiju (build_variants.py does that).
+description: Make game-ready pixel-art sprites for Chomp Chomp Panic! with Codex CLI's image tool and a bundled cleanup script, and drop them into the Unity project.
 disable-model-invocation: true
 ---
 

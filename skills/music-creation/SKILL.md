@@ -1,6 +1,6 @@
 ---
 name: music-creation
-description: Write, revise, or critique songs, lyrics, melodies, and arrangements; prepare Suno lyrics and style prompts; optionally plan an EP or album. Use when the user types /music-creation or $music-creation, or asks to write a song, verse, chorus, bridge, or hook; fix lyrics that don't scan, rhyme, or fit a melody; work out chords, a melody, a groove, an arrangement, or a song's structure; turn an idea or lyrics into a Suno track, or figure out why a Suno generation came out wrong; or plan and sequence an EP or album, even if they never say "songwriting." Not for mixing or mastering audio, artwork, promotion, distribution, or release management; not for poems that aren't meant to be sung; and not for reproducing or identifying existing commercial lyrics.
+description: Write, revise, or critique songs, lyrics, melodies, and arrangements, prepare Suno lyrics and style prompts, and plan an EP or album.
 disable-model-invocation: true
 ---
 

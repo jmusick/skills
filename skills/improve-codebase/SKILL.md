@@ -1,6 +1,6 @@
 ---
 name: improve-codebase
-description: Audit a whole codebase for the improvements most worth making (dead code, shallow wrappers, duplication, logic in the wrong layer, loose types, swallowed errors, untested hot paths, risky dependencies, a missing test baseline), check every finding against the code, report a short ranked list, and file the ones the user picks as GitHub issues that /issue and /wave can work. Use when the user types /improve-codebase or $improve-codebase, or asks to improve the codebase, find tech debt, audit code quality, run a code health check, find what to refactor or clean up, find where the codebase is weak, or fill the backlog with improvement issues, even if they never say "audit." Not for reviewing a diff or PR (use /code-review), tidying recently changed code (use /simplify), making the fixes (use /issue or /wave on the filed issues), a security review (use /security-review), docs (use /update-docs), UI polish (use design-taste), or SEO (use seo-audit).
+description: Audit a codebase for the improvements most worth making, check each finding against the code, and file the ones you pick as GitHub issues for /issue and /wave.
 disable-model-invocation: true
 ---
 

@@ -1,6 +1,6 @@
 ---
 name: design-taste
-description: Audit, polish, or check web UI so it stops reading as AI-generated. Covers the layout, type, color, and copy habits that mark a page as generated, the accessibility and typography quality floor, motion timing, and a two-round screenshot critique. Use when the user types /design-taste; says a page, component, or app looks generic, templated, sloppy, or "AI-made"; asks to de-slop, polish, or review a UI's design before shipping; asks whether a design reads as AI; or as the check pass after building new UI. Not for picking a fresh aesthetic direction when frontend-design is installed (that skill owns direction, this one checks the result), not for backend or non-visual code, and not for prose (use humanize).
+description: Audit and polish web UI so it stops reading as AI-generated, covering layout, type, color, copy, accessibility, motion, and a screenshot critique.
 disable-model-invocation: true
 ---
 
