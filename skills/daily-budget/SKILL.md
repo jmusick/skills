@@ -1,6 +1,7 @@
 ---
 name: daily-budget
 description: Run Firelands Current's daily news budget. Sweeps the paper's sources (agency and organizer sites, official Facebook Pages and X accounts, Google News) for new story leads and calendar events, scouts new sources, checks what's already published, looks for usable images, drafts the best stories with the newsroom skill, and assembles a dated review packet for the editor. Use when the user types /daily-budget or $daily-budget, or asks to find today's stories, find some new stories or leads, check our sources, look for new events to add, or see what's new for Firelands Current, even if they never say "budget." Stops at the review packet. Not for importing, publishing, syncing to production, featuring stories, or queuing Facebook posts; not for writing or editing one story the user already has (use newsroom); and not for site code changes.
+disable-model-invocation: true
 ---
 
 # Daily budget

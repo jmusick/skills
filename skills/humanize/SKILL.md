@@ -1,6 +1,7 @@
 ---
 name: humanize
 description: Rewrite or audit text so it stops reading as AI-generated, keeping the meaning, facts, and the writer's voice. Use when the user types /humanize, or asks to humanize, de-AI, de-slop, unslop, or "make this sound less like ChatGPT/AI"; when they paste a draft and say it sounds robotic, generic, or AI-written; when they ask whether a piece reads as AI; or when they want a post, email, doc, README, essay, or reply cleaned up before publishing. Also use when drafting new prose that must not read as machine-written. Not for news stories or AP checks (use newsroom, which has its own AI-tells pass), for the copy or look of a web page or app (use design-taste), for proofreading spelling and grammar alone, or for translation.
+disable-model-invocation: true
 ---
 
 # Humanize

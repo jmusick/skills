@@ -7,6 +7,7 @@ This repo holds agent skills in the [Agent Skills](https://agentskills.io) forma
 - `skills/<name>/SKILL.md`: one folder per skill. The folder name must match the `name` in the frontmatter.
 - `skills/<name>/scripts/`: optional helper scripts the skill tells the agent to run.
 - `skills/<name>/references/`: optional extra docs the skill loads only when needed.
+- `skills/<name>/agents/openai.yaml`: Codex-only settings. Here it just turns off implicit invocation.
 - `skills/<name>/evals/`: optional eval cases, one folder per case (`prompt.md`, `case.yaml`, `graders/`), in the layout skill-creator writes and `claude plugin eval` runs. They're real, billed model runs, so run them only when asked: `claude plugin eval skills/<name>`. When you change a skill that has evals, update any grader the change makes wrong.
 - `README.md`: the public index. Keep its skills table in sync when you add, rename, or remove a skill.
 
@@ -16,6 +17,7 @@ This repo holds agent skills in the [Agent Skills](https://agentskills.io) forma
 - Keep `SKILL.md` short enough to read in one pass (under ~500 lines). Move long reference material into `references/` and link to it.
 - Write instructions in the imperative, and explain why a step exists when the reason isn't obvious. Agents follow rules better when they know what the rule protects.
 - A skill gets copied or symlinked on its own, so it can't reference files outside its own folder. It can call another skill by name (daily-budget uses newsroom); say so in the README so people install both.
+- Skills run only when the user invokes them: add `disable-model-invocation: true` to the frontmatter for Claude Code, and an `agents/openai.yaml` with `policy: allow_implicit_invocation: false` for Codex. The exception is a skill another skill calls (newsroom, update-docs, title, patch, minor): leave it model-invocable, because these settings also stop one skill from calling another. If a skill starts calling one that has them, remove both from the one being called. Eval prompts for a flagged skill must start with `/<name>`, since the agent won't pick it up from plain English.
 
 ## Shared code
 

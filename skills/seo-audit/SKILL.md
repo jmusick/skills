@@ -1,6 +1,7 @@
 ---
 name: seo-audit
 description: Audit a website or web project for SEO problems and fix them at the source - crawling and indexing (robots.txt, sitemaps, noindex, canonicals, redirects, HTTPS), titles, descriptions, headings, alt text, internal links, structured data, link previews, JavaScript rendering, and AI-crawler access - with a bundled checker that reads the raw HTML a crawler sees. Use when the user types /seo-audit or $seo-audit; asks for an SEO audit, review, or health check; asks why a site or page isn't showing up, ranking, or indexed in Google; says Google or a shared link shows the wrong title, description, or page; asks to fix meta tags, canonicals, robots.txt, the sitemap, structured data, or Open Graph previews; or wants a site checked before launch, even if they never say "SEO." Not for writing articles or marketing copy (use humanize or newsroom), keyword research or rank tracking that needs paid SEO data, link building, paid ads, app-store or YouTube optimization, or visual design review (use design-taste).
+disable-model-invocation: true
 ---
 
 # SEO audit

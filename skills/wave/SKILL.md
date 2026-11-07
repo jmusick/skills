@@ -2,6 +2,7 @@
 name: wave
 description: >-
   Work several GitHub issues in the current repo in parallel and ship each as its own release: pick a wave of issues that don't overlap, hand each to a subagent on the model and effort its size needs, review every diff and catch its docs up, open a PR per issue, and squash-merge them one at a time as tagged `vX.Y.Z - Summary` release commits, with no pause for local testing. Use when the user types /wave or $wave (optionally with issue numbers), or asks to work a batch, wave, or handful of issues, knock out several issues at once, or clear part of the backlog with agents. Not for a single issue (use /issue), for triaging, labeling, prioritizing, or closing issues without doing the work, for filing issues, for reviewing someone else's PR, or for a release with no issue (use /patch or /minor).
+disable-model-invocation: true
 ---
 
 # Work a wave of issues

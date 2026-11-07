@@ -5,7 +5,7 @@ timeout_seconds: 600
 allowed_tools: [Read, Glob, Grep, Skill]
 ---
 
-this linkedin post sounds like chatgpt wrote it, can you humanize it before I post
+/humanize this linkedin post sounds like chatgpt wrote it, can you humanize it before I post
 
 I'm thrilled to share a pivotal milestone in our journey! 🚀 After 18 months of hard work, our team at Brightline Logistics has officially launched RouteWise — and it's not just a tool, it's a game-changer for how small carriers plan their week.
 

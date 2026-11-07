@@ -2,6 +2,7 @@
 name: issue
 description: >-
   Take one GitHub issue in the current repo from open to released: pick and claim it, do the work in its own worktree, review it, catch the docs up, pause for the user to test it in local dev, open a PR, wait for CI, and squash-merge it as a tagged `vX.Y.Z - Summary` release commit. Use when the user types /issue or $issue (optionally with an issue number), or asks to work, fix, pick up, grab, or knock out an issue, "the next issue", "something from the backlog", or "issue #42", even if they don't mention PRs or releases. Not for several issues at once (use /wave), for filing, triaging, or labeling issues without doing the work, for reviewing someone else's PR, for a release with no issue (use /patch or /minor), or when "issue" just means a problem the user is having.
+disable-model-invocation: true
 ---
 
 # Work an issue end to end
