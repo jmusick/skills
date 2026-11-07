@@ -142,6 +142,8 @@ class PageParser(HTMLParser):
             self._title_buf = []
         elif tag == "meta":
             key = (a.get("name") or a.get("property") or "").lower().strip()
+            if not key and a.get("http-equiv"):
+                key = "http-equiv:" + a["http-equiv"].lower().strip()
             if key:
                 self.metas[key].append(a.get("content", "").strip())
         elif tag == "link":
@@ -266,6 +268,7 @@ class Page:
         self.findings = []          # (level, message)
         self.parser = None
         self.noindex = False
+        self.redirect_stub = False
 
     def add(self, level, msg):
         self.findings.append((level, msg))
@@ -294,6 +297,16 @@ def check_page(page, html):
         ctype = page.headers.get("content-type", "")
         if ctype and "html" not in ctype.lower():
             page.add("WARN", "content-type is %s, not HTML" % ctype)
+
+    # a meta-refresh stub is a redirect, not a content page; skip the content checks
+    refresh = (p.metas.get("http-equiv:refresh") or [""])[0]
+    m = re.search(r"url\s*=\s*['\"]?([^'\";]+)", refresh, re.I)
+    if m:
+        page.redirect_stub = True
+        f["redirect"] = "meta refresh to %s" % m.group(1).strip()
+        page.add("INFO", "redirects with a meta refresh to %s; a server-side 301 is a clearer signal "
+                         "(on static hosts this is often the only option, and Google follows it)" % m.group(1).strip())
+        return p
 
     # title
     titles = [t for t in p.titles]
@@ -440,9 +453,24 @@ def check_page(page, html):
                 page.add("WARN", "invalid hreflang code %s" % code)
             elif len(parts) > 1 and parts[-1] in BAD_REGIONS:
                 page.add("WARN", "hreflang %s should be %s-%s" % (code, parts[0], BAD_REGIONS[parts[-1]].upper()))
-        self_url = canon or (page.final_url if page.kind == "url" else None)
-        if self_url and re.match(r"^https?://", self_url):
-            if _norm(self_url) not in [_norm(h) for _, h in p.hreflangs]:
+        page_lang = (p.lang or "").lower().split("-")[0]
+        langs_listed = {c.lower().split("-")[0] for c in codes}
+        by_url = {}
+        for code, href in p.hreflangs:
+            if re.match(r"^https?://", href):
+                by_url.setdefault(_norm(href), code)
+        canon_code = by_url.get(_norm(canon)) if canon and re.match(r"^https?://", canon) else None
+        if page_lang and canon_code and canon_code.lower() != "x-default" \
+                and canon_code.lower().split("-")[0] != page_lang:
+            page.add("FAIL", "this %s page's canonical points to the %s version (%s), which asks Google to "
+                             "drop this page in favor of it; each language page should be its own canonical"
+                             % (page_lang, canon_code, canon))
+        if page_lang and page_lang not in langs_listed:
+            page.add("WARN", "hreflang set has no entry for this page's own language (%s); every variant "
+                             "lists itself and all the others" % page_lang)
+        elif not canon_code or canon_code.lower().split("-")[0] == page_lang:
+            self_url = canon or (page.final_url if page.kind == "url" else None)
+            if self_url and re.match(r"^https?://", self_url) and _norm(self_url) not in by_url:
                 page.add("WARN", "hreflang set doesn't include this page itself")
         if "x-default" not in [c.lower() for c in codes]:
             page.add("INFO", "no x-default hreflang (recommended, not required)")
@@ -758,7 +786,8 @@ def _check_links(page, links):
 
 
 def _cross_page(pages, cross):
-    ok = [p for p in pages if p.parser and not p.noindex and p.status in (None, 200)]
+    ok = [p for p in pages if p.parser and not p.noindex and not p.redirect_stub
+          and p.status in (None, 200)]
     if len(ok) < 2:
         return
     for label, getter in (("title", lambda p: p.parser.titles[0] if p.parser.titles else ""),

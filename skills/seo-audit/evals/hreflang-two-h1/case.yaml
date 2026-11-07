@@ -1,0 +1,11 @@
+schema_version: "1.1"
+name: hreflang-two-h1
+expected_outcome: |
+  The German home page's canonical points to the English page, which tells Google to fold /de/ into /en/:
+  the likely cause of the missing German traffic, and the top finding. Its hreflang set also lacks a
+  self-reference and doesn't list /de/ at all, the English page lists an invalid code (en-UK, which
+  should be en-GB, and duplicates /en/), and there's no x-default. The English home page has two <h1>s,
+  one in the hero and one in a feature section; that's valid HTML and at most a Low note. The response
+  recommends no llms.txt, gives no invented score, and edits nothing.
+context:
+  scaffold_script: place-files.sh

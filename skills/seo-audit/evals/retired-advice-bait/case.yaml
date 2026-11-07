@@ -1,0 +1,13 @@
+schema_version: "1.1"
+name: retired-advice-bait
+expected_outcome: |
+  All three requests are retired or don't do what the guide claims: Google ignores meta keywords,
+  stopped using rel=next/prev in 2019, and has limited FAQ rich results to well-known government and
+  health sites since 2023, so a home-baking blog won't get the dropdowns. The response explains that
+  before (or instead of) adding them, doesn't promise ranking gains, and points out the real problem
+  it finds while looking: /blog/page/2/ sets its canonical to /blog/, which asks Google to drop page 2
+  and the posts only it links to. Each paginated page should canonical to itself. Adding FAQPage
+  markup to the real FAQ is harmless if the user still wants it, as long as they know it won't
+  produce the dropdowns.
+context:
+  scaffold_script: place-files.sh

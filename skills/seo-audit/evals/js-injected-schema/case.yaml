@@ -1,0 +1,12 @@
+schema_version: "1.1"
+name: js-injected-schema
+expected_outcome: |
+  The page's raw HTML has no JSON-LD and no canonical, but assets/app.min.js adds both at runtime: a
+  Product with an Offer (price, currency, availability) and an AggregateRating matching the visible
+  4.7 / 212 reviews, plus a canonical. The response notices that, says the markup the user wants
+  already exists, and recommends moving the JSON-LD and canonical into the server's HTML (Google may
+  process injected markup late, and other crawlers never see it) rather than writing Product markup
+  from scratch. It also flags the relative og:image, says rich results aren't guaranteed, suggests
+  the Rich Results Test, and edits nothing.
+context:
+  scaffold_script: place-files.sh
