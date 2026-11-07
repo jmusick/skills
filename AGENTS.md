@@ -8,7 +8,7 @@ This repo holds agent skills in the [Agent Skills](https://agentskills.io) forma
 - `skills/<name>/scripts/`: optional helper scripts the skill tells the agent to run.
 - `skills/<name>/references/`: optional extra docs the skill loads only when needed.
 - `skills/<name>/agents/openai.yaml`: Codex-only settings. Here it just turns off implicit invocation.
-- `skills/<name>/evals/`: optional eval cases, one folder per case (`prompt.md`, `case.yaml`, `graders/`), in the layout skill-creator writes and `claude plugin eval` runs. They're real, billed model runs, so run them only when asked: `claude plugin eval skills/<name>`. When you change a skill that has evals, update any grader the change makes wrong.
+- `skills/<name>/evals/`: optional eval cases, one folder per case (`prompt.md`, `case.yaml`, `graders/`), in the layout skill-creator writes and `claude plugin eval` runs. They're real, billed model runs, so run them only when asked: `claude plugin eval skills/<name>`. When you change a skill that has evals, update any grader the change makes wrong. A case can also carry `files/`, a fixture project that its `scaffold_script` (`place-files.sh`) copies into the sandbox. Nothing installs those fixtures, so Dependabot alerts and PRs on their `package.json` files don't affect anyone using the skills.
 - `README.md`: the public index. Keep its skills table in sync when you add, rename, or remove a skill.
 
 ## Writing a skill
