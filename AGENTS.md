@@ -13,9 +13,13 @@ This repo holds agent skills in the [Agent Skills](https://agentskills.io) forma
 
 ## Writing a skill
 
-- Frontmatter needs `name` (lowercase, hyphens) and `description`. The description is what the agent sees when deciding whether to use the skill. Say what the skill does, list the phrases and situations that should trigger it, and say what it is *not* for, so it doesn't fire on near misses.
-- Keep `SKILL.md` short enough to read in one pass (under ~500 lines). Move long reference material into `references/` and link to it.
-- Write instructions in the imperative, and explain why a step exists when the reason isn't obvious. Agents follow rules better when they know what the rule protects.
+Draft new skills with skill-creator and review existing ones with `/improve-skills`. Where their defaults differ from the rules below, these rules win.
+
+- Frontmatter needs `name` (lowercase, hyphens) and `description`.
+- For a model-invocable skill, the description is the only text the agent sees when deciding whether to use it. Say what the skill does, then the phrases and situations that should trigger it, in the words users type, key use case first (long skill lists get their descriptions cut). Agents tend to undertrigger, so name every distinct case, but don't repeat one case in synonyms. Say what it is *not* for only where a near miss or a sibling skill competes for the same words.
+- For a manual-only skill (see below), the agent never sees the description, so one sentence on what the skill does is enough.
+- Every line of `SKILL.md` costs context on every run, so keep only what the model wouldn't do unaided: no definitions, generic advice, or restated repo facts. Stay under ~500 lines, and move material only some runs need into `references/`, linked at the step that needs it.
+- Write instructions in the imperative, and explain why a step exists when the reason isn't obvious. A rule with its reason generalizes; an all-caps MUST gets over-applied or argued away.
 - A skill gets copied or symlinked on its own, so it can't reference files outside its own folder. It can call another skill by name (daily-budget uses newsroom); say so in the README so people install both.
 - Skills run only when the user invokes them: add `disable-model-invocation: true` to the frontmatter for Claude Code, and an `agents/openai.yaml` with `policy: allow_implicit_invocation: false` for Codex. The exception is a skill another skill calls (newsroom, update-docs, title, patch, minor): leave it model-invocable, because these settings also stop one skill from calling another. If a skill starts calling one that has them, remove both from the one being called. Eval prompts for a flagged skill must start with `/<name>`, since the agent won't pick it up from plain English.
 

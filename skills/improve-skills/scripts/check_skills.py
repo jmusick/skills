@@ -3,8 +3,7 @@
 
 Finds every SKILL.md under the given paths (default: the current directory),
 checks frontmatter, size, links, unreferenced files, eval prompts, and the
-Codex invocation setting, collects each skill's git history, and compares
-same-named files shared between skills. Prints JSON.
+Codex invocation setting. Prints JSON.
 
 Usage: check_skills.py [PATH ...]
   PATH is a skill folder, a SKILL.md, or a folder to search for skills.
@@ -12,7 +11,6 @@ Usage: check_skills.py [PATH ...]
 import json
 import os
 import re
-import subprocess
 import sys
 
 MAX_DESCRIPTION = 1024
@@ -21,7 +19,6 @@ MAX_LINES = 500
 LONG_REFERENCE = 100
 SKIP_DIRS = {".git", "node_modules", "__pycache__", ".venv", "venv", "dist", "build", "evals"}
 NAME_RE = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
-FIX_RE = re.compile(r"\b(fix(es|ed)?|bug|revert|regression|broken|wrong|stale)\b", re.I)
 MD_LINK = re.compile(r"\]\(([^)\s]+)\)")
 CODE_PATH = re.compile(r"`((?:\.{1,2}/)?(?:[\w.-]+/)*[\w.-]+\.(?:md|py|sh|js|mjs|ts|json|yaml|yml|txt|ps1|dot|svg|png))`")
 BACKSLASH_PATH = re.compile(r"\b(?:scripts|references|assets)\\[\w.\\-]+")
@@ -32,15 +29,6 @@ SKILL_SUBDIRS = {"references", "scripts", "assets", "rules", "templates", "agent
 def read(path):
     with open(path, encoding="utf-8", errors="replace") as f:
         return f.read()
-
-
-def git(args, cwd):
-    try:
-        r = subprocess.run(["git", *args], cwd=cwd, capture_output=True, text=True,
-                           encoding="utf-8", errors="replace")
-    except OSError:
-        return None
-    return r.stdout if r.returncode == 0 else None
 
 
 def parse_frontmatter(text):
@@ -190,15 +178,6 @@ def check_evals(skill_dir, name, model_invocable, issues):
     return len(cases)
 
 
-def git_history(skill_dir):
-    log = git(["log", "--format=%h %s", "--", "."], skill_dir)
-    if log is None:
-        return None
-    subjects = [l for l in log.splitlines() if l.strip()]
-    fixes = [s for s in subjects if FIX_RE.search(s.split(" ", 1)[-1])]
-    return {"commits": len(subjects), "fix_like": len(fixes), "recent": subjects[:8], "recent_fixes": fixes[:8]}
-
-
 def check_skill(skill_md):
     skill_dir = os.path.dirname(os.path.abspath(skill_md))
     folder = os.path.basename(skill_dir)
@@ -284,8 +263,6 @@ def check_skill(skill_md):
             issues.append(issue("info", "unreferenced-file", f"{rel} isn't mentioned by SKILL.md or the files it links, so the agent never loads it", rel))
 
     result["evals"] = check_evals(skill_dir, name or folder, model_invocable, issues)
-    result["git"] = git_history(skill_dir)
-    result["files"] = files
     result["issues"] = issues
     return result
 
@@ -311,25 +288,6 @@ def find_skills(paths):
     return sorted(set(found)), missing
 
 
-def shared_files(results):
-    """Same-named scripts and references in more than one skill, and whether they match."""
-    groups = {}
-    for r in results:
-        for rel in r["files"]:
-            if rel.split("/")[0] in ("scripts", "references") and not os.path.basename(rel).startswith("test_"):
-                groups.setdefault(rel, []).append(r)
-    out = []
-    for rel, owners in sorted(groups.items()):
-        if len(owners) < 2:
-            continue
-        contents = {}
-        for r in owners:
-            contents.setdefault(read(os.path.join(r["path"], rel)).replace("\r\n", "\n"), []).append(r["name"])
-        out.append({"file": rel, "skills": [r["name"] for r in owners], "identical": len(contents) == 1,
-                    "versions": list(contents.values()) if len(contents) > 1 else None})
-    return out
-
-
 def main():
     args = sys.argv[1:] or ["."]
     if any(a in ("-h", "--help") for a in args):
@@ -345,18 +303,16 @@ def main():
             for r in results:
                 if r["name"] == name:
                     r["issues"].append(issue("error", "duplicate-name", f"name '{name}' is used by {len(paths)} skills: {', '.join(paths)}"))
-    shared = shared_files(results)
     counts = {"error": 0, "warn": 0, "info": 0}
     for r in results:
         for i in r["issues"]:
             counts[i["level"]] += 1
-        del r["files"]
     try:
         sys.stdout.reconfigure(encoding="utf-8")
     except (AttributeError, ValueError):
         pass
     print(json.dumps({"skills_found": len(results), "missing_paths": missing, "counts": counts,
-                      "skills": results, "shared_files": shared}, indent=2, ensure_ascii=False))
+                      "skills": results}, indent=2, ensure_ascii=False))
     return 0
 
 
