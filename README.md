@@ -11,7 +11,7 @@ Agent skills I write and use with Claude Code, Codex, and other agents that supp
 | [humanize](skills/humanize/SKILL.md) | Rewrites or audits text so it stops reading as AI-generated, keeping the meaning and the writer's voice. |
 | [improve-codebase](skills/improve-codebase/SKILL.md) | Audits a codebase for the improvements most worth making, weighted toward the files git history says change and break most, checks every finding against the code, reports a short ranked list with a "looks bad but is fine" section, and files the findings you pick as GitHub issues ready for issue or wave. Never edits code. |
 | [improve-skills](skills/improve-skills/SKILL.md) | Audits agent skills for what makes them misfire, get ignored, or waste context, with a bundled checker for frontmatter, links, invocation settings, and eval prompts. Checks each finding against the files and the skill's git history, gives each skill a keep, improve, merge, or retire verdict, then makes the fixes you pick and has a fresh subagent compare old and new. |
-| [issue](skills/issue/SKILL.md) | Picks a GitHub issue, offers a cheaper model when the job is small, does the work in its own worktree, reviews it, updates the docs it affected, pauses for you to test it in local dev, bumps the version in the PR, squash-merges it as one `vX.Y.Z` release commit, tags it, cleans up its branches, and retitles the chat. |
+| [issue](skills/issue/SKILL.md) | Picks a GitHub issue, offers a cheaper model when the job is small, does the work in its own worktree, reviews it, updates the docs it affected, pauses for you to test it in local dev, bumps the version in the PR, squash-merges it as one `vX.Y.Z` release commit, tags it, and cleans up its branches. |
 | [minor](skills/minor/SKILL.md) | Cuts a minor release: bumps `X.Y.Z` to `X.Y+1.0`, updates the changelog, commits, tags, and pushes. |
 | [music-creation](skills/music-creation/SKILL.md) | Writes, revises, and critiques songs, lyrics, melodies, and arrangements, prepares ready-to-paste Suno packages, and can plan an EP or album. |
 | [newsroom](skills/newsroom/SKILL.md) | Writes, edits, and checks news stories for Firelands Current in AP style, with house rules, story-type playbooks, and editor flags. |
@@ -20,7 +20,7 @@ Agent skills I write and use with Claude Code, Codex, and other agents that supp
 | [sprite](skills/sprite/SKILL.md) | Makes pixel-art sprites for Chomp Chomp Panic!: generates each animation with Codex CLI's image tool from a structured prompt and a reference image, then snaps it onto the game's frame grid, palette and outline and writes the strips the Unity importer expects. Needs [Codex CLI](https://github.com/openai/codex) installed and logged in. |
 | [title](skills/title/SKILL.md) | Renames the current chat session to match what actually happened in it. |
 | [update-docs](skills/update-docs/SKILL.md) | Audits README, AGENTS.md, CLAUDE.md, CHANGELOG, the privacy policy, and other docs against the code and fixes what's wrong or out of date, then finds contradictions, stale records, and docs to consolidate or delete, and proposes structural changes for approval. |
-| [wave](skills/wave/SKILL.md) | Picks a wave of non-overlapping GitHub issues, hands each to a subagent on the model and effort its size calls for, reviews every diff and updates the docs it affected, ships each issue one at a time as its own squash-merged, tagged `vX.Y.Z` release, and retitles the chat. |
+| [wave](skills/wave/SKILL.md) | Picks a wave of non-overlapping GitHub issues, hands each to a subagent on the model and effort its size calls for, reviews every diff and updates the docs it affected, ships each issue one at a time as its own squash-merged, tagged `vX.Y.Z` release. |
 
 ## Install
 
@@ -50,9 +50,9 @@ skills/
     evals/          # optional test cases for skill-creator or `claude plugin eval`
 ```
 
-Each skill folder holds all of its own files, so it can be copied anywhere on its own. Some skills call another skill: daily-budget needs newsroom installed too. Issue and wave run update-docs on each change before it ships and title at the end of the run, so install those alongside them; without them, issue and wave check the docs by hand and leave the chat's title alone. They also fall back to patch and minor when a repo can't squash-merge or the user merges a PR themselves. Improve-codebase files issues for issue and wave to work, and leaves docs drift to update-docs.
+Each skill folder holds all of its own files, so it can be copied anywhere on its own. Some skills call another skill: daily-budget needs newsroom installed too. Issue and wave run update-docs on each change before it ships, so install it alongside them; without it, issue and wave check the docs by hand. They also fall back to patch and minor when a repo can't squash-merge or the user merges a PR themselves. Improve-codebase files issues for issue and wave to work, and leaves docs drift to update-docs.
 
-Most skills run only when you invoke them: `disable-model-invocation: true` in the frontmatter does that for Claude Code (`/<name>`), and `agents/openai.yaml` does it for Codex (`$<name>`). Newsroom, update-docs, title, patch, and minor are left out, because other skills call them and these settings would block that.
+Most skills run only when you invoke them: `disable-model-invocation: true` in the frontmatter does that for Claude Code (`/<name>`), and `agents/openai.yaml` does it for Codex (`$<name>`). Newsroom, update-docs, patch, and minor are left out, because other skills call them and these settings would block that.
 
 ## Credits
 

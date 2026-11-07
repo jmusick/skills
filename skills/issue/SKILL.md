@@ -238,11 +238,7 @@ Leave the work where the user can pick it up:
 - Clean up the worktree as in step 12 once everything is pushed. Keep the branch.
 - **Merged but not tagged:** say so first in the report, with the merge SHA and the exact `git tag` and `git push` commands from step 11.
 
-## 13. Retitle the session
-
-Run `/title` with guidance on the issue and outcome, such as `/title shipped #42 as v1.4.3` or `/title stopped on #61, PR left as draft`. Do it every run, including `--no-merge` and failures, before the report so the report stays last. Skip it if `/title` isn't available.
-
-## 14. Report
+## 13. Report
 
 End with this report every time. The **Follow-up** section is required, since it tells the user what's theirs to do; write "None" if nothing is.
 

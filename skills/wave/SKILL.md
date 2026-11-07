@@ -245,11 +245,7 @@ One failure doesn't stop the wave, except where step 8d says to stop shipping. L
 - Clean up the worktree as in step 9 once everything is pushed. Keep the branch.
 - **Merged but not tagged:** say so first in the report, with the merge SHA and the exact `git tag` and `git push` commands from step 8d. PRs queued behind it stay open and unbumped; list them in the follow-up.
 
-## 10. Retitle the session
-
-Run `/title` once for the wave, with guidance on what shipped and how it ended, such as `/title shipped #42 #44 #47, #45 left as draft`. Do it every run, including `--no-merge` and early stops, before the report so the report stays last. Skip it if `/title` isn't available.
-
-## 11. Report
+## 10. Report
 
 End with this report every time. The **Follow-up** section is required, since it tells the user what's theirs to do; write "None" if nothing is.
 

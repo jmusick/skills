@@ -1,6 +1,7 @@
 ---
 name: title
-description: Renames the current chat session so its title reflects what actually happened in the conversation, not just the opening request. Use whenever the user types /title or $title, or asks to rename, retitle, or re-name "this chat", "this session", or "this conversation", or says the session's title is wrong, stale, or outdated. Do not use for writing titles of other things (blog posts, documents, PRs, commits, headlines).
+description: Renames the current chat session so its title reflects what actually happened in the conversation, not just the opening request.
+disable-model-invocation: true
 ---
 
 # Title
