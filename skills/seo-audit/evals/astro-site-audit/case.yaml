@@ -1,0 +1,13 @@
+schema_version: "1.1"
+name: astro-site-audit
+expected_outcome: |
+  The audit reports, without editing any files, the planted problems in priority order:
+  robots.txt blocks the whole site (a staging leftover in public/robots.txt), and BaseLayout.astro
+  hard-codes a canonical to the home page on every page. Both are top severity. It also flags the
+  noindex on the pricing page as something to confirm rather than silently removing it, the about
+  page's default "Home" title and shared description, and the blog image with no alt text, each
+  traced to its source file. It does not recommend adding the Organization JSON-LD the home page
+  already has, recommends no retired tactics (FAQ or HowTo markup, meta keywords, rel=prev/next),
+  and gives no invented 0-100 score.
+context:
+  scaffold_script: place-files.sh

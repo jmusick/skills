@@ -21,7 +21,7 @@ This repo holds agent skills in the [Agent Skills](https://agentskills.io) forma
 
 `skills/minor/scripts/version_info.py`, `skills/patch/scripts/version_info.py`, `skills/issue/scripts/version_info.py` and `skills/wave/scripts/version_info.py` are intentionally identical copies, because a skill can't read files from another skill's folder. So are `skills/issue/scripts/issue_survey.py` and `skills/wave/scripts/issue_survey.py`. If you change one copy, make the same change in the others.
 
-`skills/patch/SKILL.md` and `skills/minor/SKILL.md` are twins too: they differ only in the name, description, bump rule, and example versions. Keep everything else the same in both.
+`skills/patch/SKILL.md` and `skills/minor/SKILL.md` are twins too: they differ only in the name, description, bump rule, and example releases. Keep everything else the same in both.
 
 ## Scripts
 

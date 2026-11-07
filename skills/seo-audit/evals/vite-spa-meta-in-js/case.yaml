@@ -1,0 +1,12 @@
+schema_version: "1.1"
+name: vite-spa-meta-in-js
+expected_outcome: |
+  The response explains that per-route titles and descriptions are set in the browser by
+  usePageMeta (a useEffect), while index.html, the only HTML the server sends, has the title "Vite
+  App" and no description or preview tags. Slack's link previews don't run JavaScript, so they see
+  only index.html, and Google may not use the client-set title either. It fixes index.html with an
+  accurate site-wide title, description, and Open Graph tags, and recommends (or sets up)
+  prerendering or server rendering so each public route ships its own head. It does not claim
+  Google can't run JavaScript at all.
+context:
+  scaffold_script: place-files.sh

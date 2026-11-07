@@ -1,0 +1,11 @@
+schema_version: "1.1"
+name: clean-page-left-alone
+expected_outcome: |
+  The landing page is already in good shape: unique title and description, absolute
+  canonical, viewport, lang, one h1, alt text and dimensions on images, Open Graph and Twitter tags,
+  valid Organization and WebSite JSON-LD, and a robots.txt and sitemap that agree. The response says
+  so plainly, reports no Critical or High problems, doesn't recommend adding anything the page
+  already has or any retired tactic, gives no invented score, and notes what it couldn't check
+  (Core Web Vitals, Search Console).
+context:
+  scaffold_script: place-files.sh
