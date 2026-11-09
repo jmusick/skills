@@ -35,7 +35,7 @@ python <this skill's directory>/scripts/issue_survey.py --issue 42 # just one is
 
 It prints JSON: `gh` readiness, repo and default branch, merge methods, branch protection, the checkout's state, and candidate issues ranked by priority, then doability, then age. Issues assigned to others, with an open PR, with a skip label, or still waiting on a reply to an earlier run's comment are under `excluded`.
 
-The run never changes files in the user's checkout or switches its branch; all work happens in a worktree. So a dirty checkout is fine, and the user can keep working in it during the run.
+The run never switches the user's branch or touches their uncommitted work; all work happens in a worktree, and the only change to their checkout is step 12's fast-forward of `<default>`. So a dirty checkout is fine, and the user can keep working in it during the run.
 
 Stop before doing anything if:
 - `gh_ready` or `can_push` is false.
@@ -75,9 +75,9 @@ Hardest has a high bar because the top models cost far more per token. Difficult
 - An earlier attempt at Hard failed, as the issue's comments or a closed PR show.
 - A miss couldn't be undone after release, such as a migration that rewrites production data.
 
-Name the condition in the PR and report.
+Note the size, the reason, and any Hardest condition in the PR and report.
 
-Don't go to `max` or `ultra` by default: they spend far more for the last bit of quality, and Codex's `ultra` spawns its own subagents. If an issue seems to need them, ask the user. On another agent, map the rows onto its small, mid, and top tiers. Model lineups change, so if a listed model isn't offered, use the nearest tier that is. When unsure, go up a size: a too-weak model costs a review round, which costs more. Note the size and reason for the PR and report.
+Don't go to `max` or `ultra` by default: they spend far more for the last bit of quality, and Codex's `ultra` spawns its own subagents. If an issue seems to need them, ask the user. On another agent, map the rows onto its small, mid, and top tiers. Model lineups change, so if a listed model isn't offered, use the nearest tier that is. When unsure, go up a size: a too-weak model costs a review round, which costs more.
 
 If this session's model is above or below what the size calls for, stop before claiming and tell the user, e.g. "#42 looks trivial (a one-line config fix). Haiku at low effort can handle it. Switch in the model menu (`/model` in the CLI) and say go, or say go to stay." Only the user can switch, and switching now is cheapest because a switch drops the prompt cache. Fold this into any step 2 questions so the run stops once. If the model fits and the effort is one level off, if the session fits, or if you can't tell, don't stop.
 
@@ -254,14 +254,14 @@ git fetch --prune
 
 Remove the worktree only once everything in it is pushed. Otherwise leave it and give its path in the report.
 
-To bring the user's local `<default>` up to date without touching their files, run `git fetch origin <default>:<default>` if their checkout isn't on `<default>`. If it is, or the fetch refuses because their copy diverged, leave it to them.
+To bring the user's local `<default>` up to date, run `git fetch origin <default>:<default>` if their checkout isn't on `<default>` (git refuses to update a branch that is checked out, so this form can't be used when it is). If it is, run `git merge --ff-only origin/<default>` in the user's checkout, which leaves uncommitted files alone and refuses rather than overwrite them. If either refuses because their copy diverged or their changes conflict, leave it to them and say so in the report.
 
 ## When it can't be finished: the failure path
 
 Leave the work where the user can pick it up:
 
 - **A PR exists:** comment with what's done, what's blocking, and the next step, and leave the issue assigned. `/issue N` resumes it later. Mark it draft (`gh pr ready <pr> --undo`) unless the only blocker is a missing review: a draft tells reviewers it isn't ready, so leave that one ready for review.
-- **Commits but no PR:** push and open a draft PR so the work is visible.
+- **Commits but no PR:** push, open a draft PR so the work is visible, and comment on it as above.
 - **Nothing pushed** (nothing written yet, or the user discarded it): unassign yourself (`gh issue edit N --remove-assignee @me`) and comment with what you learned and what's needed. End the comment with the line `<!-- agent-waiting-for-reply -->`: it's invisible on GitHub, and the survey skips the issue until someone replies, so `/loop /issue` doesn't retry it every round. Remove the worktree and delete the local branch; nothing on them is worth keeping.
 - Otherwise clean up the worktree as in step 12 once everything is pushed, and keep the branch.
 - **Merged but not tagged:** say so first in the report, with the merge SHA and the exact `git tag` and `git push` commands from step 11.
