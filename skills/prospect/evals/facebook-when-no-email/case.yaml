@@ -1,0 +1,10 @@
+schema_version: "1.1"
+name: facebook-when-no-email
+expected_outcome: |
+  With no published email and no website (so no contact form), chooses a Facebook Message to the
+  business's Page as Justin's personal profile, never Nextdoor or Yelp and never a guessed email.
+  Pitches a website (with online quote requests) because the business has none, in a short,
+  link-free, humanized message from Justin with an opt-out line. Writes a drafted record and stops
+  for approval.
+context:
+  scaffold_script: place-files.sh

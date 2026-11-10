@@ -16,6 +16,7 @@ Agent skills I write and use with Claude Code, Codex, and other agents that supp
 | [music-creation](skills/music-creation/SKILL.md) | Writes, revises, and critiques songs, lyrics, melodies, and arrangements, prepares ready-to-paste Suno packages, and can plan an EP or album. |
 | [newsroom](skills/newsroom/SKILL.md) | Writes, edits, and checks news stories for Firelands Current in AP style, with house rules, story-type playbooks, and editor flags. |
 | [patch](skills/patch/SKILL.md) | Cuts a patch release: bumps `X.Y.Z` to `X.Y.Z+1`, updates the changelog, commits, tags, and pushes. |
+| [prospect](skills/prospect/SKILL.md) | Finds one local business in Stone Dragon Media's coverage area, checks its website, Google profile, and Facebook for a problem SDM can fix, writes a link-free first message from Justin with humanize, and sends it by email, contact form, or Facebook only after approval, keeping a record so no one is contacted twice. |
 | [seo-audit](skills/seo-audit/SKILL.md) | Audits a site or web project for search problems (crawling, indexing, canonicals, titles, structured data, link previews, JavaScript rendering, AI-crawler access) with a bundled raw-HTML checker, traces each finding to the template that causes it, and fixes it on request. |
 | [sprite](skills/sprite/SKILL.md) | Makes pixel-art sprites for Chomp Chomp Panic!: generates each animation with Codex CLI's image tool from a structured prompt and a reference image, then snaps it onto the game's frame grid, palette and outline and writes the strips the Unity importer expects. Needs [Codex CLI](https://github.com/openai/codex) installed and logged in. |
 | [title](skills/title/SKILL.md) | Renames the current chat session to match what actually happened in it. |
@@ -50,9 +51,9 @@ skills/
     evals/          # optional test cases for skill-creator or `claude plugin eval`
 ```
 
-Each skill folder holds all of its own files, so it can be copied anywhere on its own. Some skills call another skill: daily-budget needs newsroom installed too. Issue and wave run update-docs on each change before it ships, so install it alongside them; without it, issue and wave check the docs by hand. They also fall back to patch and minor when a repo can't squash-merge or the user merges a PR themselves. Improve-codebase files issues for issue and wave to work, and leaves docs drift to update-docs.
+Each skill folder holds all of its own files, so it can be copied anywhere on its own. Some skills call another skill: daily-budget needs newsroom installed too, and prospect needs humanize. Issue and wave run update-docs on each change before it ships, so install it alongside them; without it, issue and wave check the docs by hand. They also fall back to patch and minor when a repo can't squash-merge or the user merges a PR themselves. Improve-codebase files issues for issue and wave to work, and leaves docs drift to update-docs.
 
-Most skills run only when you invoke them: `disable-model-invocation: true` in the frontmatter does that for Claude Code (`/<name>`), and `agents/openai.yaml` does it for Codex (`$<name>`). Newsroom, update-docs, patch, and minor are left out, because other skills call them and these settings would block that.
+Most skills run only when you invoke them: `disable-model-invocation: true` in the frontmatter does that for Claude Code (`/<name>`), and `agents/openai.yaml` does it for Codex (`$<name>`). Newsroom, humanize, update-docs, patch, and minor are left out, because other skills call them and these settings would block that.
 
 ## Credits
 

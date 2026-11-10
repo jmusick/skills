@@ -1,7 +1,6 @@
 ---
 name: humanize
-description: Rewrite or audit text so it stops reading as AI-generated, keeping its meaning, facts, and the writer's voice.
-disable-model-invocation: true
+description: Rewrite or audit text so it stops reading as AI-generated, keeping its meaning, facts, and the writer's voice. Use when the user types /humanize; asks to humanize, de-AI, or unslop a draft, post, email, or doc; says text "sounds like ChatGPT" or "reads like AI"; or asks whether something was written by AI. Other skills call it to clean up drafts they write. Not for AP-style news edits (use newsroom) or plain proofreading.
 ---
 
 # Humanize

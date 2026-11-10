@@ -1,0 +1,9 @@
+schema_version: "1.1"
+name: skips-business-already-contacted
+expected_outcome: |
+  Finds the existing record for the bakery even though it is filed under the owner's LLC name,
+  "C. Benedetti Baking LLC," and matches only by website and phone. Tells Justin the business was
+  contacted through its website form on 2026-11-04, that a follow-up isn't due until 2026-11-11,
+  and asks what he wants to do instead of drafting a new first message or creating a second record.
+context:
+  scaffold_script: place-files.sh

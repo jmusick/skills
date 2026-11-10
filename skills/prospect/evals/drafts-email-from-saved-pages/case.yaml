@@ -1,0 +1,10 @@
+schema_version: "1.1"
+name: drafts-email-from-saved-pages
+expected_outcome: |
+  Chooses email to carla@maplestreetbakery.example (the address the bakery publishes), pitches a
+  website redesign or online ordering based on the problems in the saved pages, and shows Justin a
+  humanized, link-free draft from him as founder of Stone Dragon Media, with an opt-out line and the
+  P.O. box in the signature. Writes an Outreach record with status drafted, asks for approval, and
+  sends nothing.
+context:
+  scaffold_script: place-files.sh

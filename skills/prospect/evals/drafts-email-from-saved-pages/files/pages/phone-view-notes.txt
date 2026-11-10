@@ -1,0 +1,6 @@
+Saved 2026-11-09. Opened http://maplestreetbakery.example/ in a browser resized to 390 px wide (phone width).
+
+- The page did not resize. Text was tiny and needed zooming to read.
+- Had to scroll sideways to see the hours and phone number.
+- No menu page; "Menu: coming soon" text only.
+- No way to order or request a custom cake online; the site says to call.
