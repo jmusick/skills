@@ -29,7 +29,7 @@ This skill reports and files issues. It never edits code. Findings are cheap to 
 
 ## What counts as an improvement
 
-The most-used skills of this kind agree on these, and they decide what makes the list:
+These decide what makes the list:
 
 - **Delete before you rearrange.** The best change removes code, layers, modes, or branches. A refactor that moves complexity around without reducing what a reader has to hold in their head isn't an improvement.
 - **The deletion test.** For a module you suspect is a thin wrapper, imagine deleting it. If its complexity disappears or lands in one obvious place, it was a pass-through and should go. If the complexity reappears across many callers, it's earning its keep.

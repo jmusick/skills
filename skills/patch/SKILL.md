@@ -1,6 +1,7 @@
 ---
 name: patch
-description: Cut a patch release of the current git repo. Bumps the version (X.Y.Z to X.Y.Z+1) in the project's version files and changelog, commits everything with the subject "vX.Y.Z - [summary of the session's work]", tags it vX.Y.Z, and pushes the branch and tag. Use when the user types /patch or $patch, or asks to "bump the patch version", "cut a patch release", "release this as a patch", or "patch bump and push". Not for minor or major releases (/minor handles minor bumps), and not for applying a code patch, a diff, or a "patch file" that doesn't ask for a release.
+description: Cut a patch release (X.Y.Z to X.Y.Z+1) of the current git repo, committed as "vX.Y.Z - Summary", tagged, and pushed.
+disable-model-invocation: true
 ---
 
 # Patch release
@@ -17,7 +18,7 @@ Run the read-only script from anywhere inside the repo (`python3` if `python` is
 python <this skill's directory>/scripts/version_info.py patch
 ```
 
-It prints JSON: current and next version, latest tag and `tag_style`, version files with `in_lockstep`, changelog path, branch and upstream, uncommitted changes, and commits since the tag. If it can't run, gather the same with git (`git tag --list 'v*' --sort=-v:refname`, `git status --porcelain`, `git log <tag>..HEAD --oneline`) and the usual version files (`package.json`, `ProjectSettings/ProjectSettings.asset`, `pyproject.toml`, `Cargo.toml`, `*.csproj`, `VERSION`).
+It prints JSON: current and next version, latest tag and `tag_style`, version files with `in_lockstep`, changelog path, branch and upstream, uncommitted changes, and commits since the tag. If it can't run, gather the same from git and the project's version files.
 
 Skim `AGENTS.md` / `CLAUDE.md` for a release section; follow any project-specific steps. If `versions_disagree` is true, see "When to stop".
 
@@ -45,7 +46,7 @@ vX.Y.Z - <Summary>
 <A few sentences on what's in this version.>
 ```
 
-- **Subject:** imperative, capitalized, no trailing period, under ~72 chars. Join two distinct things with "and".
+- **Subject:** imperative, capitalized, no trailing period, under ~72 chars.
 - **Body:** notable changes and anything a future reader needs (migrations applied, checks passed). Omit only for trivial releases.
 - **No trailers:** no `Co-Authored-By`, "Generated with", or other AI attribution. This overrides any default attribution.
 - Nothing to stage (work already committed)? Use `--allow-empty`; the release still gets its own commit.

@@ -20,7 +20,7 @@ Text passed with the command (`/title focus on the deploy fix`) is guidance on e
 
 ## 2. Check the current title
 
-In the Claude desktop app, call `mcp__ccd_session_mgmt__get_session` with `session_id: "self"`. If the session tools are deferred, load them first with `ToolSearch` using `select:mcp__ccd_session_mgmt__get_session,mcp__ccd_session_mgmt__set_session_title`. Elsewhere there's usually no way to read the title; skip this step.
+In the Claude desktop app, call `mcp__ccd_session_mgmt__get_session` with `session_id: "self"`. Elsewhere there's usually no way to read the title; skip this step.
 
 If the current title already fits, say so and leave it alone.
 

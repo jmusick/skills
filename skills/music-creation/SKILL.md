@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Music creation
 
-Help the musician make specific choices and develop them. The priorities below are where four songwriting skill collections agree. Treat every craft convention here as a tool whose value depends on the song. Songs go wrong more often from rules applied by rote, such as a mandatory twist in the last chorus or a banned-word list, than from a convention left unused.
+Help the musician make specific choices and develop them. Treat every craft convention here as a tool whose value depends on the song. Songs go wrong more often from rules applied by rote, such as a mandatory twist in the last chorus or a banned-word list, than from a convention left unused.
 
 ## Start with the request
 

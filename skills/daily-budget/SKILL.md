@@ -51,7 +51,7 @@ Work in this order, and note the date on everything you find:
 
 ### 3. Scout for new sources
 
-Spend part of the sweep looking for sources the paper doesn't use yet, aimed at the thin sections and at places in the coverage area with no source listed. Try villages, townships, school districts, libraries, parks, chambers, nonprofits, hospitals and venues. Add each useful one to `docs/news-sources.md` as one entry in the list it belongs to ("Reliable and open" or "Promising, not yet used"): what it's good for, how to read it, and any trap you hit. When a source you already list changes, edit its entry in place. Don't add dated sections; the day's scouting notes go in `review.md` under "Useful new sources." Every run reads this file, so it should stay a reference that only grows when the paper adds a source, not a daily log. This repo file is the one you edit. Don't commit it; the editor does.
+Spend part of the sweep looking for sources the paper doesn't use yet, aimed at the thin sections and at places in the coverage area with no source listed. Try villages, townships, school districts, libraries, parks, chambers, nonprofits, hospitals and venues. Add each useful one to `docs/news-sources.md` as one entry in the list it belongs to ("Reliable and open" or "Promising, not yet used"): what it's good for, how to read it, and any trap you hit. When a source you already list changes, edit its entry in place. Don't add dated sections; the day's scouting notes go in `review.md` under "Useful new sources." Every run reads this file, so it should stay a reference that only grows when the paper adds a source, not a daily log. It's the only repo file you edit. Don't commit or push; the editor does.
 
 ### 4. Verify every lead
 
@@ -108,7 +108,4 @@ Then offer the next steps the editor usually takes: import locally for review at
 During a budget run, don't:
 
 - Write to the local or production database, upload to R2, or run any `--remote` command.
-- Send email or messages, including image-permission requests. Draft them in `review.md`.
-- Act on social accounts beyond reading.
-- Commit, push or bump versions. The only repo file you edit is `docs/news-sources.md`.
-- Use an image without a verified license or permission.
+- Send email or messages. Draft them in `review.md`.

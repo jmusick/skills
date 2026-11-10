@@ -1,6 +1,6 @@
 ---
 name: update-docs
-description: "Audit and tidy a repo's docs. Checks each doc against the code and fixes what's wrong or out of date, then reviews organization: contradictions between docs, docs no longer needed, duplicates to consolidate, misplaced content, and inconsistent formatting. Covers README, AGENTS.md, CLAUDE.md, CONTRIBUTING, docs/, CHANGELOG, privacy policies, dated records (audits, ADRs, plans), and agent notes (TODO.md, memory-bank/). Use when the user types /update-docs or $update-docs, or asks to update, refresh, sync, audit, check, clean up, tidy, organize, or consolidate the docs, README, AGENTS.md, or CLAUDE.md; asks whether the docs are still accurate or needed; or wants the docs caught up after a batch of changes, even if they just say the docs are a mess or old plans and audits are piling up. Not for writing new docs from scratch, code comments or docstrings, de-AI'ing prose (use humanize), releases or version bumps (use /patch or /minor), or documents outside the repo."
+description: "Audit and tidy a repo's docs: fix what no longer matches the code, then propose deleting, merging, or moving docs that are stale, duplicated, contradictory, or misplaced. Use when the user asks to update, sync, audit, or clean up the docs, README, AGENTS.md, CLAUDE.md, changelog, or privacy policy; asks whether the docs are still accurate or needed; or wants the docs caught up after a batch of changes, even if they just say the docs are a mess or old plans and audits are piling up. Not for writing new docs from scratch, code comments, de-AI'ing prose (use humanize), or releases (use /patch or /minor)."
 ---
 
 # Update docs
@@ -111,13 +111,7 @@ Skip in audit mode. Make the smallest edit that makes each doc true and readable
 
 ### Formatting and consistency
 
-Follow the repo's existing conventions (bullet style, heading case, line wrapping) over your own preferences.
-
-- One H1 per doc, and no skipped heading levels.
-- Lists and tables that render; code fences with a language.
-- One term for one thing across all docs. Use the one the code uses.
-- Put what a reader needs first (what it is, how to install and run it) ahead of background and history.
-- Break up a wall of text with headings, or with a list where the content really is steps or items.
+Follow the repo's existing conventions (bullet style, heading case, line wrapping) over your own preferences. Use one term for one thing across all docs, the one the code uses.
 
 Don't reword sentences beyond that. If the user wants the prose itself tightened or de-AI'd, that's the humanize skill.
 

@@ -8,10 +8,6 @@ disable-model-invocation: true
 
 Find what stops search engines from crawling, indexing, and understanding a site, then fix it in the code that produces it.
 
-## Why this skill is short
-
-Most SEO advice an agent gives comes from memory, and much of it is stale or folklore. When public SEO skills were scored against test sites with known problems, the biggest losses came from recommending fixes for things that were already fine ("add Organization schema" on a page that had it) and from retired advice. A plain model with no skill beat several of them. So this skill holds the checks that the most-used SEO skills agree on, a list of advice not to give, and one rule above the rest: look before you recommend.
-
 ## Modes
 
 - **Audit** (default): report findings and change nothing.
