@@ -58,7 +58,14 @@ List the outreach folder and keep the names, domains, phone numbers, and Faceboo
 
 ## 2. Find candidates
 
-When the user gave no town, pick one from the coverage list in `references/sdm.md`, favoring in-person towns with the fewest records so the outreach spreads across the area. Then gather five to eight candidates with web search and Google Maps: local, independently owned businesses that sell to the public or to other local businesses.
+When the user gave no town, pick one from the coverage list in `references/sdm.md`, favoring in-person towns with the fewest records so the outreach spreads across the area. Then gather five to eight candidates with web search, Google Maps, and Facebook: local, independently owned businesses that sell to the public or to other local businesses.
+
+**Facebook as a lead source.** Facebook turns up the strongest kind of candidate: a business whose only presence online is a Facebook Page. Use Justin's signed-in Chrome, and read only:
+- Search Facebook Pages for the town and a category (`facebook.com/search/pages/?q=<category> <town>`), and look through the town's public community and buy-local groups for businesses that people name.
+- Search a few times, at a normal person's pace. Don't scroll the feed to build lists, and don't collect anything beyond a business's name and its Page. Meta's terms restrict automated collection, and this is Justin's personal account.
+- Don't like, follow, join, comment, react, or message anyone while researching. Those are public actions he didn't approve.
+- Use only what the business itself published. Never use a resident's post (a complaint, a review, a "can anyone recommend…") in a pitch, and never tell the business where you found it.
+- Nextdoor is off limits for research as well as for contact. Its terms prohibit commercial prospecting, and a pitch built from neighbors' posts reads like surveillance.
 
 Leave out, without researching further:
 - chains, franchises, and national brands, which buy marketing centrally
@@ -69,7 +76,7 @@ Leave out, without researching further:
 
 ## 3. Look at each candidate's online presence
 
-Use the signals in `references/signals.md`: check the website, the Google Business Profile, and the Facebook Page, and note what's missing, broken, or outdated. Check every problem yourself before writing it down. Load the site on a phone-width viewport before saying it isn't mobile-friendly, and open the page before calling a link broken. The message will name one of these problems to the owner, and getting it wrong costs the whole pitch.
+Use the signals in `references/signals.md`: check the website, the Google Business Profile, and the Facebook Page, and note what's missing, broken, or outdated. Facebook shows a login wall to signed-out browsers, so check the Page, and whether one exists at all, in Justin's signed-in Chrome. Search Facebook Pages for the business name before writing "no Facebook Page." Click every link on the Google profile too: a Website button that leads to a dead or unrelated page is easy to miss and costs the business customers. Check every problem yourself before writing it down. Load the site on a phone-width viewport before saying it isn't mobile-friendly, and open the page before calling a link broken. The message will name one of these problems to the owner, and getting it wrong costs the whole pitch.
 
 Pick the candidate with the clearest problem SDM fixes and a contact channel you can actually use. If none of them has a real problem, say so, write `passed` records, and offer another town or industry. Don't stretch a weak case.
 
@@ -154,3 +161,4 @@ SDM owns Firelands Current, a local news site. Advertising in it may be mentione
 - Doesn't buy, scrape, or guess contact lists, or contact anyone who opted out.
 - Doesn't create accounts, sign in for Justin, or solve CAPTCHAs.
 - Doesn't post publicly anywhere.
+- Doesn't browse Nextdoor, or mine residents' posts on any site, for leads.

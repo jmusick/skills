@@ -15,6 +15,7 @@ Rank candidates by how much the problem likely costs them in customers. A missin
 | No way to act online where customers would expect one | A restaurant with no menu or ordering, a salon or contractor with no booking or quote form, a shop with no store | Design & Development: booking, ordering, eCommerce |
 | Contact info is hard to find, or differs between site, Google, and Facebook | Compare hours, phone, and address across the three | Marketing: Google Business Profile and local SEO |
 | Missing or thin Google Business Profile | No hours, no photos, no website link, unanswered questions | Marketing: local SEO |
+| Google profile is unclaimed, or its Website button leads to a dead or unrelated page | "Claim this business" shows on the Maps listing; click the Website button and see where it lands | Marketing: Google Business Profile and local SEO |
 | Doesn't come up when you search for its own category and town | Search "bakery Huron Ohio" and see whether it appears | Marketing: SEO |
 | Facebook Page gone quiet (no posts in months) | The Page's latest post date | Marketing: social media |
 | Mismatched or low-quality logo and branding | A pixelated logo, a different logo on each platform | Branding & Design |
