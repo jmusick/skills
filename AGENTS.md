@@ -26,9 +26,9 @@ Draft new skills with skill-creator and review existing ones with `/improve-skil
 
 ## Shared code
 
-`skills/minor/scripts/version_info.py`, `skills/patch/scripts/version_info.py`, `skills/issue/scripts/version_info.py` and `skills/wave/scripts/version_info.py` are intentionally identical copies, because a skill can't read files from another skill's folder. So are `skills/issue/scripts/issue_survey.py` and `skills/wave/scripts/issue_survey.py`, and their tests in `skills/issue/tests/` and `skills/wave/tests/`. If you change one copy, make the same change in the others.
+`skills/minor/scripts/version_info.py`, `skills/patch/scripts/version_info.py` and `skills/issue/scripts/version_info.py` are intentionally identical copies, because a skill can't read files from another skill's folder. If you change one copy, make the same change in the others.
 
-`skills/issue/SKILL.md` and `skills/wave/SKILL.md` share text too: the size table and the Hardest rules in step 3, the version bump, merge, and tag steps, and the `<!-- agent-waiting-for-reply -->` marker, which must match `WAITING_MARKER` in `issue_survey.py`. Change them together.
+The `<!-- agent-waiting-for-reply -->` marker in `skills/issue/SKILL.md` must match `WAITING_MARKER` in `skills/issue/scripts/issue_survey.py`. Change them together.
 
 `skills/patch/SKILL.md` and `skills/minor/SKILL.md` are twins too: they differ only in the name, description, bump rule, and example releases. Keep everything else the same in both.
 

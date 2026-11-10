@@ -1,12 +1,12 @@
 ---
 name: improve-codebase
-description: Audit a codebase for the improvements most worth making, check each finding against the code, and file the ones you pick as GitHub issues for /issue and /wave.
+description: Audit a codebase for the improvements most worth making, check each finding against the code, and file the ones you pick as GitHub issues for /issue.
 disable-model-invocation: true
 ---
 
 # Improve the codebase
 
-Find the few changes that would make this codebase easier to change, prove each one from the code, and turn the ones the user picks into GitHub issues good enough for `/issue` or `/wave` to finish without this conversation.
+Find the few changes that would make this codebase easier to change, prove each one from the code, and turn the ones the user picks into GitHub issues good enough for `/issue` to finish without this conversation.
 
 This skill reports and files issues. It never edits code. Findings are cheap to throw away and edits aren't, and filed issues go through `/issue`'s worktree, review, and release steps, so nothing here needs its own safety net.
 
@@ -109,4 +109,4 @@ For each finding the user picks, write one issue with `references/issue-template
 - **Labels.** Add `improve-codebase` to every issue, so later runs can find them. Create it if missing (`gh label create improve-codebase --description "Found by /improve-codebase"`). Use the repo's existing labels for kind (bug, enhancement, refactor, tech-debt) and priority. If the repo has no priority labels, put the severity in the body; don't invent a label scheme without asking. Add the repo's needs-decision label, if it has one, when the fix needs the maintainer's call.
 - **Public repos.** Check `gh repo view --json visibility`. If the repo is public, get the user's explicit OK before filing any security finding, because anyone can read the issue before the fix ships.
 
-File with `gh issue create --title ... --body-file <temp file> --label ...`, using a temp file for the body so quoting doesn't mangle it. End with the URL of each new issue and the next step: `/issue N` for one, `/wave` for several.
+File with `gh issue create --title ... --body-file <temp file> --label ...`, using a temp file for the body so quoting doesn't mangle it. End with the URL of each new issue and the next step: `/issue N` for one, `/issue N M ...` to work several as a batch.

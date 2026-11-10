@@ -1,6 +1,6 @@
 # Issue template
 
-Write every issue for someone who hasn't seen this conversation, this audit, or the other issues. `/issue` will refuse an issue with no clear done state, and `/wave` uses the files in scope to keep parallel issues from colliding, so both sections are required.
+Write every issue for someone who hasn't seen this conversation, this audit, or the other issues. `/issue` will refuse an issue with no clear done state, and `/issue`'s batch mode uses the files in scope to keep parallel issues from colliding, so both sections are required.
 
 ## Title
 

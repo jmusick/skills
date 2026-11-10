@@ -1,7 +1,7 @@
 ---
 name: issue
 description: >-
-  Take one GitHub issue from open to released: do the work in its own worktree, review it, pause for you to test it, and squash-merge it as a tagged `vX.Y.Z - Summary` release commit.
+  Take GitHub issues from open to released, one at a time or several in parallel with subagents: do each in its own worktree, review it, pause for you to test it, and squash-merge it as a tagged `vX.Y.Z - Summary` release commit.
 disable-model-invocation: true
 ---
 
@@ -11,11 +11,12 @@ Take one GitHub issue from open to released. It lands on the default branch as e
 
 Arguments:
 - `/issue 42` works issue 42, or resumes it if an earlier run left your PR open. A bare `/issue` picks one.
+- `/issue 12 15 18` works those issues as a batch, in parallel. `--batch` picks a batch of up to 4, and `--batch N` up to N.
 - `--no-test` makes the run unattended: it skips the step 7 pause and every other stop to ask the user. Use it only when the user passes it.
 - `--no-merge` stops once the PR is open and CI has passed. The PR carries no version bump.
 - `--no-ship` merges without a version bump or tag.
 
-One issue per run. For a backlog, the user can run `/loop /issue` (with `--no-test` to run unattended) or `/wave`.
+For a batch, read [references/batch.md](references/batch.md) before step 1: it changes most steps. For a backlog, the user can run `/loop /issue`, or `/loop /issue --batch --no-test` to work it unattended.
 
 With `--no-test`, nobody is there to answer, so never stop to ask:
 - In step 2, take the next issue rather than one that needs the user's decisions, a breaking change, or (when `has_release_tags` is false) a first tag. If `/issue N` names such an issue, take the failure path and put the question in its comment.

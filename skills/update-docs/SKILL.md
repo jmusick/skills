@@ -14,7 +14,7 @@ Two kinds of change, two levels of authority:
 
 If the user says "audit" or "check only", apply nothing and report both lists.
 
-If the user or a calling skill limits the run to named files or to docs a diff could have made wrong (issue and wave do this), do steps 3, 5 and 7 for those docs only and skip the organization review. Don't stop to ask for approval; list any structural ideas under "Noticed, not done" so the caller can pass them on.
+If the user or a calling skill limits the run to named files or to docs a diff could have made wrong (issue does this), do steps 3, 5 and 7 for those docs only and skip the organization review. Don't stop to ask for approval; list any structural ideas under "Noticed, not done" so the caller can pass them on.
 
 ## 1. Find and sort the docs
 

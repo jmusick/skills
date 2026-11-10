@@ -33,7 +33,7 @@ BUG = re.compile(r"bug|regression|defect|crash|(^|[^a-z])fix")
 FEATURE = re.compile(r"enhancement|feature|improvement")
 BREAKING = re.compile(r"breaking")
 SEMVER_TAG = re.compile(r"^v?\d+\.\d+\.\d+$")
-# The issue and wave skills end the comment they leave on an issue they couldn't do with this.
+# The issue skill ends the comment it leaves on an issue it couldn't do with this.
 WAITING_MARKER = "<!-- agent-waiting-for-reply -->"
 
 
