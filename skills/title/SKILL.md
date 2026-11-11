@@ -16,6 +16,8 @@ Read from the first message to now. A compacted summary counts as the record of 
 - **The main thread vs. detours:** weight topics by how much of the session they took and how much they mattered to the result.
 - **Concrete anchors:** project, feature, tool, or the bug's symptom. Specific nouns make a title findable.
 
+Skip meta turns when weighing topics: this `/title` call, greetings, and small wording tweaks say nothing about what the session was for.
+
 Text passed with the command (`/title focus on the deploy fix`) is guidance on emphasis. An exact title (`/title Stripe webhook retry fix`) is used as written.
 
 ## 2. Check the current title
@@ -29,6 +31,9 @@ If the current title already fits, say so and leave it alone.
 - 3 to 8 words, under about 60 characters, because sidebars truncate.
 - Lead with the outcome or subject, not the conversation: "Fix race condition in upload queue", not "Chat about upload issues".
 - Sentence case, no trailing period, quotes, or emoji.
+- Write it in the language the conversation was held in.
+- If the session centered on one issue, PR, or ticket, include its number ("Fix #42 login redirect"); it's often what the user searches for.
+- Keep secrets out: no tokens, passwords, client names under NDA, or personal contact details. Titles show in sidebars, shared screens, and synced devices.
 - Two separate threads can be joined ("Add CSV export + fix date parsing"). With more than two, name the one that mattered most.
 - If the work ended unfinished, don't claim it was done: "Debugging flaky Playwright login test", not "Fix ...".
 

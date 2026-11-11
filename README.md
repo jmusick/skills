@@ -58,14 +58,19 @@ Most skills run only when you invoke them: `disable-model-invocation: true` in t
 
 ## Credits
 
-Some skills distill what the most-used public skills on the same subject agree on. Each one lists its sources in a `SOURCES.md` in its own folder, with each source pinned to the commit last reviewed and its license. The agent never loads these files.
+Some skills distill what the most-used public skills on the same subject agree on; the rest were checked against them. Each one lists its sources in a `SOURCES.md` in its own folder, with each source pinned to the commit last reviewed and its license. The agent never loads these files.
 
+- [daily-budget](skills/daily-budget/SOURCES.md): eight journalism and news-monitoring skills, for the sources-swept log.
 - [design-taste](skills/design-taste/SOURCES.md): nine frontend design skills, with most of the motion guidance from emilkowalski/skills and jakubkrehel/skills.
 - [humanize](skills/humanize/SOURCES.md): ten anti-AI-writing skills; each rule appears in most of them.
 - [improve-codebase](skills/improve-codebase/SOURCES.md): about twenty codebase-improvement skills, led by Matt Pocock's improve-codebase-architecture and codebase-design and shadcn's improve.
 - [improve-skills](skills/improve-skills/SOURCES.md): fifteen skill-writing and skill-improvement skills, beyond Anthropic's and OpenAI's skill-creators.
+- [issue](skills/issue/SOURCES.md): twelve issue-to-PR skills, led by open-mercato's om-auto-fix-issue (reproduce first) and fandhe-ai's implement-issue (out-of-scope tracking).
+- [minor](skills/minor/SOURCES.md) and [patch](skills/patch/SOURCES.md): thirteen release and changelog skills, led by jssblck's tag-release and tobi/qmd's release.
 - [music-creation](skills/music-creation/SOURCES.md): four songwriting skill collections, with a map of each rule to the sources behind it (licenses in [NOTICE.md](skills/music-creation/NOTICE.md)).
 - [newsroom](skills/newsroom/SOURCES.md): builds on the `newsroom-style` skill in jamditis/claude-skills-journalism (MIT; see [NOTICE.md](skills/newsroom/NOTICE.md)).
+- [prospect](skills/prospect/SOURCES.md): nine cold-outreach and prospecting skills, led by coreyhaines31's cold-email and prospecting.
 - [seo-audit](skills/seo-audit/SOURCES.md): the most-installed SEO skills, with the fix loop from squirrelscan's audit-website and the "look before you recommend" rule from seo-skill-bench.
 - [sprite](skills/sprite/SOURCES.md): adapts The Sprite Wizard's "prompt bible" from r/aigamedev.
+- [title](skills/title/SOURCES.md): twelve session- and tab-renaming skills.
 - [update-docs](skills/update-docs/SOURCES.md): eight docs-maintenance skills, including Anthropic's claude-md-improver, amelnagdy's docs-guard, and laurigates' docs-sync.

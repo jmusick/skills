@@ -1,5 +1,7 @@
 # The review packet
 
+Contents: the folder layout, then `research.json` (stories, events, updates, held leads), then `review.md` (the editor's outline).
+
 Everything for one day lives in `<library>/editorial/<YYYY-MM-DD>/`:
 
 ```
@@ -142,6 +144,14 @@ the contact; photos the editor could take today or tomorrow.
 ## Held leads and source checks
 
 What you looked at that didn't make it, and why. This is tomorrow's starting list.
+
+## Sources swept
+
+| Source | Checked | Result |
+| --- | --- | --- |
+| Erie County Health Department news | 9:40 a.m. | Nothing new since Oct. 10 |
+
+Every source you opened today, including the ones with nothing new, so the editor can see what was covered and what wasn't reached.
 ```
 
 Write dates in the editor's style (`Oct. 14`, `Wednesday`), link every source, and keep it scannable. The editor should be able to approve the package in a few minutes.

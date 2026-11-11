@@ -78,7 +78,7 @@ Leave out, without researching further:
 
 Use the signals in `references/signals.md`: check the website, the Google Business Profile, and the Facebook Page, and note what's missing, broken, or outdated. Facebook shows a login wall to signed-out browsers, so check the Page, and whether one exists at all, in Justin's signed-in Chrome. Search Facebook Pages for the business name before writing "no Facebook Page." Click every link on the Google profile too: a Website button that leads to a dead or unrelated page is easy to miss and costs the business customers. Check every problem yourself before writing it down. Load the site on a phone-width viewport before saying it isn't mobile-friendly, and open the page before calling a link broken. The message will name one of these problems to the owner, and getting it wrong costs the whole pitch.
 
-Pick the candidate with the clearest problem SDM fixes and a contact channel you can actually use. If none of them has a real problem, say so, write `passed` records, and offer another town or industry. Don't stretch a weak case.
+Pick the candidate with the clearest problem SDM fixes and a contact channel you can actually use. Between close candidates, prefer an owner who is visibly engaged: recent reviews with the owner's replies, recent posts, updated hours. An engaged owner reads messages and is more likely to act on one. If none of them has a real problem, say so, write `passed` records, and offer another town or industry. Don't stretch a weak case.
 
 ## 4. Choose the service and the channel
 
@@ -90,7 +90,7 @@ Pick the candidate with the clearest problem SDM fixes and a contact channel you
 3. Facebook Message to its Page.
 4. Another channel the business publishes for inquiries, such as an Instagram DM or a LinkedIn company page.
 
-Use only addresses the business published. Don't guess `info@` addresses or pull them from email-finder sites and data brokers: a guessed address bounces or reaches the wrong person, and buying or scraping lists is what makes outreach spam. Never use Nextdoor, Yelp messaging or "Request a Quote," Google review replies, or comments on posts. Those platforms ban solicitation, and a public pitch on someone's page reads badly to their customers. If the only channel is the phone, write the record, give Justin the number and a two-line talking point, and stop.
+Use only addresses the business published, and note in the record where it published the one you use and the date you saw it, so the source is on file if anyone asks how Justin got it. Don't guess `info@` addresses or pull them from email-finder sites and data brokers: a guessed address bounces or reaches the wrong person, and buying or scraping lists is what makes outreach spam. Never use Nextdoor, Yelp messaging or "Request a Quote," Google review replies, or comments on posts. Those platforms ban solicitation, and a public pitch on someone's page reads badly to their customers. If the only channel is the phone, write the record, give Justin the number and a two-line talking point, and stop.
 
 ## 5. Write the message
 
@@ -102,11 +102,11 @@ The message, in this order:
 3. The specific thing you noticed and what it likely costs them, in a sentence or two. Describe it as an observation, not a verdict, and never insult their work: "When I opened your site on my phone, the menu ran off the screen" rather than "Your website is outdated."
 4. What SDM would do about it, concretely.
 5. One sentence on what else SDM does, and only if it fits, a short mention of advertising in Firelands Current (see below).
-6. A low-pressure ask: a free, no-obligation conversation, or an offer to send a few notes on what he found. Invite a reply on this same channel.
+6. One low-pressure ask, by default an offer to send a few notes on what he found ("Want me to send them over?"). A yes is easy to give and shows real interest; a call can come after. Offer a free conversation instead only when the problem needs talking through. Don't offer both: two asks split the reply. Invite a reply on this same channel.
 7. An opt-out line in plain words, such as "If this isn't useful, just let me know and I won't reach out again."
 8. Sign-off: Justin Musick, Founder, Stone Dragon Media, and his phone number. Emails also carry the mailing address from `sender.md`, because U.S. law (CAN-SPAM) requires a valid postal address in commercial email. A P.O. box or registered mailbox is fine.
 
-Keep the body (everything above the sign-off) to 90–150 words for emails and forms and 60–100 for Facebook. Drafts run long, and estimates run short, so count the words with a command (such as `wc -w`) after humanizing, cut until the count fits, and report the real count in step 6. A Facebook message shows only its first line or two in the inbox preview, and a long one reads like a form letter. Give the phone number once, in the sign-off, not in the body too. For an email, write a plain subject line that names the business or the topic, like "A note about Maple Street Bakery's website." Never write a fake "Re:" or a misleading subject, which CAN-SPAM also prohibits.
+Keep the body (everything above the sign-off) to 75–125 words for emails and forms and 60–100 for Facebook. Owners read these on a phone between customers, and a long message reads like a form letter. Drafts run long, and estimates run short, so count the words with a command (such as `wc -w`) after humanizing, cut until the count fits, and report the real count in step 6. A Facebook message shows only its first line or two in the inbox preview. Give the phone number once, in the sign-off, not in the body too. For an email, write a short, plain subject line (two to six words) that names the business or the topic, like "Maple Street Bakery's website." Never write a fake "Re:" or a misleading subject, which CAN-SPAM also prohibits.
 
 **No links in a first message.** That means no URLs, no bare domains (email apps turn `stonedragonmedia.com` into a link), no email address written into the body, and no signature block that adds them. A link from a stranger looks like phishing and gets filtered. The business can reply or call. The phone number is fine.
 

@@ -80,10 +80,11 @@ In the checkout:
 
 1. Read its AGENTS.md / CLAUDE.md and follow the repo's conventions.
 2. Write concrete acceptance criteria. The review and the release commit check against them.
-3. Make the change, plus tests if the repo has them for this kind of code.
-4. Run the repo's checks (test, lint, build; with none, read the change against its rules).
+3. For a bug, reproduce it before changing code, as a failing test where the repo has tests for that code, so the fix is shown to make it pass. If it doesn't reproduce on the current default branch, stop: something may already have fixed it. Tell the user what you tried and ask whether to close the issue or keep digging.
+4. Make the change, plus tests if the repo has them for this kind of code.
+5. Run the repo's checks (test, lint, build; with none, read the change against its rules).
 
-Leave the change uncommitted: step 9 commits it together with the version bump as one release commit. Ask the user about any decision the issue doesn't settle.
+Leave the change uncommitted: step 9 commits it together with the version bump as one release commit. Ask the user about any decision the issue doesn't settle. When you notice something worth fixing that the issue doesn't cover, leave it alone and note it for the report's **Noticed** section: fixing it here widens the release past what the issue asked for.
 
 ## 6. Review
 
@@ -135,9 +136,9 @@ Choose the bump:
 python <this skill's directory>/scripts/version_info.py <patch|minor>
 ```
 
-It prints current and next version, `next_tag`, `tag_style`, version files with `in_lockstep` and an `update` hint, and the changelog path. Stop and ask if `versions_disagree` or `next_tag_exists_locally` is true. Then:
+It prints current and next version, `next_tag`, `tag_style`, version files with `in_lockstep` and an `update` hint, and the changelog path. Stop and ask if `versions_disagree`, `next_tag_exists_locally`, or `next_tag_exists_on_origin` is true, or `origin_tags_at_or_above_next` lists anything. Then:
 - Update every version file with `in_lockstep` true per its `update` hint. For `package.json`, run `npm version <X.Y.Z> --no-git-tag-version` (it updates the lockfile too) and check that only version lines changed. Leave independently versioned files alone and mention them in the report.
-- If there's a changelog, add a section at the top in its exact format, with today's date, written for readers. Don't create one.
+- If there's a changelog, add a section at the top in its exact format, with today's date, written for readers, leaving out what they can't see (refactors, CI, tests). If it has an `Unreleased` section (`changelog_has_unreleased`), turn that into this version's section instead of writing a second one, and leave a fresh empty `Unreleased` above it. Don't create one.
 - Follow any release steps in the repo's AGENTS.md / CLAUDE.md.
 
 Rerun the checks if the bump touched something they read, such as a lockfile. Write down the version, tag, and a release summary: imperative, capitalized, under about 60 characters, no trailing period, e.g. `Reset hCaptcha after a failed contact-form send`.

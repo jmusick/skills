@@ -42,7 +42,7 @@ Then open yesterday's `review.md` (the newest earlier folder in `editorial/`). I
 
 ### 2. Sweep the sources
 
-Work in this order, and note the date on everything you find:
+Work in this order, note the date on everything you find, and log each source you open, with the time and what it turned up, for the packet's "Sources swept" table:
 
 1. **Follow-ups.** Yesterday's held leads, plus anything new about stories published in the last few days (a route announced, a time changed, a vote taken).
 2. **Reliable sources** in `news-sources.md`.

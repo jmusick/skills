@@ -6,7 +6,9 @@ Usage: python version_info.py <major|minor|patch>
 
 Prints JSON describing the current version (from semver tags and tracked
 version files), the next version for the requested bump, where the version
-lives, the repo's tag style, and the state of the branch. Changes nothing.
+lives, the repo's tag style, whether origin already has the next tag, and the
+state of the branch. Changes nothing, so fetch first: `behind_ahead_upstream`
+compares against the last-fetched upstream.
 
 With --verify, checks one planned release against a commit (HEAD by default)
 and origin's tags instead: `ready_to_merge` says nothing has released X.Y.Z
@@ -141,6 +143,20 @@ def local_tags():
     return tags
 
 
+def origin_tags():
+    """Semver tag names on origin, or None if origin can't be listed."""
+    remote = git("ls-remote", "--tags", "origin")
+    if remote is None:
+        return None
+    names = set()
+    for line in remote.splitlines():
+        name = line.split("refs/tags/", 1)[-1]
+        name = name[:-3] if name.endswith("^{}") else name
+        if parse(name):
+            names.add(name)
+    return names
+
+
 def verify(version, ref):
     want = parse(version)
     if not want:
@@ -163,15 +179,7 @@ def verify(version, ref):
     file_versions = {parse(f["version"]) for f in files} - {None}
     local_tag_sha = git("rev-parse", "-q", "--verify", f"refs/tags/{tag}^{{commit}}")
 
-    remote = git("ls-remote", "--tags", "origin")
-    remote_tags = None
-    if remote is not None:
-        remote_tags = set()
-        for line in remote.splitlines():
-            name = line.split("refs/tags/", 1)[-1]
-            name = name[:-3] if name.endswith("^{}") else name
-            if parse(name):
-                remote_tags.add(name)
+    remote_tags = origin_tags()
 
     problems_merge, problems_tag = [], []
     if remote_tags is None:
@@ -253,6 +261,12 @@ def main():
     ahead_behind = git("rev-list", "--left-right", "--count", "@{u}...HEAD") if upstream else None
 
     changelog = next((c for c in ("CHANGELOG.md", "CHANGELOG", "CHANGES.md", "HISTORY.md") if os.path.exists(c)), None)
+    unreleased = bool(changelog and re.search(r"^#+\s*\[?Unreleased\]?\s*$", read(changelog) or "", re.M | re.I))
+
+    # Local tags can lag origin's, so check the next tag and anything newer there too.
+    remote_tags = origin_tags()
+    newer_on_origin = None if remote_tags is None else sorted(
+        (t for t in remote_tags if parse(t) >= nxt), key=parse)
 
     out = {
         "repo_root": root,
@@ -261,12 +275,15 @@ def main():
         "next_version": fmt(nxt),
         "next_tag": next_tag,
         "next_tag_exists_locally": git("rev-parse", "-q", "--verify", f"refs/tags/{next_tag}") is not None,
+        "next_tag_exists_on_origin": None if remote_tags is None else next_tag in remote_tags,
+        "origin_tags_at_or_above_next": newer_on_origin,
         "latest_tag": latest_tag,
         "tag_style": tag_style or "lightweight (no existing tags; default)",
         "version_files": files,
         "versions_disagree": len(seen) > 1,
         "versions_seen": sorted(seen),
         "changelog": changelog,
+        "changelog_has_unreleased": unreleased,
         "branch": branch,
         "upstream": upstream,
         "behind_ahead_upstream": ahead_behind,

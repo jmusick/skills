@@ -5,13 +5,19 @@ End every run with this report. The **Follow-up** section is required, since it 
 ```
 Shipped #42 - Fix login redirect after password reset
 - Size: normal (two files, existing tests to follow); ran on sonnet at medium effort
+- Reproduced with a failing test first; after the last edit `npm test` passed (48 tests) and `npm run lint` was clean
 - Tested by you in local dev; one fix round (the redirect dropped the query string)
 - Committed on main after 1 review round as "v1.4.3 - Fix login redirect after password reset" (3f2a9c1), which closed #42
 - Released v1.4.3 (patch): tagged 3f2a9c1 and pushed main and the tag; CI runs on the push
 
+Noticed
+- The signup form has the same unescaped redirect parameter (src/auth/signup.ts); left alone as outside #42
+
 Follow-up
-- None
+- Say the word and I'll file the signup redirect as an issue
 ```
+
+Name the checks you ran after the last edit and what they returned, not just "checks passed", so the user can see the release was checked as it shipped. Leave **Noticed** out when there's nothing; otherwise list what you saw but left alone because the issue didn't cover it, and offer to file each as an issue.
 
 With `--branch`, name the PR, its review rounds and CI, the merge commit the tag points at, and the worktree and branches cleaned up.
 
