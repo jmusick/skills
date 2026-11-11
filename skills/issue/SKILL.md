@@ -16,12 +16,7 @@ Arguments:
 - `--no-merge` stops once the PR is open and CI has passed. The PR carries no version bump.
 - `--no-ship` merges without a version bump or tag.
 
-For a batch, read [references/batch.md](references/batch.md) before step 1: it changes most steps. For a backlog, the user can run `/loop /issue`, or `/loop /issue --batch --no-test` to work it unattended.
-
-With `--no-test`, nobody is there to answer, so never stop to ask:
-- In step 2, take the next issue rather than one that needs the user's decisions, a breaking change, or (when `has_release_tags` is false) a first tag. If `/issue N` names such an issue, take the failure path and put the question in its comment.
-- Skip the step 3 model-fit stop; note any mismatch in the report.
-- Any later stop that would ask the user (a decision in step 5 or 6, a breaking change or a version mismatch in step 8, a non-mechanical merge) takes the failure path instead, with the question in its comment.
+Before step 1, read [references/batch.md](references/batch.md) for a batch (it changes most steps) and [references/unattended.md](references/unattended.md) for `--no-test` (it turns every stop to ask into the failure path). For a backlog, the user can run `/loop /issue`, or `/loop /issue --batch --no-test` to work it unattended.
 
 Keep a list of everything this run creates (claim, worktree, branches, PR, tag). Cleanup and the report depend on it.
 

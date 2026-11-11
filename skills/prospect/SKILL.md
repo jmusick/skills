@@ -13,7 +13,7 @@ Find one local business that Stone Dragon Media can actually help, show Justin w
 ## Modes
 
 - **New** (default): `/prospect`, optionally with a town, an industry, or a named business ("/prospect Huron restaurants", "/prospect Maple Street Bakery"). Runs steps 1–7.
-- **Follow-up**: `/prospect follow-up`. See "Follow-ups" below.
+- **Follow-up**: `/prospect follow-up`. Read [references/follow-up.md](references/follow-up.md) and follow it.
 - **Update**: the user reports a reply, a no, or an opt-out ("Maple Street said no thanks"). Update that business's record and stop.
 
 If the user asks for several businesses, run the loop once per business, each with its own approval.
@@ -137,16 +137,6 @@ Use Justin's real browser, where he's signed in (Claude in Chrome, or the browse
 After sending, confirm it went: Gmail's "Message sent," the form's thank-you page, the message appearing in the Facebook thread. Then update the record: `status: sent`, the date, the channel, the final text, and a History line. If sending failed, say so, keep `status: drafted`, and record what happened.
 
 End by telling Justin what was sent, where, and when a follow-up would be due (seven days out).
-
-## Follow-ups
-
-`/prospect follow-up` lists the records with `status: sent` whose first contact was seven or more days ago, oldest first. For each one Justin picks:
-
-1. Ask whether they replied. If the channel was email, offer to search his Gmail for a reply first. Never assume no reply.
-2. If there was no reply, draft one short follow-up on the same channel (about 40–80 words). Refer back to the first note in a sentence, add one useful detail, and repeat the opt-out line. A follow-up may include one link to stonedragonmedia.com or a relevant portfolio page, since the business has now heard from Justin once.
-3. Humanize it, get approval as in step 6, send it, and set `status: followed-up` with a History line.
-
-Send one follow-up at most. After that the business has heard twice, and a third unanswered message is pestering.
 
 ## Firelands Current
 
