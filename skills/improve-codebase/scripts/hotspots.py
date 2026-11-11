@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Find a repo's hotspots from git history. Read-only.
 
-Prints JSON: the files touched by the most recent commits (with how many of
-those commits look like fixes, the file's size, and when it last changed) and
-the largest tracked source files. Lockfiles, changelogs, vendored code, build
+Prints JSON: the files touched by the most recent commits in scope (with how
+many of those commits look like fixes, the file's size, and when it last
+changed), counted under each file's current name across renames, and the
+largest tracked source files. Lockfiles, changelogs, vendored code, build
 output, and binary files are left out.
 
 Usage: hotspots.py [--path DIR] [--commits N] [--top N]
@@ -55,7 +56,7 @@ def line_count(full):
 def main():
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--path", default=".", help="limit to this folder (relative to the repo root or cwd)")
-    ap.add_argument("--commits", type=int, default=500, help="how many recent non-merge commits to read")
+    ap.add_argument("--commits", type=int, default=500, help="how many recent non-merge commits in scope to read")
     ap.add_argument("--top", type=int, default=25, help="how many files to list in each section")
     args = ap.parse_args()
 
@@ -73,8 +74,14 @@ def main():
         return 1
     scope = "" if scope == "." else scope.rstrip("/") + "/"
 
-    log = git("log", "--no-merges", f"-n{args.commits}", "--name-only", "--format=%x00%aI%x09%s", cwd=root) or ""
+    # The pathspec makes -n count only commits that touched the scope. -M reports
+    # renames as "R<score>\told\tnew" so history under an old name isn't lost.
+    log_args = ["log", "--no-merges", "-M", f"-n{args.commits}", "--name-status", "--format=%x00%aI%x09%s"]
+    if scope:
+        log_args += ["--", scope]
+    log = git(*log_args, cwd=root) or ""
     stats = {}
+    renamed = {}  # old path -> its current name; the log runs newest-first, so this fills before older commits
     commits = 0
     oldest = newest = None
     for chunk in log.split("\0")[1:]:
@@ -86,9 +93,14 @@ def main():
         newest = newest or date
         oldest = date
         is_fix = bool(FIX.search(subject))
-        for path in lines[1:]:
-            path = path.strip()
-            if not path or not path.startswith(scope) or skipped(path):
+        for line in lines[1:]:
+            fields = line.split("\t")
+            if len(fields) < 2:
+                continue
+            path = renamed.get(fields[-1], fields[-1])
+            if fields[0].startswith("R") and len(fields) == 3:
+                renamed[fields[1]] = path
+            if not path.startswith(scope) or skipped(path):
                 continue
             s = stats.setdefault(path, {"path": path, "commits": 0, "fix_commits": 0, "last_changed": date[:10]})
             s["commits"] += 1
