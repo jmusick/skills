@@ -54,7 +54,7 @@ python <skill>/scripts/codex_image.py --prompt-file <scratch>/croc_walk.txt --ou
 
 The script prints the saved path and Codex's reply, and exits non-zero if no image came back. If Codex saved more than one image, the extras are kept as `.alt1.png` and so on; pick the best.
 
-Look at every sheet (open the PNG) and judge it against the checklist in the prompting guide: identity, frame count, separation, visible motion, consistent size, detail budget kept, nothing cropped, no text. Reroll a failing sheet with one targeted change. Don't reroll for soft edges, off colors or a ragged outline; the cleanup fixes those.
+Look at every sheet (open the PNG) and judge it against "Judging a sheet" in the prompting guide. Reroll a failing sheet with one targeted change. Don't reroll for soft edges, off colors or a ragged outline; the cleanup fixes those.
 
 ## 4. Clean up
 

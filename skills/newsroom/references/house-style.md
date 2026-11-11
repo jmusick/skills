@@ -72,11 +72,10 @@ Districts with buildings or students in the coverage area (formal name first, `t
 Bellevue City, Berlin-Milan Local, Buckeye Central Local, Edison Local (Erie County), Firelands Local, Huron City, Kelleys Island Local, Margaretta Local, Monroeville Local, New London Local, Norwalk City, Perkins Local, Plymouth-Shiloh Local, Sandusky City, Seneca East Local, South Central Local, Vermilion Local, Wellington Exempted Village, Western Reserve Local, Willard City (each followed by "School District").
 
 - **Career centers:** `EHOVE Career Center` in Milan. EHOVE stands for Erie Huron Ottawa Vocational Education, but don't spell it out.
-- **Private schools:** `Sandusky Central Catholic Schools`, `St. Peter's School` (Huron). [FILL IN others]
+- **Private schools:** `Sandusky Central Catholic Schools`, `St. Peter's School` (Huron).
 
 ### Institutions
 
 - **Hospitals:** `Fisher-Titus Medical Center` (Norwalk), `Firelands Regional Medical Center` (Sandusky, part of Firelands Health), `The Bellevue Hospital` (capital T, part of Firelands Health), `Mercy Health - Willard Hospital`.
 - **College:** `BGSU Firelands` (Huron), a regional campus of Bowling Green State University. Use `Bowling Green State University Firelands` only when the full name is needed.
 - **Places:** `Cedar Point`, `Plum Brook Station` (NASA, near Sandusky), `Blue Hole` (Castalia), `Norwalk-Huron County Airport`, `Firelands Museum and Research Center`, `Firelands Historical Society`.
-- [FILL IN local businesses, nonprofits, and names that are often misspelled]

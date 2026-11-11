@@ -34,7 +34,7 @@ Check this first. Every other fix depends on it.
 
 ## 4. Dead code
 
-- Flag: unused exports, files nothing imports, functions with zero references, unreachable branches, feature flags that are always on or off, compatibility shims and fallbacks with no remaining caller, commented-out code, dependencies nothing imports.
+- Flag: unused code and dependencies, feature flags that are always on or off, compatibility shims and fallbacks with no remaining caller.
 - Before calling something dead, search for dynamic uses: string-based lookups, reflection, plugin registries, framework conventions (routes, migrations, entry points named in config), public API a library exports for others.
 - Tools: `npx knip` (JS/TS), `vulture` (Python), `cargo machete` or `cargo udeps` (Rust), `staticcheck` (Go), `npx depcheck`.
 
@@ -46,12 +46,12 @@ Check this first. Every other fix depends on it.
 
 ## 6. Errors and resilience
 
-- Flag: empty or blanket `catch`/`except` blocks; errors logged and then ignored where the caller needed to know; inconsistent error shapes from one module; outbound network calls with no timeout; retries with no limit; resources (files, connections, listeners) not closed.
+- Flag: errors swallowed where the caller needed to know, inconsistent error shapes from one module, outbound calls with no timeout, unbounded retries, unclosed resources.
 - Usually fine: a broad catch at the top of a process that logs and exits, or a deliberate best-effort path with a comment saying so.
 
 ## 7. Tests
 
-- Flag: frequently changed or frequently fixed code with no tests; tests that assert on implementation details so every refactor breaks them; flaky or skipped tests; tests that can't run without network or secrets.
+- Flag: frequently changed or fixed code with no tests, tests that assert on implementation details, tests that can't run without network or secrets.
 - Don't chase a coverage number. Tie each finding to code that changes or breaks.
 - Tools: the project's own coverage command, if it has one.
 
@@ -65,7 +65,7 @@ Check this first. Every other fix depends on it.
 
 Only with evidence that the code is on a hot path (a request handler, a loop over user data, a render path).
 
-- Flag: queries inside loops (N+1), blocking I/O in async code, work repeated on every call that could be done once, unbounded caches or lists.
+- Flag: N+1 queries, blocking I/O in async code, unbounded caches.
 - Don't flag: micro-optimizations, or anything you can't connect to a path that runs often.
 
 ## 10. Security hygiene

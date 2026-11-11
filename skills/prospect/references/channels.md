@@ -1,6 +1,6 @@
 # Sending on each channel
 
-All sending goes through Claude in Chrome, where Justin is signed in. Work in a new tab, not one he has open. Never sign in, sign out, or change any account setting. If a site asks for a login, stop and ask Justin to sign in.
+All sending goes through Justin's signed-in browser (Claude in Chrome or the equivalent). Work in a new tab, not one he has open. Never sign in, sign out, or change any account setting. If a site asks for a login, stop and ask Justin to sign in.
 
 ## Email (Gmail)
 

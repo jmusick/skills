@@ -8,7 +8,7 @@ Describe reference music through audible traits: articulation, register, groove,
 
 Build a recognizable motif from rhythm, interval shape, contour, or gesture. Develop it through repetition, sequence, fragmentation, extension, compression, or changed register. Retain enough identity for the relationship to remain audible.
 
-Give phrases direction and an arrival or intentional suspension. Use rests. Judge leaps against the intended performer and their preparation or landing rather than a universal interval ban. Choose range and tessitura for the singer; do not invent their comfortable range. Consider vowels, articulation, breathing, and important words.
+Give phrases direction and an arrival or intentional suspension. Use rests. Choose range and tessitura for the singer; do not invent their comfortable range. Consider vowels, articulation, breathing, and important words.
 
 When exact melody is requested, supply unambiguous pitches and rhythm in appropriate notation or an event representation. Contour prose is a sketch. State what remains unverified when playback is unavailable.
 
@@ -22,7 +22,7 @@ Distinguish tempo from feel. Straight, swung, half-time, double-time, sparse, an
 
 Give sections distinct jobs. Plan useful entries, exits, register, rhythm, texture, or performance changes. Consider subtraction when adding layers masks the hook. A chorus can arrive through space or lower register; it need not be louder or higher. Minimal arrangements can develop through touch and phrasing.
 
-Explain how later sections build on earlier material. Repeated grooves, even phrases, static textures, and identical choruses may be central to the style. Choose a purposeful ending: stop, unresolved cut, tag, return, thinning, or fade. Require no arbitrary asymmetry or subtraction event.
+Explain how later sections build on earlier material. Repeated grooves, even phrases, static textures, and identical choruses may be central to the style. Choose a purposeful ending: stop, unresolved cut, tag, return, thinning, or fade.
 
 For substantial arrangements, use a compact section table with length if known, musical purpose, lead/supporting parts, and transition. Include key, tempo, meter, groove, motif, vocal direction, and ending only to the required depth. If exact duration and bars are specified, reconcile them: seconds = bars × quarter-note beats per bar × 60 / quarter-note BPM at constant meter and tempo. Account separately for tempo changes, pickups, and free time.
 

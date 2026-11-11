@@ -4,7 +4,6 @@ Image models draw a polished single illustration and a sloppy sprite. Left to gu
 
 ## Contents
 - [The three levers](#the-three-levers)
-- [The order of work](#the-order-of-work)
 - [Model sheet template](#model-sheet-template)
 - [Clip sheet template](#clip-sheet-template)
 - [The cliché list](#the-cliché-list)
@@ -20,13 +19,6 @@ Image models draw a polished single illustration and a sloppy sprite. Left to gu
 3. **Restrictions.** Name the clichés to leave out (the list below), and say that leaving them out doesn't mean making the character plain.
 
 Without an art direction the model fills the gap with its defaults, and its defaults are the clichés.
-
-## The order of work
-
-1. **Model sheet first.** For a new character, generate one standalone sprite in a neutral pose and get the user's OK on the design. Every clip sheet attaches it as a reference. A character described only in words comes out different in every sheet; a character shown in a reference image stays put.
-2. **One clip per image.** One animation per generation, one row, a stated number of frames. Models lose count and mix poses when one image holds several animations.
-3. **Attach the reference every time,** and say in words that it's the same character. For an existing game character, attach its `*_preview_8x.png` from `ArtSource/` instead of a model sheet.
-4. **Same wording across a character's prompts.** Only the asset line, layout, frame list and output lines change between clips. Identical CHARACTER, ART DIRECTION and DETAIL BUDGET text is what keeps the clips matching.
 
 ## Model sheet template
 

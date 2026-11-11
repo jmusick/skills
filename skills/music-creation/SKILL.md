@@ -51,7 +51,7 @@ After the song, add short notes only where they earn their place: the feel or te
 
 ## Check before handing it over
 
-Check the active constraints, the hook, each section's job, natural stress, and whether the words agree with the musical plan. Separate demonstrable mismatches, such as a stressed syllable landing on a weak beat, from matters of taste, and say which is which. Don't score songs numerically or demand devices like asymmetry, a changed final chorus, or a resolved ending. Use them when they serve the song.
+Check the active constraints, the hook, each section's job, natural stress, and whether the words agree with the musical plan. Separate demonstrable mismatches, such as a stressed syllable landing on a weak beat, from matters of taste, and say which is which.
 
 Be honest about what you can't hear. A contour description is a sketch, not a notated melody, and a prompt is not audio. Without audio or notation, qualify claims about how something sounds or fits. Never claim to have listened, measured, rendered, or checked originality when you haven't, because the user will make decisions based on those claims.
 

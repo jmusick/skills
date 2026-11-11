@@ -1,6 +1,6 @@
 ---
 name: newsroom
-description: Write, edit, or check news copy for Firelands Current in AP style, with newsroom standards for ledes, nut grafs, inverted-pyramid structure, attribution, sourcing, and fairness. Use when the user asks for a news story, brief, meeting story, police or court story, obituary, feature, profile, or explainer; wants notes, a transcript, an agenda, or a press release turned into a story; asks to edit, tighten, or AP-check a draft; or needs headlines. Not for opinion columns or editorials, marketing copy, press releases written on behalf of an organization, or proofreading text that isn't news.
+description: Write, edit, or AP-check news stories, briefs, obituaries, features, and headlines for Firelands Current, including turning notes, transcripts, agendas, or press releases into stories. Not for opinion columns, marketing copy, press releases written for an organization, or proofreading text that isn't news.
 ---
 
 # Newsroom

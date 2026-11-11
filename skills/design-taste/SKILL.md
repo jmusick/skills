@@ -28,7 +28,7 @@ A model builds the average of every page it has seen: a centered headline, a sma
 
 ## The tells
 
-Treat a single hit as a question and a cluster as a finding. `references/tells.md` has the dated registry, the reason each one reads as generated, what to do instead, and when it's fine.
+Treat a single hit as a question and a cluster as a finding. Before writing a fix for a tell, read its row in `references/tells.md` for the reason, the replacement, and when it's fine.
 
 **Structure**
 - Same-size cards of icon, heading, and text as the page's structure; cards nested in cards.
@@ -67,7 +67,7 @@ Treat a single hit as a question and a cluster as a finding. `references/tells.m
 
 ## Quality floor
 
-Build to this without announcing it, and check it on the result. `references/floor.md` has the full list with the reason for each rule.
+Build to this without announcing it, and check it on the result. When auditing, or unsure how a rule applies, read `references/floor.md`.
 
 - Body text contrast at least 4.5:1, large text and UI boundaries at least 3:1. Secondary text on a colored surface is tinted from that color, not grey.
 - Every interactive element has a visible `:focus-visible` state. Never remove an outline without a replacement.

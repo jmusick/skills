@@ -1,6 +1,6 @@
 ---
 name: update-docs
-description: "Audit and tidy a repo's docs: fix what no longer matches the code, then propose deleting, merging, or moving docs that are stale, duplicated, contradictory, or misplaced. Use when the user asks to update, sync, audit, or clean up the docs, README, AGENTS.md, CLAUDE.md, changelog, or privacy policy; asks whether the docs are still accurate or needed; or wants the docs caught up after a batch of changes, even if they just say the docs are a mess or old plans and audits are piling up. Not for writing new docs from scratch, code comments, de-AI'ing prose (use humanize), or releases (use /patch or /minor)."
+description: "Audit and tidy a repo's docs: fix what no longer matches the code, then propose deleting, merging, or moving stale, duplicated, or misplaced docs. Not for writing new docs, code comments, de-AI'ing prose (use humanize), or releases (use /patch or /minor)."
 ---
 
 # Update docs
@@ -14,7 +14,9 @@ Two kinds of change, two levels of authority:
 
 If the user says "audit" or "check only", apply nothing and report both lists.
 
-If the user or a calling skill limits the run to named files or to docs a diff could have made wrong (issue does this), do steps 3, 5 and 7 for those docs only and skip the organization review. Don't stop to ask for approval; list any structural ideas under "Noticed, not done" so the caller can pass them on.
+If the user or a calling skill limits the run to named files or to docs a diff could have made wrong (issue does this), do steps 1, 3, 5 and 7 for those docs only and skip the organization review. Don't stop to ask for approval; list any structural ideas under "Noticed, not done" so the caller can pass them on.
+
+On a full run, steps 2, 4, 6 and 9 are in [references/full-audit.md](references/full-audit.md): read it before step 2, and do those steps at their numbers below.
 
 ## 1. Find and sort the docs
 
@@ -39,18 +41,6 @@ Read AGENTS.md / CLAUDE.md first. They may set doc rules (e.g. "keep the README 
 
 With more than a few dozen docs, checking every claim in every file won't fit one pass. Check the docs readers hit first (README, AGENTS.md, getting-started and setup guides) fully, use step 2 to target the rest, and say in the report which docs got only a light check. If you can spawn subagents, you can split the claim checks by folder, but make the edits yourself so terms and fixes stay consistent across docs.
 
-## 2. See what changed since the docs were last touched
-
-For each doc, find its last commit and what changed in the repo after it:
-
-```bash
-git log -1 --format='%h %as' -- README.md
-git log --oneline --stat <that-hash>..HEAD
-git status --short
-```
-
-This points you at likely drift (new folders, renamed scripts, removed features) and at docs nobody has touched in a long time. It doesn't replace step 3, because some docs were wrong from the day they were written.
-
 ## 3. Check living docs against the repo
 
 Treat each statement a living doc makes as a claim and verify it by reading the code or running a read-only command. Don't trust memory of how a tool "usually" works.
@@ -65,20 +55,6 @@ Treat each statement a living doc makes as a claim and verify it by reading the 
 - **Stated rules:** checkable claims hold ("these two files are identical", "scripts use only the standard library", "no build step").
 - **Gaps:** a user-facing feature, command, or top-level folder that no doc mentions where a reader would look for it.
 
-## 4. Check dated records and agent notes
-
-Never rewrite what a dated record says, even where the code has moved on. It records what was decided or found at the time, and "fixing" it to match today's code falsifies that record.
-
-Instead, work out each record's status from commits, the code, and newer records: still open, done, superseded, or abandoned.
-
-- **Done or superseded but still worth keeping as history:** add one status line under the title, e.g. `> Status: superseded by docs/adr/0007-queue.md (2026-10-31)` or `> Status: done in v0.7.0`. Update an existing `Status:` line instead of adding a second.
-- **No longer worth keeping:** propose deleting it (step 8). Examples: a plan whose work shipped and is recorded in the changelog or an ADR, an audit whose findings were all fixed, a scratch file with nothing in it a reader still needs.
-- **Still open:** leave it.
-
-Agent notes are lists of work, so check them like one. Propose removing items the code or history shows are done, and propose deleting a notes file whose content is all done or stale.
-
-If a living doc cites a dated record as current ("see the 2024 audit for our auth setup") and the record is stale, that's a living-doc problem; fix the citation.
-
 ## 5. Find contradictions
 
 Compare docs that cover the same ground: setup steps in README vs CONTRIBUTING, rules in AGENTS.md vs CONTRIBUTING, versions, defaults, and names for the same thing.
@@ -87,18 +63,6 @@ Compare docs that cover the same ground: setup steps in README vs CONTRIBUTING, 
 - **The code can't settle it** (a policy, a process, an intent): don't pick a side. Put both claims, with file:line, under "Needs your call".
 
 A dated record disagreeing with a living doc isn't a contradiction; the record is history. Mark its status instead (step 4).
-
-## 6. Review organization
-
-Look for:
-
-- **Docs no longer needed:** about a removed feature, superseded by another doc, an empty stub, or a finished record or notes file (step 4). Give the reason and the evidence for each.
-- **Duplication:** the same content in two places that will drift apart. Propose keeping it in one and linking from the other. Keep the copy where a reader would look first, or the one more docs already link to. AGENTS.md may restate a few rules agents must see without following a link; that's fine.
-- **Misplaced content:** long reference material in the README that belongs in `docs/`; how-to-run steps buried in a design doc; human-only background in AGENTS.md, which loads into every agent session and should hold only what an agent can't learn from the code.
-- **Shape:** one doc covering unrelated topics (propose splitting it), or several tiny docs on one topic (propose merging them).
-- **Findability:** docs nothing links to, a `docs/` folder with many files and no index, a README that never points to `docs/`.
-
-If the docs as a whole are scattered, duplicated, or hard to navigate, also propose a target layout: a short tree of what lives where and what moves or merges to get there. Don't propose one for its own sake. A small repo with a good README and a changelog is already organized.
 
 ## 7. Apply the small fixes
 
@@ -152,16 +116,11 @@ Proposed changes (reply with the numbers to apply, "all", or "none")
 3. Delete NOTES.md (untracked, can't be recovered): every item is done
 4. Add docs/README.md as an index: 11 docs, nothing links to 6 of them
 
+Noticed, not done (limited runs only)
+- docs/setup-old.md looks superseded by the README, but this run covers only the diff
+
 Checked, no changes: SECURITY.md, docs/api.md, docs/adr/0001-0006
 ```
 
 Leave out an empty section. Nothing is committed; say so. If there are no proposals, the run ends here.
 
-## 9. Apply what's approved
-
-Do only the numbers the user approved.
-
-- Move tracked files with `git mv` so history follows them; untracked files with a plain move.
-- When merging, keep everything from the source that isn't already in the target, then delete the source.
-- After any move, merge, or delete, search the repo for links and mentions of the old path and fix them, including in AGENTS.md and code comments that point at docs.
-- Report what you applied, in the same format. Still nothing committed.

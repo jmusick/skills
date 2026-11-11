@@ -11,9 +11,9 @@ Translate choices into compatible instructions. Assign influences to roles, such
 Unless the request is narrower, provide:
 
 - Title: preserve a supplied title or propose one.
-- Style: concise prose for defining sound, groove or tempo where relevant, instruments, vocal or instrumental character, section contrast, and ending. Put the defining priority early; there is no universally superior ordering.
+- Style: concise prose for defining sound, groove or tempo where relevant, instruments, vocal or instrumental character, section contrast, and ending. Put the defining priority early.
 - Lyrics: words to sing with simple section labels such as `[Verse]` and `[Chorus]`. For instrumentals, state that Instrumental should be enabled and no sung lyrics supplied; put any section plan separately.
-- Exclusions: genuinely unwanted elements for the dedicated exclusion field where available. Do not invent exclusions for every song.
+- Exclusions: genuinely unwanted elements for the dedicated exclusion field where available.
 
 Give each field its own block so the user can copy it in one motion, for example:
 
