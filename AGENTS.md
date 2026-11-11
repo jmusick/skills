@@ -34,6 +34,8 @@ The `<!-- agent-waiting-for-reply -->` marker in `skills/issue/references/failur
 
 `skills/patch/SKILL.md` and `skills/minor/SKILL.md` are twins too: they differ only in the name, description, bump rule, and example releases. Keep everything else the same in both.
 
+Steps 8 and 9 of `skills/issue/SKILL.md` do the same release as `/patch` and `/minor` (bump, one `vX.Y.Z - Summary` commit, tag, push) inline, because those two are manual-only and calling them would mean dropping that guard. When you change how `/patch` or `/minor` bumps, writes the commit, or tags, make the matching change there.
+
 ## Scripts
 
 - Scripts should run with only the Python standard library (or plain shell) so they work wherever the skill is installed.

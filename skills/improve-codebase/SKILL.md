@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 Find the few changes that would make this codebase easier to change, prove each one from the code, and turn the ones the user picks into GitHub issues good enough for `/issue` to finish without this conversation.
 
-This skill reports and files issues. It never edits code. Findings are cheap to throw away and edits aren't, and filed issues go through `/issue`'s worktree, review, and release steps, so nothing here needs its own safety net.
+This skill reports and files issues. It never edits code. Findings are cheap to throw away and edits aren't, and filed issues go through `/issue`'s review, test, and release steps, so nothing here needs its own safety net.
 
 ## Arguments
 

@@ -16,10 +16,10 @@ Hardest has a high bar because the top models cost far more per token. Difficult
 - An earlier attempt at Hard failed, as the issue's comments or a closed PR show.
 - A miss couldn't be undone after release, such as a migration that rewrites production data.
 
-Note the size, the reason, and any Hardest condition in the PR and report.
+Note the size, the reason, and any Hardest condition in the report, and in the PR with `--branch`.
 
 Don't go to `max` or `ultra` by default: they spend far more for the last bit of quality, and Codex's `ultra` spawns its own subagents. If an issue seems to need them, ask the user. On another agent, map the rows onto its small, mid, and top tiers. Model lineups change, so if a listed model isn't offered, use the nearest tier that is. When unsure, go up a size: a too-weak model costs a review round, which costs more.
 
 ## The model-fit stop
 
-If this session's model is above or below what the size calls for, stop before claiming and tell the user, e.g. "#42 looks trivial (a one-line config fix). Haiku at low effort can handle it. Switch in the model menu (`/model` in the CLI) and say go, or say go to stay." Only the user can switch, and switching now is cheapest because a switch drops the prompt cache. Fold this into any step 2 questions so the run stops once. If the model fits and the effort is one level off, if the session fits, or if you can't tell, don't stop.
+If this session's model is above or below what the size calls for, stop before starting and tell the user, e.g. "#42 looks trivial (a one-line config fix). Haiku at low effort can handle it. Switch in the model menu (`/model` in the CLI) and say go, or say go to stay." Only the user can switch, and switching now is cheapest because a switch drops the prompt cache. Fold this into any step 2 questions so the run stops once. If the model fits and the effort is one level off, if the session fits, or if you can't tell, don't stop.

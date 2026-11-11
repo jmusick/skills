@@ -6,13 +6,14 @@ End every run with this report. The **Follow-up** section is required, since it 
 Shipped #42 - Fix login redirect after password reset
 - Size: normal (two files, existing tests to follow); ran on sonnet at medium effort
 - Tested by you in local dev; one fix round (the redirect dropped the query string)
-- PR #57 squash-merged after 1 review round as "v1.4.3 - Fix login redirect after password reset"; CI passed
-- Released v1.4.3 (patch): tagged the merge commit 3f2a9c1 and pushed the tag
-- Cleaned up: worktree, local and remote branch issue-42-fix-login-redirect
+- Committed on main after 1 review round as "v1.4.3 - Fix login redirect after password reset" (3f2a9c1), which closed #42
+- Released v1.4.3 (patch): tagged 3f2a9c1 and pushed main and the tag; CI runs on the push
 
 Follow-up
 - None
 ```
+
+With `--branch`, name the PR, its review rounds and CI, the merge commit the tag points at, and the worktree and branches cleaned up.
 
 When the run stopped early, lead with that, and make each follow-up concrete: what to do, where, and what to run.
 
