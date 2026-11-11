@@ -11,7 +11,9 @@ nothing.
 An issue whose open PR is the viewer's own carries `resume` (and with --issue
 isn't excluded), so an earlier run's work can be picked back up. An issue
 whose latest comment carries WAITING_MARKER is excluded from the ranking: an
-earlier run left it waiting on a reply, and a loop shouldn't retry it.
+earlier run left it waiting on a reply, and a loop shouldn't retry it. An
+issue whose body has a "Depends on #N" or "Blocked by #N" line naming an open
+issue carries `open_dependencies` and is excluded from the ranking.
 """
 import argparse
 import json
@@ -33,6 +35,9 @@ BUG = re.compile(r"bug|regression|defect|crash|(^|[^a-z])fix")
 FEATURE = re.compile(r"enhancement|feature|improvement")
 BREAKING = re.compile(r"breaking")
 SEMVER_TAG = re.compile(r"^v?\d+\.\d+\.\d+$")
+# A body line such as "Depends on #12" or "- Blocked by #12, #15". The lookbehind skips owner/repo#12.
+DEPENDS_LINE = re.compile(r"(?im)^[\s>*-]*(?:depends on|blocked by)\b(.*)$")
+ISSUE_REF = re.compile(r"(?<![\w/])#(\d+)")
 # The issue skill ends the comment it leaves on an issue it couldn't do with this.
 WAITING_MARKER = "<!-- agent-waiting-for-reply -->"
 
@@ -76,7 +81,29 @@ def checkout_state():
     }
 
 
-def classify(issue, me, linked, single=False):
+def dependencies(body, number=None):
+    """Issue numbers named on the body's "Depends on" / "Blocked by" lines, sorted."""
+    nums = {int(n) for m in DEPENDS_LINE.finditer(body or "") for n in ISSUE_REF.findall(m.group(1))}
+    nums.discard(number)
+    return sorted(nums)
+
+
+def open_among(numbers, known_open, complete):
+    """The subset of `numbers` that are open issues.
+
+    `known_open` holds open issue numbers already listed. When that listing is `complete`,
+    a number missing from it is closed or not an issue; otherwise it's looked up.
+    """
+    found = {n for n in numbers if n in known_open}
+    if not complete:
+        for n in sorted(set(numbers) - set(known_open)):
+            info, _ = gh_json("issue", "view", str(n), "--json", "state")
+            if (info or {}).get("state") == "OPEN":
+                found.add(n)
+    return found
+
+
+def classify(issue, me, linked, single=False, open_numbers=frozenset()):
     labels = [l["name"] for l in issue.get("labels", [])]
     low = [l.lower() for l in labels]
     joined = " ".join(low)
@@ -101,6 +128,10 @@ def classify(issue, me, linked, single=False):
     waiting = bool(comments) and WAITING_MARKER in (comments[-1].get("body") or "")
     if waiting and not single:
         reasons.append("waiting on a reply to an earlier run's comment")
+    body = issue.get("body") or ""
+    open_deps = [n for n in dependencies(body, issue["number"]) if n in open_numbers]
+    if open_deps and not single:
+        reasons.append("depends on open " + ", ".join(f"#{n}" for n in open_deps))
     if BREAKING.search(joined):
         kind = "breaking"
     elif BUG.search(joined):
@@ -109,7 +140,6 @@ def classify(issue, me, linked, single=False):
         kind = "feature"
     else:
         kind = "other"
-    body = issue.get("body") or ""
     return {
         "number": issue["number"],
         "title": issue["title"],
@@ -122,6 +152,7 @@ def classify(issue, me, linked, single=False):
         "created_at": issue.get("createdAt"),
         "comments": len(comments),
         "awaiting_reply": waiting,
+        "open_dependencies": open_deps or None,
         "resume": resume,
         "body_chars": len(body),
         "body_preview": body[:400],
@@ -244,7 +275,8 @@ def main():
         if issue is None:
             result["error"] = f"could not read issue #{args.issue}: {err}"
         else:
-            c = classify(issue, me, linked, single=True)
+            deps = open_among(dependencies(issue.get("body"), args.issue), set(), complete=False)
+            c = classify(issue, me, linked, single=True, open_numbers=deps)
             c["state"] = issue.get("state")
             c["body_preview"] = (issue.get("body") or "")[:2000]
             result["issue"] = c
@@ -253,7 +285,10 @@ def main():
         if issues is None:
             result["error"] = f"could not list issues: {err}"
             issues = []
-        ranked = [classify(i, me, linked) for i in issues]
+        wanted = {n for i in issues for n in dependencies(i.get("body"), i["number"])}
+        listed = {i["number"] for i in issues}
+        deps = open_among(wanted, listed, complete=len(issues) < args.limit)
+        ranked = [classify(i, me, linked, open_numbers=deps) for i in issues]
         ok = [c for c in ranked if not c["excluded"]]
         # Highest priority first; within a priority, issues that can be done end to end; then oldest.
         ok.sort(key=lambda c: (-c["priority"], c["needs_input"], c["created_at"] or ""))

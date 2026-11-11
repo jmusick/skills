@@ -40,7 +40,7 @@ Out of scope: <things that look related but must not change, such as a public AP
 
 ## Notes
 
-- Depends on #N <if any>
+- Depends on #N <if any; one line per issue, in this exact wording, because `/issue` reads it and waits until #N is closed>
 - Risk: <what could go wrong>
 - Stop and ask on the issue if <the condition that would make the proposed change wrong, e.g. "a caller outside this repo uses the old method">.
 

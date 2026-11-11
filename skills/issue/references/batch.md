@@ -10,7 +10,7 @@ Run the survey once without `--issue` to pick a batch, or once per named issue.
 
 Also stop before doing anything if you can't start subagents. Say so, and suggest `/issue N` for each issue, or `/loop /issue` for a backlog.
 
-A named issue that is closed, assigned to someone else, or has someone else's open PR drops out: say which and why, and carry on. One with `resume` set drops out too: suggest `/issue N`, which picks its PR back up.
+A named issue that is closed, assigned to someone else, has someone else's open PR, or has `open_dependencies` drops out: say which and why, and carry on. Work in parallel can't wait on a dependency, even one in the same batch, so leave it for a later run. One with `resume` set drops out too: suggest `/issue N`, which picks its PR back up.
 
 If `required_approvals` is above 0, run the batch as if `--no-merge` was passed, so the PRs don't all bump to the same version while they wait for review, and say so when you post the batch in step 3. The follow-up is to get each PR reviewed, then run `/issue N` for each in priority order.
 

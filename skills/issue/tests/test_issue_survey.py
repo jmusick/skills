@@ -81,6 +81,40 @@ class Classify(unittest.TestCase):
         self.assertFalse(s.classify(issue(), "me", {})["needs_input"])
 
 
+class Dependencies(unittest.TestCase):
+    def test_reads_depends_and_blocked_by_lines(self):
+        body = "## Notes\n\n- Depends on #12\n- Blocked by #15, #16\nSee #99 for context."
+        self.assertEqual(s.dependencies(body), [12, 15, 16])
+
+    def test_ignores_other_repos_and_itself(self):
+        self.assertEqual(s.dependencies("Depends on owner/repo#12 and #3", number=3), [])
+
+    def test_open_dependency_excludes_from_ranking(self):
+        c = s.classify(issue(n=5, body="Depends on #4"), "me", {}, open_numbers={4})
+        self.assertEqual(c["open_dependencies"], [4])
+        self.assertEqual(c["excluded"], ["depends on open #4"])
+
+    def test_closed_dependency_is_fine(self):
+        c = s.classify(issue(n=5, body="Depends on #4"), "me", {}, open_numbers=set())
+        self.assertIsNone(c["open_dependencies"])
+        self.assertIsNone(c["excluded"])
+
+    def test_named_issue_reports_but_isnt_excluded(self):
+        c = s.classify(issue(n=5, body="Depends on #4"), "me", {}, single=True, open_numbers={4})
+        self.assertEqual(c["open_dependencies"], [4])
+        self.assertIsNone(c["excluded"])
+
+    def test_open_among_trusts_a_complete_listing(self):
+        with mock.patch.object(s, "gh_json") as gh:
+            self.assertEqual(s.open_among({4, 7}, {4}, complete=True), {4})
+            gh.assert_not_called()
+
+    def test_open_among_looks_up_the_rest(self):
+        states = {"7": "OPEN", "8": "CLOSED"}
+        with mock.patch.object(s, "gh_json", side_effect=lambda *a: ({"state": states[a[2]]}, None)):
+            self.assertEqual(s.open_among({4, 7, 8}, {4}, complete=False), {4, 7})
+
+
 class LinkedPrs(unittest.TestCase):
     def test_links_by_closing_reference_body_and_branch(self):
         prs = [

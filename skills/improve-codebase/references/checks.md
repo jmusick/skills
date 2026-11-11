@@ -2,6 +2,8 @@
 
 Work through the sections that fit the scope. Each section lists what to flag, what usually isn't a problem, and tools that help. A tool's output is a lead: open the code before it becomes a finding.
 
+Run a listed tool only if it's already installed or in the project's dependencies. For the `npx` ones, write `npx --no <tool>`, which refuses to download a package the project doesn't have.
+
 ## Severity
 
 - **Critical:** the code is wrong or unsafe now, or nothing can be verified. A hardcoded live credential, an injection path, data loss, no working test or build command on a project that ships.

@@ -14,12 +14,14 @@ This skill reports and files issues. It never edits code. Findings are cheap to 
 
 - `/improve-codebase` audits the whole repo, weighted toward the files that change most.
 - `/improve-codebase <path>` audits one directory or package.
-- `/improve-codebase <focus>` audits one category from `references/checks.md`, such as `tests`, `deps`, `types`, `dead-code`, or `architecture`.
-- `quick` (anywhere in the arguments) limits the audit to the top hotspots and reports only high-confidence findings.
+- `/improve-codebase <focus>` audits one section of `references/checks.md`: `baseline` (1), `architecture` or `structure` (2), `duplication` (3), `dead-code` (4), `types` (5), `errors` (6), `tests` (7), `deps` (8), `performance` (9), or `security` (10). Docs go to `/update-docs`.
+- A path and a focus combine: `/improve-codebase src/api tests` audits the tests section in `src/api` only.
+- A bare word that is a focus name is the focus, even if a folder has that name. The user writes `tests/` or `./tests` to mean the folder.
+- `quick` (anywhere in the arguments) limits the audit to the top 10 hotspots and reports only high-confidence findings.
 
 ## Hard rules
 
-1. **Read-only.** Don't edit, format, install, commit, or switch branches. You may run checks that only read or that write to ignored folders (tests, `tsc --noEmit`, a linter in check mode, `npm audit`). Outside the OS temp directory, the only things you create are the GitHub issues the user picks and the `improve-codebase` label they carry. The temp directory holds the issue bodies, and the report if it's too long for chat.
+1. **Read-only.** Don't edit, format, install, commit, or switch branches. You may run checks that only read or that write to ignored folders (tests, `tsc --noEmit`, a linter in check mode, `npm audit`). Outside the OS temp directory, the only things you create are the GitHub issues the user picks, the `improve-codebase` label they carry, and the closed kept-as-is record if the user asks for it (step 6). The temp directory holds the issue bodies, and the report if it's too long for chat.
 2. **No finding without evidence you read yourself.** Every finding cites `path:line`, and you open that line before reporting it. A subagent's or tool's report is a lead, not a finding: subagents over-report, and their line numbers drift.
 3. **Recommend for this repo, not in general.** Every finding names a cost this code is paying now: churn, bugs, duplicated fixes, a test that can't be written. "Best practice says X" with nothing to point at is a preference. Drop it.
 4. **No invented numbers.** No health scores, grades, or "40% less complexity." Counts you measured (lines, commits, references) are fine.
@@ -49,6 +51,7 @@ Read before you judge. Opinions formed before you understand the system produce 
 - Read any decision records (`docs/adr/`, `docs/decisions/`), glossaries, and design docs. They tell you what's deliberate.
 - Find the exact build, test, lint, and typecheck commands. Run them if they're quick and only write to ignored folders. Record what passed, what failed, and what doesn't exist. A missing or red baseline is usually finding #1, because every other fix depends on being able to verify it.
 - Record `git rev-parse --short HEAD`. Every issue cites it, so whoever works it later can tell whether the code has moved.
+- Run `gh repo view --json nameWithOwner,visibility`. If it fails (no `gh`, not signed in, or the remote isn't on GitHub), the run can't search or file issues: skip step 4's issue search and list it under Not checked, and in step 6 write each picked issue's body to a temp file and give the user the paths instead of filing. Note the visibility for step 6.
 
 ### 2. Scope
 
@@ -59,13 +62,13 @@ python <this skill's directory>/scripts/hotspots.py            # whole repo
 python <this skill's directory>/scripts/hotspots.py --path src # one folder
 ```
 
-Use `python3` if `python` isn't found. It prints JSON: the files touched by the most recent commits, how many of those commits look like fixes, each file's size, and the largest source files. Lockfiles, changelogs, vendored code, and build output are left out.
+Use `python3` if `python` isn't found. It prints JSON: the files touched by the most recent commits, how many of those commits look like fixes, each file's size, and the largest source files. Lockfiles, changelogs, vendored code, build output, and docs and data files are left out. Add `--include-docs` when docs or config are what the repo ships. If `shallow` is true, the history is cut off: say so under Not checked and lean on the large files list.
 
 Start with files that are both large and frequently changed, or frequently fixed. Improving code nobody touches pays off slowly, so weight toward the hotspots and widen only if they're clean. High churn alone isn't a problem; it may just be active work.
 
 ### 3. Audit
 
-Walk the scoped code with the categories in `references/checks.md`. Read it now. It also lists stack tools (knip, vulture, madge, cargo-udeps, staticcheck, ...) worth running when they're installed. Don't install tools globally; note what you couldn't run.
+Walk the scoped code with the categories in `references/checks.md`. Read it now. It also lists stack tools (knip, vulture, madge, cargo-udeps, staticcheck, ...). Run one only if it's already installed or in the project's dependencies. `npx <tool>` for a package the project doesn't have downloads it from the registry and runs it, which is installing unvetted code, so use `npx --no <tool>`, which refuses to download. List the tools you couldn't run under Not checked.
 
 Explore the way a new maintainer would, and note where you hit friction: where understanding one concept means opening many files, where a change would have to be made in several places, where a test would be hard to write.
 
@@ -76,10 +79,10 @@ For a large repo, split the audit across parallel read-only subagents (Explore a
 Before anything reaches the user, check each candidate:
 
 1. **Open the cited code yourself.** Fix wrong lines, drop wrong findings.
-2. **Is it on purpose?** Look for a decision record, an explaining comment, a lint suppression with a reason, or a closed issue. If something looks bad but you conclude it's fine, put it on the "looks bad but is fine" list with the reason. That list proves you looked, and stops the next run from raising it again.
+2. **Is it on purpose?** Look for a decision record, an explaining comment, a lint suppression with a reason, or a closed issue. If something looks bad but you conclude it's fine, put it on the "looks bad but is fine" list with the reason. That list proves you looked. It lasts past this chat only if the user has it recorded in step 6.
 3. **Is there a smaller fix?** If deleting something gets most of the benefit of restructuring it, propose the deletion.
 4. **Is it really one problem?** Merge findings that share a root cause into one, with every location listed.
-5. **Already filed?** Search the repo's issues, open and closed (`gh issue list --state all --search "<keywords>"`, plus `--label improve-codebase`). Drop anything already open. An issue closed as "not planned" falls under rule 5.
+5. **Already filed?** Search the repo's issues, open and closed (`gh issue list --state all --search "<keywords>"`, plus `--label improve-codebase`). Drop anything already open. An issue closed as "not planned" falls under rule 5, and so does every item in an earlier run's kept-as-is record.
 
 ### 5. Report
 
@@ -99,14 +102,15 @@ Report in chat, most important first:
 
 If more than 10 findings survived vetting, keep the best 10 and give the count of the rest in one line. Leave docs drift to `/update-docs`: name it in one row instead of filing issues for each doc. If the codebase is in good shape, say so and stop. Padding the list to look thorough is the failure this skill exists to prevent.
 
-Then ask which findings to file. Suggest the top ones, and wait. If no user can answer (an unattended run), file nothing and end with the report.
+Then ask which findings to file, and whether to record the "looks bad but is fine" list so later runs skip it. Suggest the top findings, and wait. If no user can answer (an unattended run), file nothing and end with the report.
 
 ### 6. File issues
 
 For each finding the user picks, write one issue with `references/issue-template.md`. Read it before the first one. Each issue must be workable cold: whoever picks it up through `/issue` hasn't seen this conversation.
 
-- **One PR per issue.** Split an L finding into ordered issues, file them in order, and link each one's dependencies (`Depends on #N`).
+- **One PR per issue.** Split an L finding into ordered issues, file them in order, and link each one's dependencies with a `Depends on #N` line. `/issue` won't start an issue while one it depends on is still open.
 - **Labels.** Add `improve-codebase` to every issue, so later runs can find them. Create it if missing (`gh label create improve-codebase --description "Found by /improve-codebase"`). Use the repo's existing labels for kind (bug, enhancement, refactor, tech-debt) and priority. If the repo has no priority labels, put the severity in the body; don't invent a label scheme without asking. Add the repo's needs-decision label, if it has one, when the fix needs the maintainer's call.
-- **Public repos.** Check `gh repo view --json visibility`. If the repo is public, get the user's explicit OK before filing any security finding, because anyone can read the issue before the fix ships.
+- **Public repos.** If step 1 found the repo public, get the user's explicit OK before filing any security finding, because anyone can read the issue before the fix ships.
+- **Kept-as-is record.** If the user wants the "looks bad but is fine" list kept, file it as one issue titled `Reviewed by /improve-codebase: kept as is (<short SHA>)`, one bullet per item with `path:line` and the reason, labeled `improve-codebase`. Then close it with `gh issue close N --reason "not planned"`. Step 4 of later runs finds it and leaves those items alone. It isn't work, so leave it out of the `/issue` next step.
 
 File with `gh issue create --title ... --body-file <temp file> --label ...`, using a temp file for the body so quoting doesn't mangle it. End with the URL of each new issue and the next step: `/issue N` for one, `/issue N M ...` to work several as a batch.

@@ -29,13 +29,14 @@ python <this skill's directory>/scripts/issue_survey.py            # rank open i
 python <this skill's directory>/scripts/issue_survey.py --issue 42 # just one issue
 ```
 
-It prints JSON: `gh` readiness, repo and default branch, merge methods, branch protection, the checkout's state, and candidate issues ranked by priority, then doability, then age. Issues assigned to others, with an open PR, with a skip label, or still waiting on a reply to an earlier run's comment are under `excluded`.
+It prints JSON: `gh` readiness, repo and default branch, merge methods, branch protection, the checkout's state, and candidate issues ranked by priority, then doability, then age. Issues assigned to others, with an open PR, with a skip label, still waiting on a reply to an earlier run's comment, or with a `Depends on #N` / `Blocked by #N` line naming an open issue are under `excluded`.
 
 The run never switches the user's branch or touches their uncommitted work; all work happens in a worktree, and the only change to their checkout is step 12's fast-forward of `<default>`. So a dirty checkout is fine, and the user can keep working in it during the run.
 
 Stop before doing anything if:
 - `gh_ready` or `can_push` is false.
 - `/issue N` names an issue that is closed, assigned to someone else, or has someone else's open PR. Say which, and offer the top candidate.
+- `/issue N` names an issue with `open_dependencies`. Its work assumes those issues are done (often tests that must exist before a refactor), so say which it waits on and offer to work them first.
 
 If `required_approvals` is above 0, tell the user up front that the run will open the PR and then stop for someone else's review, since GitHub doesn't let a PR's author approve it, and carry on. If it's null, the branch is protected but its review rule couldn't be read; say merge may need a review. With `--no-test`, put this in the report instead.
 
