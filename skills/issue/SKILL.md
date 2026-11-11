@@ -40,7 +40,7 @@ Stop before doing anything if:
 If the issue has `resume` set, its open PR is yours from an earlier run: read [references/branch.md](references/branch.md) and [references/resuming.md](references/resuming.md) and follow them instead of picking and claiming.
 
 Without `--branch`, the release commit goes straight onto the default branch from the user's checkout, and it stages everything. So check the checkout before going further:
-- `direct_push_may_be_blocked` is true: the push would likely be rejected. Switch to `--branch` and say so.
+- `direct_push_may_be_blocked` is true: a rule you can't bypass would likely reject the push. Switch to `--branch` and say so. When it's false the script has already counted your bypass (admin, or a ruleset bypass actor), so don't switch just because the branch shows as protected.
 - `current_branch` isn't the default branch, `uncommitted_changes` isn't empty, or `in_progress_operation` is set: the user's own work would end up in the release. Ask whether they want to commit, stash, or switch it themselves, or have the run use `--branch`, which leaves their checkout alone. With `--no-test`, switch to `--branch`.
 
 ## 2. Pick the issue

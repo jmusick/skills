@@ -40,6 +40,10 @@ DEPENDS_LINE = re.compile(r"(?im)^[\s>*-]*(?:depends on|blocked by)\b(.*)$")
 ISSUE_REF = re.compile(r"(?<![\w/])#(\d+)")
 # The issue skill ends the comment it leaves on an issue it couldn't do with this.
 WAITING_MARKER = "<!-- agent-waiting-for-reply -->"
+# Ruleset rule types that reject pushing a new commit straight to a branch. deletion,
+# non_fast_forward, and required_linear_history leave a fast-forward release commit alone.
+PUSH_BLOCKING_RULES = {"pull_request", "required_status_checks", "required_deployments",
+                       "required_signatures", "update", "merge_queue"}
 
 
 def run(*args):
@@ -193,20 +197,47 @@ def has_release_tags():
     return False if code == 0 else None
 
 
-def required_approvals(rules, protected, classic_reviews):
+def required_approvals(rules, classic_protected, classic_reviews):
     """Approving reviews a PR into the default branch needs, or None if it couldn't be read.
 
     `rules` is the rules/branches response (readable by any collaborator). Classic branch
     protection's review settings usually need admin to read, so `classic_reviews` is None
-    when that read failed; it only matters when the branch is protected.
+    when that read failed; it only matters when classic protection is on.
     """
     counts = [(r.get("parameters") or {}).get("required_approving_review_count") or 0
               for r in rules or [] if r.get("type") == "pull_request"]
-    if protected:
+    if classic_protected:
         if classic_reviews is None:
             return max(counts) if any(counts) else None
         counts.append(classic_reviews.get("required_approving_review_count") or 0)
     return max(counts, default=0)
+
+
+def ruleset_blocks_push(rules, can_bypass):
+    """Whether a ruleset rule would reject pushing a release commit straight to the branch.
+
+    `can_bypass` maps a ruleset_id to that ruleset's `current_user_can_bypass` ("always",
+    "exempt", "pull_requests_only", "never"), or None when it couldn't be read. Only
+    "always" and "exempt" let a direct push through; an unread ruleset counts as binding.
+    """
+    return any(r.get("type") in PUSH_BLOCKING_RULES
+               and can_bypass.get(r.get("ruleset_id")) not in ("always", "exempt")
+               for r in rules or [])
+
+
+def classic_blocks_push(classic, admin):
+    """Whether classic branch protection would reject a direct push.
+
+    `classic` is the branches/<b>/protection response: {} when the branch has none, None
+    when it couldn't be read (which counts as blocking). Admins push past it unless
+    "Do not allow bypassing" (enforce_admins) is on.
+    """
+    if classic is None:
+        return True
+    if admin and not (classic.get("enforce_admins") or {}).get("enabled"):
+        return False
+    return (any(classic.get(k) for k in ("required_pull_request_reviews", "required_status_checks", "restrictions"))
+            or any((classic.get(k) or {}).get("enabled") for k in ("required_signatures", "lock_branch")))
 
 
 def main():
@@ -243,13 +274,21 @@ def main():
     rules, _ = gh_json("api", f"repos/{nwo}/rules/branches/{default}")
     branch, _ = gh_json("api", f"repos/{nwo}/branches/{default}")
     rule_types = sorted({r.get("type") for r in rules or [] if r.get("type")})
+    admin = repo.get("viewerPermission") == "ADMIN"
+    # `protected` is also true when only a ruleset applies; `protection.enabled` is classic protection alone.
     protected = bool((branch or {}).get("protected"))
-    classic_reviews = None
-    if protected:
-        classic_reviews, _ = gh_json("api", f"repos/{nwo}/branches/{default}/protection/required_pull_request_reviews")
-        # An admin can always read it, so a failed read there means no review rule is set.
-        if classic_reviews is None and repo.get("viewerPermission") == "ADMIN":
-            classic_reviews = {}
+    classic_protected = bool(((branch or {}).get("protection") or {}).get("enabled", protected))
+    classic = {}
+    if classic_protected:
+        classic, _ = gh_json("api", f"repos/{nwo}/branches/{default}/protection")
+        # An admin can always read it, so a failed read there means no classic protection.
+        if classic is None and admin:
+            classic = {}
+    classic_reviews = None if classic is None else (classic.get("required_pull_request_reviews") or {})
+    can_bypass = {}
+    for rid in {r.get("ruleset_id") for r in rules or [] if r.get("type") in PUSH_BLOCKING_RULES}:
+        ruleset, _ = gh_json("api", f"repos/{nwo}/rulesets/{rid}")
+        can_bypass[rid] = (ruleset or {}).get("current_user_can_bypass")
     result["repo"] = {
         "name": nwo,
         "default_branch": default,
@@ -262,9 +301,9 @@ def main():
         "default_branch_rules": rule_types,
         # Approving reviews a PR needs before merge; None means protection exists but couldn't be read.
         # GitHub doesn't let a PR's author approve it, so any nonzero count stops the run at merge.
-        "required_approvals": required_approvals(rules, protected, classic_reviews),
-        # A pull_request rule or classic protection usually rejects the release push straight to the default branch.
-        "direct_push_may_be_blocked": protected or "pull_request" in rule_types,
+        "required_approvals": required_approvals(rules, classic_protected, classic_reviews),
+        # Whether a rule the viewer can't bypass would reject the release push straight to the default branch.
+        "direct_push_may_be_blocked": classic_blocks_push(classic, admin) or ruleset_blocks_push(rules, can_bypass),
     }
     result["repo"]["has_release_tags"] = has_release_tags()
 

@@ -159,6 +159,34 @@ class ReleaseTags(unittest.TestCase):
             self.assertFalse(s.has_release_tags())
 
 
+class DirectPushBlocked(unittest.TestCase):
+    CHECKS = [{"type": "deletion", "ruleset_id": 7}, {"type": "required_status_checks", "ruleset_id": 7}]
+
+    def test_bypassable_ruleset_does_not_block(self):
+        self.assertFalse(s.ruleset_blocks_push(self.CHECKS, {7: "always"}))
+        self.assertFalse(s.ruleset_blocks_push(self.CHECKS, {7: "exempt"}))
+
+    def test_binding_or_unread_ruleset_blocks(self):
+        self.assertTrue(s.ruleset_blocks_push(self.CHECKS, {7: "never"}))
+        self.assertTrue(s.ruleset_blocks_push(self.CHECKS, {7: "pull_requests_only"}))
+        self.assertTrue(s.ruleset_blocks_push(self.CHECKS, {}))
+
+    def test_harmless_rules_do_not_block(self):
+        rules = [{"type": "deletion", "ruleset_id": 7}, {"type": "non_fast_forward", "ruleset_id": 7}]
+        self.assertFalse(s.ruleset_blocks_push(rules, {}))
+        self.assertFalse(s.ruleset_blocks_push(None, {}))
+
+    def test_classic_protection(self):
+        reviews = {"required_pull_request_reviews": {"required_approving_review_count": 1}}
+        self.assertFalse(s.classic_blocks_push({}, admin=False))
+        self.assertTrue(s.classic_blocks_push(None, admin=False))
+        self.assertTrue(s.classic_blocks_push(reviews, admin=False))
+        self.assertFalse(s.classic_blocks_push(reviews, admin=True))
+        enforced = dict(reviews, enforce_admins={"enabled": True})
+        self.assertTrue(s.classic_blocks_push(enforced, admin=True))
+        self.assertFalse(s.classic_blocks_push({"allow_force_pushes": {"enabled": False}}, admin=False))
+
+
 class RequiredApprovals(unittest.TestCase):
     PR_RULE = [{"type": "pull_request", "parameters": {"required_approving_review_count": 2}}]
 
