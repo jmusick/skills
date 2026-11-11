@@ -45,12 +45,13 @@ skills/
   <skill-name>/
     SKILL.md        # frontmatter (name, description) + instructions
     scripts/        # optional helper scripts the skill runs
+    tests/          # optional unit tests for those scripts
     references/     # optional docs the skill loads on demand
     agents/         # optional Codex settings (openai.yaml)
     evals/          # optional test cases for skill-creator or `claude plugin eval`
 ```
 
-Each skill folder holds all of its own files, so it can be copied anywhere on its own. Some skills call another skill: daily-budget needs newsroom installed too, and prospect needs humanize. Issue runs update-docs on each change before it ships, so install it alongside; without it, issue checks the docs by hand. When a repo can't squash-merge, or you'll merge a PR yourself, it leaves a `/patch` or `/minor` run as your follow-up. Improve-codebase files issues for issue to work, and leaves docs drift to update-docs.
+Each skill folder holds all of its own files, so it can be copied anywhere on its own. Some skills call another skill: daily-budget needs newsroom installed too, and prospect needs humanize. Issue runs update-docs on each change before it ships, so install it alongside; without it, issue checks the docs by hand. When a repo can't squash-merge, it leaves a `/patch` or `/minor` run as your follow-up. Improve-codebase files issues for issue to work, and leaves docs drift to update-docs.
 
 Most skills run only when you invoke them: `disable-model-invocation: true` in the frontmatter does that for Claude Code (`/<name>`), and `agents/openai.yaml` does it for Codex (`$<name>`). Newsroom, humanize, and update-docs are left out, because other skills call them and these settings would block that.
 
