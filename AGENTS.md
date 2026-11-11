@@ -12,6 +12,7 @@ CI (`.github/workflows/ci.yml`) calls the shared [jmusick/ci](https://github.com
 - `skills/<name>/references/`: optional extra docs the skill loads only when needed.
 - `skills/<name>/agents/openai.yaml`: Codex-only settings. Here it just turns off implicit invocation.
 - `skills/<name>/evals/`: optional eval cases, one folder per case (`prompt.md`, `case.yaml`, `graders/`), in the layout skill-creator writes and `claude plugin eval` runs. They're real, billed model runs, so run them only when asked: `claude plugin eval skills/<name>`. When you change a skill that has evals, update any grader the change makes wrong. A case can also carry `files/`, a fixture project that its `scaffold_script` (`place-files.sh`) copies into the sandbox. Nothing installs those fixtures, so Dependabot alerts and PRs on their `package.json` files don't affect anyone using the skills.
+- `skills/<name>/SOURCES.md`: optional, for a skill built from other people's skills. See "Sources" below.
 - `README.md`: the public index. Keep its skills table in sync when you add, rename, or remove a skill.
 
 ## Writing a skill
@@ -25,6 +26,18 @@ Draft new skills with skill-creator and review existing ones with `/improve-skil
 - Write instructions in the imperative, and explain why a step exists when the reason isn't obvious. A rule with its reason generalizes; an all-caps MUST gets over-applied or argued away.
 - A skill gets copied or symlinked on its own, so it can't reference files outside its own folder. It can call another skill by name (daily-budget uses newsroom, prospect uses humanize); say so in the README so people install both.
 - Skills run only when the user invokes them: add `disable-model-invocation: true` to the frontmatter for Claude Code, and an `agents/openai.yaml` with `policy: allow_implicit_invocation: false` for Codex. The exception is a skill another skill calls (newsroom, humanize, update-docs): leave it model-invocable, because these settings also stop one skill from calling another. If a skill starts calling one that has them, remove both from the one being called. Eval prompts for a flagged skill must start with `/<name>`, since the agent won't pick it up from plain English.
+
+## Sources
+
+When a skill draws on someone else's skill, record it in that skill's `SOURCES.md`, not the README, so the credit and license travel with the folder. It sits at the folder's top level, not in `references/`, because it's for maintainers and the agent never needs it (`check_skills.py` skips it like `NOTICE.md`). Each source is a table row: repo, path, the commit you reviewed (12 characters), license, whether to track it, and what it contributed. Mark **Track** only for the few sources that shaped the skill; credit the rest. When you adapt text under a license that requires a notice, put the notice in `NOTICE.md`.
+
+To check a tracked source for updates, list the files changed since its pin, then read the diff for its path:
+
+```bash
+gh api repos/<owner>/<repo>/compare/<pin>...HEAD --jq '.files[] | select(.filename | startswith("<path>")) | .filename'
+```
+
+Adopt only what fits the skill, then set the pin to the commit you reviewed. The README's Credits list links each `SOURCES.md` with one line; update that line if a skill gains or drops a lead source.
 
 ## Shared code
 

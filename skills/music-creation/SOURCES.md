@@ -1,15 +1,15 @@
-# Source comparison and decisions
+# Sources
 
-Reviewed 2026-10-25. This is an original condensed synthesis, not independent validation of the upstream methods.
+music-creation is what four songwriting skill collections agree on. This is an original condensed synthesis, not independent validation of the upstream methods.
 
-## Snapshots inspected
+All four were reviewed on 2026-10-25 at the pinned commits, so the pins are the versions actually read.
 
-| Source | Revision | Contribution |
-| --- | --- | --- |
-| [Bitwize Music Skills](https://github.com/bitwize-music-studio/claude-ai-music-skills) (B) | `597d928fb2c8316ee13159771405813174aa01de` | Lyric writing/revision, voice review, Suno packaging, album cohesion. |
-| [Music Composition Skills](https://github.com/jtydhr88/music-composition-skills) (C) | `5d5d22803517ac5828a01218e775555920451dd9` | Motifs, melody, harmony, groove, arrangement, generation handoff. |
-| [Lyric Writing Skills](https://github.com/jtydhr88/lyric-writing-skills) (L) | `d2c3c780afeaaba0801c324fa2d3a9100277e8e1` | Intent, imagery, lyric structure, rhyme, language-specific prosody. |
-| [Melodic songwriting plugin](https://github.com/melodic-software/claude-code-plugins/tree/main/plugins/songwriting) (M) | `aa42c27ed2778f1c8122e193f2a796bd8f5055e1` | Coaching, object writing, rhyme, prosody, form, diagnosis, Suno. |
+| Source | Path | Pin | License | Track | Contributed |
+| --- | --- | --- | --- | --- | --- |
+| [bitwize-music-studio/claude-ai-music-skills](https://github.com/bitwize-music-studio/claude-ai-music-skills) (B) | [whole repo](https://github.com/bitwize-music-studio/claude-ai-music-skills/tree/597d928fb2c8) | `597d928fb2c8` | CC0-1.0 | yes | Lyric writing/revision, voice review, Suno packaging, album cohesion. |
+| [jtydhr88/music-composition-skills](https://github.com/jtydhr88/music-composition-skills) (C) | [whole repo](https://github.com/jtydhr88/music-composition-skills/tree/5d5d22803517) | `5d5d22803517` | MIT | yes | Motifs, melody, harmony, groove, arrangement, generation handoff. |
+| [jtydhr88/lyric-writing-skills](https://github.com/jtydhr88/lyric-writing-skills) (L) | [whole repo](https://github.com/jtydhr88/lyric-writing-skills/tree/d2c3c780afea) | `d2c3c780afea` | MIT | yes | Intent, imagery, lyric structure, rhyme, language-specific prosody. |
+| [melodic-software/claude-code-plugins](https://github.com/melodic-software/claude-code-plugins) (M) | [plugins/songwriting](https://github.com/melodic-software/claude-code-plugins/tree/aa42c27ed277/plugins/songwriting) | `aa42c27ed277` | MIT | yes | Coaching, object writing, rhyme, prosody, form, diagnosis, Suno. |
 
 The review downloaded 346 text files spanning instructions, references, and notices. It inventoried entrypoints and examined representative core instructions and relevant reference sections; it was not a line-by-line audit of every document. No upstream scripts were executed. Operational and release modules were screened for scope rather than incorporated wholesale.
 
@@ -43,4 +43,4 @@ Composition detail comes mainly from C; coaching particularly from M/L; optional
 - Use compact plans rather than mandatory schemas, approval gates, model tiers, or upstream plugin dependencies.
 - Exclude mixing/mastering, artwork, marketing, distribution, and release operations according to the user's scope.
 
-No book passages, commercial lyrics, or exhaustive upstream reference corpora are bundled. See [NOTICE.md](../NOTICE.md). Upstream corpus claims and numerical thresholds were not independently reproduced and are not inherited as rules.
+No book passages, commercial lyrics, or exhaustive upstream reference corpora are bundled. See [NOTICE.md](NOTICE.md). Upstream corpus claims and numerical thresholds were not independently reproduced and are not inherited as rules.

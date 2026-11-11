@@ -1,6 +1,6 @@
 # Notice
 
-This skill synthesizes guidance from the four projects listed in references/source-synthesis.md. Original wording and focused procedures replace the upstream corpora. Book and song quotations are not included.
+This skill synthesizes guidance from the four projects listed in SOURCES.md. Original wording and focused procedures replace the upstream corpora. Book and song quotations are not included.
 
 Bitwize publishes its repository under CC0 1.0: https://creativecommons.org/publicdomain/zero/1.0/
 

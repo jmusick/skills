@@ -257,7 +257,7 @@ def check_skill(skill_md):
     for rel in files:
         top = rel.split("/")[0]
         base = os.path.basename(rel)
-        if rel == "SKILL.md" or top in ("agents", "evals") or base.startswith(("test_", "conftest")) or "/" not in rel and base.upper().startswith(("LICENSE", "NOTICE", "README")):
+        if rel == "SKILL.md" or top in ("agents", "evals") or base.startswith(("test_", "conftest")) or "/" not in rel and base.upper().startswith(("LICENSE", "NOTICE", "README", "SOURCES")):
             continue
         if rel not in names_mentioned and base not in text and base not in names_mentioned:
             issues.append(issue("info", "unreferenced-file", f"{rel} isn't mentioned by SKILL.md or the files it links, so the agent never loads it", rel))
