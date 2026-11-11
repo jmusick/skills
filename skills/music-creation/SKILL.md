@@ -18,13 +18,11 @@ Infer ordinary creative choices from the brief. Ask only when an open choice wou
 
 ## Shared priorities
 
-1. Find the emotional center or musical purpose. Establish speaker, addressee, and situation when that helps. An attitude, atmosphere, chant, or instrumental need not become a story.
-2. Make words, rhythm, melody, harmony, performance, and arrangement serve that purpose. Deliberate friction can serve it too.
-3. Keep natural word stress, meaningful phrase accents, room to breathe, and a singable density. Matching syllable counts don't prove a line fits a melody, because stress placement matters more than totals. Musical emphasis comes from duration, pitch, and syncopation as well as beat position.
-4. Give the song a memorable hook: a lyric, melodic, rhythmic, or instrumental one. Arrange a spotlight for it, without forcing the title into every emphasized slot.
-5. Give each section a job. Develop a motif or perspective rather than rephrasing verse one or bolting on unrelated material. Repetition, steady energy, and identical choruses can be strengths when they're intentional.
-6. Keep the writer's particular voice. Flag filler, strained grammar, interchangeable metaphors, and over-explanation. Direct statements and abstraction stay valid, so judge words in context instead of against a forbidden list.
-7. Fix causes, not symptoms. Explain a problem by its effect on a listener and offer a targeted remedy. Keep what's already strong, and stop when another pass would only trade the writer's taste for yours.
+- An attitude, atmosphere, chant, or instrumental need not become a story.
+- Matching syllable counts don't prove a line fits a melody, because stress placement matters more than totals. Musical emphasis comes from duration, pitch, and syncopation as well as beat position.
+- Don't force the title into every emphasized slot. Repetition, steady energy, and identical choruses can be strengths when they're intentional.
+- Keep the writer's particular voice. Direct statements and abstraction stay valid, so judge words in context instead of against a forbidden list.
+- Keep what's already strong, and stop when another pass would only trade the writer's taste for yours.
 
 ## Read only what the task needs
 

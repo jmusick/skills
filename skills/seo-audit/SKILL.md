@@ -37,45 +37,15 @@ Find what stops search engines from crawling, indexing, and understanding a site
 
 ## Checklist
 
-In priority order: a page that can't be crawled or indexed gains nothing from a better title. `references/checks.md` has the reason, the detail, and the common mistakes for each item.
+Work in this order, because a page that can't be crawled or indexed gains nothing from a better title. The checker already tests titles, descriptions, canonicals, robots, sitemap, hreflang, alt, viewport, `lang`, `<h1>`, and Open Graph tags in the HTML it fetched. Judge the rest by hand, and read the matching section of `references/checks.md` for the detail and common mistakes before you report a finding.
 
-**1. Crawl and index**
-- robots.txt exists or is absent on purpose, returns text (not an HTML catch-all page), doesn't block important pages or the CSS and JS needed to render them, and lists the sitemap.
-- An XML sitemap exists and lists only canonical, indexable, 200-status URLs on the right host and scheme.
-- No accidental `noindex` in meta robots or the `X-Robots-Tag` header.
-- One absolute canonical per page. Unique pages point to themselves; no layout hard-codes one canonical for every page. Host, scheme, and trailing slash match the URLs the site actually serves.
-- 301 for permanent moves, no redirect chains or loops, and real 404 status for missing pages (not a 200 "not found" page).
-- HTTPS everywhere: http:// redirects to https://, no mixed content.
-- Content, links, and the head tags (title, canonical, robots, JSON-LD) are in the server's HTML, not added later by JavaScript.
-
-**2. Technical**
-- `<meta name="viewport" content="width=device-width, initial-scale=1">`, no horizontal scroll, the same content on mobile as on desktop.
-- Core Web Vitals at the 75th percentile: LCP ≤ 2.5s, INP ≤ 200ms, CLS ≤ 0.1. Measure them; from code alone, only point out likely causes (a huge hero image, render-blocking scripts, images without dimensions).
-- URLs lowercase, hyphenated, readable, without needless parameters, and used consistently.
-- `<html lang>` set.
-
-**3. On-page**
-- A unique, descriptive `<title>` with the main topic near the front. About 50-60 characters is a guide, not a limit.
-- A unique meta description that honestly says what the page offers. About 150-160 characters is a guide; Google often writes its own.
-- One clear main heading (normally one `<h1>`) and headings that follow the content's outline.
-- Alt text that describes each meaningful image; `alt=""` on decorative ones. Images compressed, in WebP or AVIF where possible, with width and height set, and lazy-loaded below the fold.
-- Internal links with descriptive anchor text, no orphan pages, important pages within about three clicks of home, no broken links.
-
-**4. Content**
-- One main intent per page, with no two pages competing for the same query.
-- Thin or near-duplicate pages are merged, improved, or kept out of the index on purpose.
-- Who wrote it and who runs the site is clear: author names, an about page, contact details, sources for claims, dates on time-sensitive content.
-
-**5. Structured data and previews**
-- JSON-LD that describes what is visible on the page, using the most specific type: Organization or Person and WebSite on the home page, Article or BlogPosting on posts, Product with Offer on products, BreadcrumbList on deep pages. It parses, and it validates in Google's Rich Results Test.
-- `og:title`, `og:description`, an absolute `og:image` URL (1200×630 works everywhere), `og:url`, and `twitter:card`.
-
-**6. International** (only for sites in more than one language)
-- hreflang on every variant, including the page itself, linked both ways, with valid codes (`en-GB`, not `en-UK`), plus `x-default` where there's a fallback. Each locale's page is its own canonical; never point one language's canonical at another.
-
-**7. AI search**
-- Check which AI crawlers robots.txt names, and report the policy back to the user. Training bots (GPTBot, ClaudeBot, Google-Extended, Applebot-Extended, CCBot) are separate from search and fetch bots (OAI-SearchBot, Claude-SearchBot, PerplexityBot, ChatGPT-User). Blocking Google-Extended doesn't remove a site from Google Search. The full table is in `references/checks.md`.
-- Everything above already helps AI search more than any AI-specific trick: content in the server's HTML, clear structure, accurate metadata.
+1. **Crawl and index:** robots.txt, sitemap, `noindex`, canonicals, redirects and real 404 status, HTTPS. The usual canonical bug is a layout that hard-codes one canonical for every page; unique pages point to themselves, with the host, scheme, and trailing slash the site serves. Title, canonical, robots, and JSON-LD belong in the server's HTML, not added later by JavaScript.
+2. **Technical:** viewport and mobile parity, readable lowercase hyphenated URLs used consistently, `<html lang>`. Core Web Vitals at the 75th percentile: LCP ≤ 2.5s, INP ≤ 200ms, CLS ≤ 0.1. Measure them; from code alone, only point out likely causes.
+3. **On-page:** titles, descriptions, headings, internal links within about three clicks of home, orphan pages, and images (descriptive alt, `alt=""` on decorative ones, dimensions set, compressed, lazy-loaded below the fold). Length figures (about 50-60 characters for a title, 150-160 for a description) are guides, not limits.
+4. **Content:** one intent per page with no two pages competing for a query, thin or near-duplicate pages, and who wrote it and who runs the site.
+5. **Structured data and previews:** JSON-LD that describes what's visible, uses the most specific type, and parses; Open Graph and `twitter:card` with an absolute `og:image`.
+6. **International** (only for sites in more than one language): hreflang on every variant, linked both ways, plus `x-default`. Each locale's page is its own canonical; never point one language's canonical at another.
+7. **AI search:** report which AI crawlers robots.txt names. Training bots (GPTBot, ClaudeBot, Google-Extended, Applebot-Extended, CCBot) are separate from search and fetch bots (OAI-SearchBot, Claude-SearchBot, PerplexityBot, ChatGPT-User), and blocking Google-Extended doesn't remove a site from Google Search. Everything above helps AI search more than any AI-specific trick.
 
 ## Don't recommend
 

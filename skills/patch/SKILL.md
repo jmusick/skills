@@ -31,11 +31,7 @@ Check that the work fits the bump. A patch is fixes and tweaks that add nothing 
 
 ## 3. Bump the version
 
-Update every version file with `in_lockstep` true. Leave independently versioned files alone (e.g. a separately versioned extension) and mention them in the report.
-
-- **package.json:** `npm version <X.Y.Z> --no-git-tag-version`, then check `git diff package.json` and restore any reformatted lines; only the version should change. Without npm, edit `package.json` and the lock file's top-level `"version"` and `packages[""].version` by hand.
-- **Unity:** `bundleVersion:` in `ProjectSettings/ProjectSettings.asset`. Don't touch generated `Assembly-CSharp*.csproj`.
-- **Others:** edit the field the script names.
+Update every version file with `in_lockstep` true, as its `update` hint says. After `npm version`, check `git diff package.json` and restore any reformatted lines; only the version should change. Leave independently versioned files alone (e.g. a separately versioned extension) and mention them in the report.
 
 **Changelog:** if one exists, add a section at the top matching its format exactly (heading style, today's date, categories). If it has an `Unreleased` section (`changelog_has_unreleased`), turn that into this version's section instead of writing a second one for the same changes, and leave a fresh empty `Unreleased` above it. Write for readers, describing what changed for them, and leave out what they can't see (refactors, CI, tests). Don't create one if absent.
 

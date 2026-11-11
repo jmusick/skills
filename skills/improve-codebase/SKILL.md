@@ -96,7 +96,7 @@ Report in chat, most important first:
 
    Evidence is `path:line` plus what you saw. Effort is S (under an hour), M (a day or less), or L (bigger: split it into several issues when you file). Severity levels are defined in `references/checks.md`.
 3. **Order.** Which findings depend on others, e.g. "#4 needs the tests from #2 first."
-4. **Looks bad but is fine.** Things you considered and dropped, with the reason. Never leave this empty; if you have nothing, you didn't look hard enough.
+4. **Looks bad but is fine.** Things you considered and dropped, with the reason. If you dropped nothing, write "nothing dropped".
 5. **Not checked**, and why (a tool missing, a package skipped, a check too slow).
 6. **Questions for the maintainer**: things you couldn't tell were debt or deliberate.
 

@@ -137,7 +137,7 @@ python <this skill's directory>/scripts/version_info.py <patch|minor>
 ```
 
 It prints current and next version, `next_tag`, `tag_style`, version files with `in_lockstep` and an `update` hint, and the changelog path. Stop and ask if `versions_disagree`, `next_tag_exists_locally`, or `next_tag_exists_on_origin` is true, or `origin_tags_at_or_above_next` lists anything. Then:
-- Update every version file with `in_lockstep` true per its `update` hint. For `package.json`, run `npm version <X.Y.Z> --no-git-tag-version` (it updates the lockfile too) and check that only version lines changed. Leave independently versioned files alone and mention them in the report.
+- Update every version file with `in_lockstep` true per its `update` hint. For `package.json`, check `git diff package.json` afterward and restore any reformatted lines; only the version should change. Leave independently versioned files alone and mention them in the report.
 - If there's a changelog, add a section at the top in its exact format, with today's date, written for readers, leaving out what they can't see (refactors, CI, tests). If it has an `Unreleased` section (`changelog_has_unreleased`), turn that into this version's section instead of writing a second one, and leave a fresh empty `Unreleased` above it. Don't create one.
 - Follow any release steps in the repo's AGENTS.md / CLAUDE.md.
 

@@ -47,18 +47,24 @@ The evidence from step 3, with the URL or place each fact came from.
 The exact text that was sent, with the subject line if it was an email.
 
 ## History
-- 2026-11-10: sent by email from justin@... (Gmail)
+- 2026-11-10: sent by email from stonedragonmedia@gmail.com
 ```
 
 Passed-over businesses get a short file with `status: passed` and one line on why, so later runs don't research them again.
 
 ## 1. Check the record before anything else
 
-List the outreach folder and keep the names, domains, phone numbers, and Facebook URLs in mind. Before you research any candidate, check those fields for a match (a business may appear under a slightly different name, so compare the website or phone too). Skip any business that already has a record, whatever its status. The one exception is when the user names a business that has a record: show them the record and ask what they want to do.
+The record check is a script, because a business may be filed under a different name (an LLC, an owner's name) and only its website, phone, or Page gives it away. Before you research any candidate, run:
+
+```bash
+python <this skill's directory>/scripts/outreach.py match <outreach folder> --name "<name>" --website <url> --phone "<phone>" --facebook <page url>
+```
+
+Pass whichever of those you have (use `python3` if `python` isn't found). Each match lists the fields it matched on; a `similar name` match alone is a lead to compare by eye, not proof. Skip any business that already has a record, whatever its status. The one exception is when the user names a business that has a record: show them the record and ask what they want to do.
 
 ## 2. Find candidates
 
-When the user gave no town, pick one from the coverage list in `references/sdm.md`, favoring in-person towns with the fewest records so the outreach spreads across the area. Then gather five to eight candidates with web search, Google Maps, and Facebook: local, independently owned businesses that sell to the public or to other local businesses.
+When the user gave no town, pick one from the coverage list in `references/sdm.md`, favoring in-person towns with the fewest records (`outreach.py towns <outreach folder>` counts them) so the outreach spreads across the area. Then gather five to eight candidates with web search, Google Maps, and Facebook: local, independently owned businesses that sell to the public or to other local businesses.
 
 **Facebook as a lead source.** Facebook turns up the strongest kind of candidate: a business whose only presence online is a Facebook Page. Use Justin's signed-in Chrome, and read only:
 - Search Facebook Pages for the town and a category (`facebook.com/search/pages/?q=<category> <town>`), and look through the town's public community and buy-local groups for businesses that people name.
@@ -106,13 +112,16 @@ The message, in this order:
 7. An opt-out line in plain words, such as "If this isn't useful, just let me know and I won't reach out again."
 8. Sign-off: Justin Musick, Founder, Stone Dragon Media, and his phone number. Emails also carry the mailing address from `sender.md`, because U.S. law (CAN-SPAM) requires a valid postal address in commercial email. A P.O. box or registered mailbox is fine.
 
-Keep the body (everything above the sign-off) to 75–125 words for emails and forms and 60–100 for Facebook. Owners read these on a phone between customers, and a long message reads like a form letter. Drafts run long, and estimates run short, so count the words with a command (such as `wc -w`) after humanizing, cut until the count fits, and report the real count in step 6. A Facebook message shows only its first line or two in the inbox preview. Give the phone number once, in the sign-off, not in the body too. For an email, write a short, plain subject line (two to six words) that names the business or the topic, like "Maple Street Bakery's website." Never write a fake "Re:" or a misleading subject, which CAN-SPAM also prohibits.
+Keep the body (everything above the sign-off) to 75–125 words for emails and forms and 60–100 for Facebook. Owners read these on a phone between customers, and a long message reads like a form letter. A Facebook message shows only its first line or two in the inbox preview. Give the phone number once, in the sign-off, not in the body too. For an email, write a short, plain subject line (two to six words) that names the business or the topic, like "Maple Street Bakery's website." Never write a fake "Re:" or a misleading subject, which CAN-SPAM also prohibits.
 
 **No links in a first message.** That means no URLs, no bare domains (email apps turn `stonedragonmedia.com` into a link), no email address written into the body, and no signature block that adds them. A link from a stranger looks like phishing and gets filtered. The business can reply or call. The phone number is fine.
 
 Don't invent a connection or experience: no "I've been a customer for years," "a friend recommended you," or "I drove past your shop" unless Justin told you so in this conversation. Don't promise results or quote prices; SDM's pricing depends on scope.
 
-Then run the **humanize** skill on the draft in Rewrite mode, and tell it to keep every fact, the opt-out line, the signature, and the no-links rule. Check its output against those yourself afterward.
+Then, in this order:
+1. Run the **humanize** skill on the draft in Rewrite mode, and tell it to keep every fact, the opt-out line, the signature, and the no-links rule.
+2. Save the humanized message (with `Subject: ...` as the first line for an email) to a scratch file and run `python <this skill's directory>/scripts/check_message.py <file> --channel email|form|facebook`. It counts the body words and flags links, bare domains, email addresses, a phone number in the body, a missing sign-off, and a bad subject line. Drafts run long and estimates run short, which is why the count is a script.
+3. Fix every issue it lists, confirm its warnings by eye, and check yourself that humanize kept every fact. Rerun until it passes. Report its word count in step 6.
 
 ## 6. Get Justin's approval
 

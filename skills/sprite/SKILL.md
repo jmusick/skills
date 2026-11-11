@@ -11,7 +11,7 @@ The game's hand-coded Python sprites look stiff. Chompy, the one sprite drawn by
 1. **Codex draws the art.** `scripts/codex_image.py` runs `codex exec` with Codex's built-in image tool, a structured prompt and a reference image, and saves the sheet. The prompt does the art direction: a logical pixel grid, a short palette, a ranked detail budget, and a list of AI clichés to leave out. That's what keeps the result from looking generated.
 2. **A script makes it real pixel art.** `scripts/sprite_clean.py` removes the background, finds the frames, downscales them onto the game's grid, snaps colors to the palette, forces the navy outline, and writes the strips the importer expects.
 
-Read [references/chomp-chomp-panic.md](references/chomp-chomp-panic.md) now for sizes, clips, palettes and file names. Read [references/prompting.md](references/prompting.md) before writing the first prompt. Read [references/spec.md](references/spec.md) when writing the build spec.
+Read [references/chomp-chomp-panic.md](references/chomp-chomp-panic.md) now for sizes, clips, palettes and file names. Read [references/prompting.md](references/prompting.md) before writing the brief. Read [references/spec.md](references/spec.md) when writing the build spec.
 
 ## Before you start
 
@@ -34,25 +34,31 @@ For a redo of existing art, look at the current preview first and say what the n
 
 ## 2. Model sheet (new characters only)
 
-Fill in the prompting guide's model sheet template (one standalone sprite in a neutral pose) and generate it, attaching Chompy's preview as a style reference:
+Write the character's brief to `<scratch>/<prefix>.prompt.json` as the prompting guide describes, with every clip's poses, and write all its prompts at once:
+
+```bash
+python <skill>/scripts/make_prompt.py <scratch>/croc.prompt.json all --out-dir <scratch>
+```
+
+Then generate the model sheet (one standalone sprite in a neutral pose), attaching Chompy's preview as a style reference:
 
 ```bash
 python <skill>/scripts/codex_image.py --prompt-file <scratch>/croc_model.txt --out <repo>/ArtSource/Croc/source_croc_model.png --ref <repo>/ArtSource/Kaiju/preview/kaiju_preview_8x.png
 ```
 
-Write prompt files in your scratch directory, not the repo: the game doesn't commit prompts. Show the user the image and the palette and wait for their OK. This is the one stop in the workflow, because every later sheet copies this design; a fix now costs one image, a fix later costs all of them.
+Write the brief and prompt files in your scratch directory, not the repo: the game doesn't commit prompts. Show the user the image and the palette and wait for their OK. This is the one stop in the workflow, because every later sheet copies this design; a fix now costs one image, a fix later costs all of them.
 
 For an existing character, skip this: its `*_preview_8x.png` is the reference.
 
 ## 3. Generate one sheet per clip
 
-Write one prompt per clip from the clip sheet template. Copy the CHARACTER, ART DIRECTION, DETAIL BUDGET and VISUAL STYLE text word for word from the model sheet prompt; only the frames, layout and output lines change. Attach the model sheet (or existing preview) to every one. The clips don't depend on each other, so run them in parallel in the background:
+Use the clip prompts `make_prompt.py` wrote; for an existing character, write its brief now and run the script for the clips you're making. Never edit a prompt file by hand: change the brief and rerun the script, so every prompt keeps the same character text. Attach the model sheet (or existing preview) to every one. The clips don't depend on each other, so run them in parallel in the background:
 
 ```bash
 python <skill>/scripts/codex_image.py --prompt-file <scratch>/croc_walk.txt --out <repo>/ArtSource/Croc/source_croc_walk.png --ref <repo>/ArtSource/Croc/source_croc_model.png
 ```
 
-The script prints the saved path and Codex's reply, and exits non-zero if no image came back. If Codex saved more than one image, the extras are kept as `.alt1.png` and so on; pick the best.
+The script prints the saved path and Codex's reply, and exits non-zero if no image came back. If Codex saved more than one image, the extras are kept as `.alt1.png` and so on; pick the best. If it exits non-zero, show the user its message and retry that clip once; on a login, quota or rate-limit error, stop instead, because every attempt is billed.
 
 Look at every sheet (open the PNG) and judge it against "Judging a sheet" in the prompting guide. Reroll a failing sheet with one targeted change. Don't reroll for soft edges, off colors or a ragged outline; the cleanup fixes those.
 
@@ -78,5 +84,5 @@ Follow "After building" in the house rules: re-run variants (and rivals for Chom
 End with:
 - The preview image, and each strip's path.
 - How many images were generated and how many were rerolls, and why.
-- The final prompt for each clip, quoted (they aren't saved anywhere else).
+- The final brief, quoted (the prompts aren't saved anywhere else, and the brief regenerates them).
 - Anything left: report warnings you accepted, clips that still look weak, the in-game check if you couldn't run Unity, and game data or code a new character still needs.

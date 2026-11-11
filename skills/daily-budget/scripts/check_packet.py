@@ -131,6 +131,8 @@ def main():
             error('research.json', f'missing top-level "{key}"')
     if not (packet / 'review.md').is_file():
         error('review.md', 'missing; the editor reads this, not the JSON')
+    elif '_fill in_' in (packet / 'review.md').read_text(encoding='utf-8', errors='replace'):
+        error('review.md', 'still has "_fill in_" cells from render_review.py; write them')
 
     seen = set()
     for i, story in enumerate(stories):

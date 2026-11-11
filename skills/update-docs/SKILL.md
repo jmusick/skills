@@ -120,6 +120,8 @@ Noticed, not done (limited runs only)
 - docs/setup-old.md looks superseded by the README, but this run covers only the diff
 
 Checked, no changes: SECURITY.md, docs/api.md, docs/adr/0001-0006
+
+Light check only: docs/guides/*.md (README, AGENTS.md and setup guides got the full check)
 ```
 
 Leave out an empty section. Nothing is committed; say so. If there are no proposals, the run ends here.

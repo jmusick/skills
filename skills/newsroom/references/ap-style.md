@@ -24,8 +24,6 @@ House style (`house-style.md`) overrides anything here. When in doubt about an e
 
 ## Titles and names
 
-- Capitalize formal titles directly before a name: `Mayor Jane Smith`, `Superintendent John Doe`, `Police Chief Ann Lee`. Lowercase them after a name or on their own: `Smith, the mayor`, `the superintendent`.
-- Occupational descriptions stay lowercase: `attorney Jane Smith`, `teacher John Doe`.
 - Put long titles after the name: `Jane Smith, director of the county board of elections`.
 - Abbreviate these before a full name: `Gov.`, `Lt. Gov.`, `Rep.`, `Sen.`, `Dr.`. Use `Dr.` only for physicians, dentists, and similar practitioners.
 - Party and hometown take this form: `state Rep. Jane Smith, R-Hometown`, `U.S. Sen. John Doe, D-Ohio`.
@@ -38,29 +36,19 @@ House style (`house-style.md`) overrides anything here. When in doubt about an e
 
 ## Word choice
 
+AP calls that differ from everyday usage:
+
 | Use | Not |
 | --- | --- |
-| that (restrictive, no commas) / which (nonrestrictive, with commas) | interchangeable |
-| who for people | that for people |
-| fewer for things you count, less for amounts | less people |
 | more than, or over (AP accepts both with numbers) | in excess of |
-| about | approximately |
-| because | due to the fact that |
-| to | in order to |
-| use | utilize |
 | crash or collision | accident (implies no one is at fault) |
 | pleaded | pled |
-| compared with (differences) / compared to (likeness) | interchangeable |
-| affect (verb) / effect (noun) | the reverse |
-| website, email, internet, online | Web site, e-mail |
 | anti-abortion / abortion-rights | pro-life / pro-choice |
 
 ## Punctuation
 
 - No Oxford comma in a simple series unless house style says otherwise: `red, white and blue`.
-- Periods and commas go inside quotation marks. Colons and semicolons go outside. Question marks go inside only when they're part of the quote.
 - Use single quotation marks in headlines and for a quote within a quote.
-- Hyphenate a compound modifier before a noun (`full-time job`) but never after an -ly adverb (`highly regarded teacher`).
 - AP puts a space on both sides of a dash. Keep dashes rare; see `ai-tells.md`.
 - Spell out an abbreviation on first reference unless readers know it on sight (FBI, NASA). On second reference, prefer a plain noun ("the board," "the district") to an acronym.
 
@@ -70,4 +58,3 @@ House style (`house-style.md`) overrides anything here. When in doubt about an e
 - Put the person first: `a person with an addiction`, not `an addict`. Write `homeless people` or `people experiencing homelessness`, not `the homeless`.
 - Use the age in place of `elderly` or `senior citizen`.
 - Suicide: write `died by suicide` or `killed himself`, never `committed suicide`. Don't describe the method in detail. Include the 988 Suicide & Crisis Lifeline.
-- Sexual assault: don't name victims without their consent.

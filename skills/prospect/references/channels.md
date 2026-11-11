@@ -13,7 +13,7 @@ All sending goes through Justin's signed-in browser (Claude in Chrome or the equ
 ## Website contact form
 
 1. Open the form on the business's own site. If the form is on a third-party service (Wix, Squarespace, JotForm, a scheduling tool), that's fine as long as the business's site is what links to it.
-2. Fill only the fields approved in step 6. Use Justin's name and phone from `sender.md`, and stonedragonmedia@gmail.com as the email so replies land in SDM's inbox. If a field is required but wasn't in the approval (a dropdown such as "reason for contact"), pick the closest neutral option and say which one you chose, or ask.
+2. Fill only the fields approved in step 6. Use Justin's name and phone from `sender.md`, and stonedragonmedia@gmail.com as the email so replies land in SDM's inbox. If a field is required but wasn't in the approval (a dropdown such as "reason for contact"), ask Justin which value to use before submitting. A submitted form can't be taken back.
 3. Don't tick newsletter or marketing opt-in boxes.
 4. If there's a CAPTCHA or "I'm not a robot" check, stop. Tell Justin the form is filled in and ask him to complete the check and click Submit himself.
 5. After submitting, confirm the thank-you message or page. If the page shows an error, or the form clears with no confirmation, report that and don't record the message as sent.

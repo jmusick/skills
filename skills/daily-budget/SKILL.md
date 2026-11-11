@@ -30,7 +30,7 @@ Run from the repo root (use `python3` if `python` isn't found):
 python <skill-dir>/scripts/start_day.py
 ```
 
-It creates `editorial/<today>/` in the library, snapshots existing stories, events and media to `evidence/existing-content.json`, and prints a briefing. Read it for:
+It creates `editorial/<today>/` in the library, snapshots existing stories, events and media to `evidence/existing-content.json`, and prints a briefing. If it exits with a message instead (no local database, library not found), do what the message names and rerun it; the rest of the run depends on that snapshot. Read the briefing for:
 
 - **Stories from the last 21 days.** Don't repeat them. An update to one of them is a different thing (step 5).
 - **Section balance.** Sections marked thin need stories most. The site wants at least three current stories in each section so every homepage block fills in.
@@ -46,7 +46,7 @@ Work in this order, note the date on everything you find, and log each source yo
 
 1. **Follow-ups.** Yesterday's held leads, plus anything new about stories published in the last few days (a route announced, a time changed, a vote taken).
 2. **Reliable sources** in `news-sources.md`.
-3. **Social.** Use the signed-in browser available to you (Codex's in-app Browser, Claude in Chrome, or the built-in browser) for the official Facebook Pages and X accounts listed in `news-sources.md`, plus Facebook event search. Use Google News's local section for leads. **Read only:** don't post, comment, react, message, follow or join anything. Don't download or reuse images from social posts.
+3. **Social.** Use the signed-in browser available to you (Codex's in-app Browser, Claude in Chrome, or the built-in browser) for the official Facebook Pages and X accounts listed in `news-sources.md`, plus Facebook event search. Use Google News's local section for leads. **Read only:** don't post, comment, react, message, follow or join anything. Don't download or reuse images from social posts. If no signed-in browser is available, or it's signed out, skip social, mark it "not reached" under "Sources swept," and tell the editor in the report.
 4. **Promising sources** from `news-sources.md` that haven't produced a story yet.
 
 ### 3. Scout for new sources
@@ -82,7 +82,13 @@ Don't invent anything a source doesn't give, including end times, first names, p
 
 ### 8. Write the packet and check it
 
-Write `research.json` and `review.md` as described in `references/packet.md`, as UTF-8. Recommend which new photo stories to feature. Then run:
+Write `research.json` as described in `references/packet.md`, as UTF-8, and recommend which new photo stories to feature. Then draft `review.md` from it, so the two files can't disagree:
+
+```bash
+python <skill-dir>/scripts/render_review.py --out <packet>/review.md
+```
+
+It writes the whole outline from `packet.md` in order, with `_fill in_` wherever only you can write: the opening paragraph, why each story runs today, the Featured reasons, image opportunities, the new sources' cells, and the Sources swept log. Fill every one, and delete a section that stays empty. Rerunning it would overwrite your edits, so it refuses unless you pass `--force`. Then run:
 
 ```bash
 python <skill-dir>/scripts/check_packet.py

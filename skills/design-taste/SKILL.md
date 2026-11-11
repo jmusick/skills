@@ -85,6 +85,8 @@ Before animating anything, read `references/motion.md`. It has the frequency rul
 
 ## Critique loop
 
+In audit mode, run steps 1 to 3 and report what you'd fix instead of fixing it. Fixing and step 4 are for polish and build, since an audit changes nothing.
+
 1. **Lint the source.** Run `python <skill-dir>/scripts/lint_tells.py <files or folder>` (use `python3` if `python` isn't found). It flags floor violations as `FAIL` and tells as `WARN`. Fix each `FAIL`. Treat each `WARN` as wrong unless you can defend it in one sentence. When the brief asks for a flagged device, pass `--allow <rule>` and note it in the report. The script reads source, not the rendered page, so a clean run is not a pass.
 2. **Capture.** Screenshot the full page at 1440px and 390px wide, plus the user's own viewport if you know it, with entrance motion settled or disabled so nothing reads as missing. Use whatever browser tool the environment has. Open every capture and confirm it shows what you think it shows.
 3. **Look.** Judge the pictures, not the code. Ask:
