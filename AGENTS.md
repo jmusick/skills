@@ -30,7 +30,7 @@ Draft new skills with skill-creator and review existing ones with `/improve-skil
 
 `skills/minor/scripts/version_info.py`, `skills/patch/scripts/version_info.py` and `skills/issue/scripts/version_info.py` are intentionally identical copies, because a skill can't read files from another skill's folder. If you change one copy, make the same change in the others.
 
-The `<!-- agent-waiting-for-reply -->` marker in `skills/issue/SKILL.md` must match `WAITING_MARKER` in `skills/issue/scripts/issue_survey.py`. Change them together.
+The `<!-- agent-waiting-for-reply -->` marker in `skills/issue/references/failure.md` must match `WAITING_MARKER` in `skills/issue/scripts/issue_survey.py`. Change them together.
 
 `skills/patch/SKILL.md` and `skills/minor/SKILL.md` are twins too: they differ only in the name, description, bump rule, and example releases. Keep everything else the same in both.
 
