@@ -62,7 +62,7 @@ Some skills distill what the most-used public skills on the same subject agree o
 
 - [daily-budget](skills/daily-budget/SOURCES.md): eight journalism and news-monitoring skills, for the sources-swept log.
 - [design-taste](skills/design-taste/SOURCES.md): nine frontend design skills, with most of the motion guidance from emilkowalski/skills and jakubkrehel/skills.
-- [humanize](skills/humanize/SOURCES.md): thirteen anti-AI-writing skills; each rule appears in most of them.
+- [humanize](skills/humanize/SOURCES.md): thirteen anti-AI-writing skills; most rules appear in most of them, and a few come from one source.
 - [improve-codebase](skills/improve-codebase/SOURCES.md): about twenty codebase-improvement skills, led by Matt Pocock's improve-codebase-architecture and codebase-design and shadcn's improve.
 - [improve-skills](skills/improve-skills/SOURCES.md): fifteen skill-writing and skill-improvement skills, beyond Anthropic's and OpenAI's skill-creators.
 - [issue](skills/issue/SOURCES.md): twelve issue-to-PR skills, led by open-mercato's om-auto-fix-issue (reproduce first) and fandhe-ai's implement-issue (out-of-scope tracking).

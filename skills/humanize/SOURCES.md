@@ -1,6 +1,6 @@
 # Sources
 
-humanize is the consensus of thirteen anti-AI-writing skills. Each rule appears in most of them, so no single source owns a rule. Most of them descend from Wikipedia's [Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing), kept by WikiProject AI Cleanup; skim it for new patterns when checking the tracked sources.
+humanize draws on thirteen anti-AI-writing skills. Most of its rules appear in most of them, so no single source owns those; the Contributed column names the rules that came from one source. Most of them descend from Wikipedia's [Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing), kept by WikiProject AI Cleanup; skim it for new patterns when checking the tracked sources.
 
 Pins were backfilled on 2026-11-11 from each repo's latest commit, after the skill was written. They mark where to start watching for changes, not the exact version that was read. The exceptions are blader/humanizer and the last three rows, which were reviewed at their pins on 2026-11-11. **Track** marks the sources worth checking for updates; the rest are credited only.
 
