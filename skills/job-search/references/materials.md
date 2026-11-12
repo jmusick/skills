@@ -30,7 +30,18 @@ To tailor:
 
 Upload systems read text, not layout, so keep the master's single column: no tables, text boxes, or images holding content.
 
-## 4. The cover letter
+## 4. Screening answers
+
+Write `screening-answers.md` in the folder: each question exactly as the form words it, then the answer to paste or select.
+
+- Take every standard answer from `application-answers.md`: contact details, work authorization, sponsorship, relocation, travel, self-identification, the outside-business disclosure (change the company name in its last sentence), and the approved written answers.
+- **Salary**: the midpoint of the posted range, rounded to the nearest $5,000 and never below $80,000. With no range posted, $80,000. State the number and the reason in the file so he can change it.
+- **Years with a tool**: count from the resume's dates, and say which jobs the count covers.
+- **Degree**: high school diploma, as `application-answers.md` records it. Where a form allows a note, add his years of professional experience, counted from the resume's dates.
+- A question the answer bank doesn't cover, or a written answer longer than a sentence: draft it from the resume and mark it **new, confirm before using**. It goes through humanize with the cover letter in step 5. When he approves one that will come up again, add it to "Short written answers" in `application-answers.md` with the company and date, so the next form can reuse it.
+- A TODO in the answer bank that this form needs: ask him once, then fill it in there.
+
+## 5. The cover letter
 
 Write one only when the form has a spot for one or the posting asks for it. An unrequested letter on an Easy Apply flow goes unread.
 
@@ -41,20 +52,9 @@ Write one only when the form has a spot for one or the posting asks for it. An u
 - **Close** with one plain line asking to talk.
 - No "perfect fit", "passionate", "proven track record", "fast-paced", or "I believe I would be a great addition." Write it the way he'd talk.
 
-Run the draft through the **humanize** skill in Rewrite mode, telling it to keep every fact, number, and name. Then check that it did.
+Run the letter and every answer marked new in step 4 through the **humanize** skill in one Rewrite pass, telling it to keep every fact, number, and name. Then check that it did. With no letter, the new answers still get that pass.
 
 Build it from the newest letter in `applications/` (`tebra/build-cover-letter.py` set the style): copy the script into the folder, replace the date, recipient, salutation, and body, and set the output to `justin-musick-cover-letter-<company>.docx`. Export and check the PDF the same way as the resume. Address a named hiring manager only if the posting or company site names one; otherwise "Dear <Company> Hiring Team".
-
-## 5. Screening answers
-
-Write `screening-answers.md` in the folder: each question exactly as the form words it, then the answer to paste or select.
-
-- Take every standard answer from `application-answers.md`: contact details, work authorization, sponsorship, relocation, travel, self-identification, the outside-business disclosure (change the company name in its last sentence), and the approved written answers.
-- **Salary**: the midpoint of the posted range, rounded to the nearest $5,000 and never below $80,000. With no range posted, $80,000. State the number and the reason in the file so he can change it.
-- **Years with a tool**: count from the resume's dates, and say which jobs the count covers.
-- **Degree**: high school diploma, as `application-answers.md` records it. Where a form allows a note, add his years of professional experience, counted from the resume's dates.
-- A question the answer bank doesn't cover, or a written answer longer than a sentence: draft it from the resume, run it through humanize, and mark it **new, confirm before using**. When he approves one that will come up again, add it to "Short written answers" in `application-answers.md` with the company and date, so the next form can reuse it.
-- A TODO in the answer bank that this form needs: ask him once, then fill it in there.
 
 ## 6. Hand it over
 

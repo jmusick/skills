@@ -124,6 +124,9 @@ def similar_role(a, b):
 
 
 POSTING_KEYS = ("company", "role", "url", "job_id")
+# What a match reports: enough to find the record and decide whether to drop the posting.
+# The agent opens the file when it needs more, so the rest of the front matter is noise.
+SUMMARY = ("file", "company", "role", "status", "applied", "updated")
 
 
 def match(records, posting):
@@ -146,12 +149,18 @@ def match(records, posting):
         if company and posting.get("role") and similar_role(posting["role"], rec["role"]):
             why.append("same company, similar role")
         if why:
-            hits.append({**rec, "matched_on": why})
+            hits.append({**{k: rec[k] for k in SUMMARY}, "matched_on": why})
         elif company:
-            company_history.append({k: rec[k] for k in ("file", "role", "status", "applied", "updated")})
+            company_history.append({k: rec[k] for k in SUMMARY if k != "company"})
     # Other records at the same employer: a recent rejection or a live application there
     # changes whether this posting is worth showing.
     return {"matches": hits, "same_company": company_history}
+
+
+def label(posting):
+    """Name a batch posting in the output by company and role, falling back to its URL or ID."""
+    named = {k: posting[k] for k in ("company", "role") if posting[k]}
+    return named or {k: posting[k] for k in ("url", "job_id") if posting[k]}
 
 
 def read_batch(source):
@@ -242,7 +251,7 @@ def main():
         if args.batch:
             if any(posting.values()):
                 p.error("use --batch or the single-posting flags, not both")
-            result = {"results": [{"posting": c, **match(records, c)} for c in read_batch(args.batch)]}
+            result = {"results": [{"posting": label(c), **match(records, c)} for c in read_batch(args.batch)]}
         elif posting["url"] or posting["job_id"] or posting["company"]:
             result = match(records, posting)
         else:

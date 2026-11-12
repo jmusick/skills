@@ -99,6 +99,16 @@ class Match(Folder):
         self.assertEqual(r["matches"], [])
         self.assertEqual(r["same_company"], [])
 
+    def test_match_reports_summary_not_whole_record(self):
+        hit = self.hit(url="https://www.linkedin.com/jobs/view/4012345678/")["matches"][0]
+        self.assertEqual(set(hit), set(jobs.SUMMARY) | {"matched_on"})
+
+    def test_batch_label_prefers_company_and_role(self):
+        self.assertEqual(jobs.label({"company": "Acme", "role": "Dev", "url": "https://x", "job_id": None}),
+                         {"company": "Acme", "role": "Dev"})
+        self.assertEqual(jobs.label({"company": None, "role": None, "url": "https://x", "job_id": None}),
+                         {"url": "https://x"})
+
     def test_different_role_same_company_is_history_not_match(self):
         r = self.hit(company="ClearCaptions", role="Engineering Manager")
         self.assertEqual(r["matches"], [])
