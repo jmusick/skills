@@ -1,14 +1,14 @@
 # Sources
 
-humanize is the consensus of ten anti-AI-writing skills. Each rule appears in most of them, so no single source owns a rule.
+humanize is the consensus of thirteen anti-AI-writing skills. Each rule appears in most of them, so no single source owns a rule. Most of them descend from Wikipedia's [Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing), kept by WikiProject AI Cleanup; skim it for new patterns when checking the tracked sources.
 
-Pins were backfilled on 2026-11-11 from each repo's latest commit, after the skill was written. They mark where to start watching for changes, not the exact version that was read. **Track** marks the sources worth checking for updates; the rest are credited only.
+Pins were backfilled on 2026-11-11 from each repo's latest commit, after the skill was written. They mark where to start watching for changes, not the exact version that was read. The exceptions are blader/humanizer and the last three rows, which were reviewed at their pins on 2026-11-11. **Track** marks the sources worth checking for updates; the rest are credited only.
 
 | Source | Path | Pin | License | Track | Contributed |
 | --- | --- | --- | --- | --- | --- |
-| [blader/humanizer](https://github.com/blader/humanizer) | [SKILL.md](https://github.com/blader/humanizer/blob/b48c832f0f80/SKILL.md) | `b48c832f0f80` | MIT | yes |  |
-| [hardikpandya/stop-slop](https://github.com/hardikpandya/stop-slop) | [SKILL.md](https://github.com/hardikpandya/stop-slop/blob/8da1f030185b/SKILL.md) | `8da1f030185b` | MIT | yes |  |
-| [petergyang/no-ai-slop](https://github.com/petergyang/no-ai-slop) | [skills/no-ai-slop/SKILL.md](https://github.com/petergyang/no-ai-slop/blob/000650b15698/skills/no-ai-slop/SKILL.md) | `000650b15698` | MIT | yes |  |
+| [blader/humanizer](https://github.com/blader/humanizer) | [SKILL.md](https://github.com/blader/humanizer/blob/b48c832f0f80/SKILL.md) | `b48c832f0f80` | MIT | yes | Strongest-first ordering, the "why AI text sounds this way" framing, matching a sample's dash rate, treating fake tags and operator notes as material, and file mode reading the whole file. Its 4.0.0 lets the rewrite add true specifics; humanize keeps the no-invention rule instead. |
+| [hardikpandya/stop-slop](https://github.com/hardikpandya/stop-slop) | [SKILL.md](https://github.com/hardikpandya/stop-slop/blob/8da1f030185b/SKILL.md) | `8da1f030185b` | MIT | yes | False agency (things doing what needs a mind). |
+| [petergyang/no-ai-slop](https://github.com/petergyang/no-ai-slop) | [skills/no-ai-slop/SKILL.md](https://github.com/petergyang/no-ai-slop/blob/000650b15698/skills/no-ai-slop/SKILL.md) | `000650b15698` | MIT | yes | Meta-commentary that explains the text to the reader. |
 | [cursor/plugins](https://github.com/cursor/plugins) | [pstack/skills/unslop/SKILL.md](https://github.com/cursor/plugins/blob/5866df557357/pstack/skills/unslop/SKILL.md) | `5866df557357` | none stated |  | Cursor's unslop. |
 | [conorbronsdon/avoid-ai-writing](https://github.com/conorbronsdon/avoid-ai-writing) | [SKILL.md](https://github.com/conorbronsdon/avoid-ai-writing/blob/30971f1c50c6/SKILL.md) | `30971f1c50c6` | MIT |  |  |
 | [Nanako0129/sepia](https://github.com/Nanako0129/sepia) | [skills/sepia/SKILL.md](https://github.com/Nanako0129/sepia/blob/0eb11d6c64c9/skills/sepia/SKILL.md) | `0eb11d6c64c9` | MIT |  |  |
@@ -16,3 +16,6 @@ Pins were backfilled on 2026-11-11 from each repo's latest commit, after the ski
 | [aplaceforallmystuff/the-antislop](https://github.com/aplaceforallmystuff/the-antislop) | [skills/antislop/SKILL.md](https://github.com/aplaceforallmystuff/the-antislop/blob/f123fdc53574/skills/antislop/SKILL.md) | `f123fdc53574` | MIT |  | Match unconfirmed: the Claude skill named antislop. |
 | [theclaymethod/unslop](https://github.com/theclaymethod/unslop) | [SKILL.md](https://github.com/theclaymethod/unslop/blob/17ed39c9d0b5/SKILL.md) | `17ed39c9d0b5` | none stated |  |  |
 | [jalaalrd/anti-ai-slop-writing](https://github.com/jalaalrd/anti-ai-slop-writing) | [skills/anti-ai-slop-writing/SKILL.md](https://github.com/jalaalrd/anti-ai-slop-writing/blob/63255f9bbb75/skills/anti-ai-slop-writing/SKILL.md) | `63255f9bbb75` | none stated |  |  |
+| [miqdadbadjuber/anti-slop](https://github.com/miqdadbadjuber/anti-slop) | [skills/antislop-copywriting/SKILL.md](https://github.com/miqdadbadjuber/anti-slop/blob/4520786d3dff/skills/antislop-copywriting/SKILL.md) | `4520786d3dff` | MIT | yes | Opening runways ("In today's fast-paced world"), false ranges, guesses filling a gap, and the mind-verb test for false agency. |
+| [Aboudjem/humanizer-skill](https://github.com/Aboudjem/humanizer-skill) | [skills/humanizer/SKILL.md](https://github.com/Aboudjem/humanizer-skill/blob/a58df0653675/skills/humanizer/SKILL.md) | `a58df0653675` | MIT |  | Pasted residue (citation tokens, `utm_source`, placeholders), Markdown that won't render, and docs that narrate a change. |
+| [MohamedAbdallah-14/unslop](https://github.com/MohamedAbdallah-14/unslop) | [skills/unslop/SKILL.md](https://github.com/MohamedAbdallah-14/unslop/blob/5e955765a78c/skills/unslop/SKILL.md) | `5e955765a78c` | MIT |  | Change style, not stance: no added warmth or agreement. |
