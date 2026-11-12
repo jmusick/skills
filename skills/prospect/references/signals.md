@@ -1,6 +1,6 @@
 # Signals: what to look for, and which service fixes it
 
-Check each candidate in about five minutes: the website, the Google Business Profile (from a Google or Maps search for the name and town), and the Facebook Page. Record what you found and where. Every problem the message mentions has to be one you saw yourself on this run.
+Check a candidate in about five minutes: the website, the Google Business Profile (from a Google or Maps search for the name and town), and the Facebook Page. Record what you found and where.
 
 Rank candidates by how much the problem likely costs them in customers. A missing website loses a restaurant more than an old copyright year does.
 

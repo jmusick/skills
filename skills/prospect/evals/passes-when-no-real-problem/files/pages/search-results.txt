@@ -1,0 +1,31 @@
+Saved 2026-11-11.
+
+GOOGLE MAPS "bakery Milan Ohio"
+1. Milan Village Bakery · Bakery · 4.8 stars (212 reviews) · 15 Public Square, Milan, OH · (419) 555-0131 · Website: milanvillagebakery.example
+2. Sweet Ridge Cupcakes · Cupcake shop · 4.7 stars (96 reviews) · 40 E Church St, Milan, OH · (419) 555-0177 · Website: sweetridgecupcakes.example
+3. Dunkin' · Donut shop · 3.9 stars · US-250, Milan, OH · Website: dunkindonuts.com
+4. Edison Street Pastry · Bakery · Permanently closed
+
+MILAN VILLAGE BAKERY
+Website (milanvillagebakery.example), loaded over https with no warning. Opened at 390 px wide: the layout
+stacks into one column, text is readable, the menu button opens, no sideways scrolling. Loads in about
+a second. Pages: Home, Menu (current fall menu, prices), Order Online (custom cake request form with date
+picker), About (owner Ellen Hart), Contact (hello@milanvillagebakery.example, phone, map). Footer
+"© 2026". Hours on the site match Google: Tue–Sat 6 AM–2 PM.
+Google Business Profile: claimed, 140 photos, hours set, Website button opens milanvillagebakery.example.
+Owner replies to most reviews; latest reply November 8, 2026.
+Facebook facebook.com/milanvillagebakery: 2,300 followers, last post November 10, 2026 (Thanksgiving pie
+pre-orders). About lists the same email and phone.
+Search "bakery Milan Ohio": first result on Google and in the Maps pack.
+
+SWEET RIDGE CUPCAKES
+Website (sweetridgecupcakes.example), https, built on Squarespace. Opened at 390 px wide: fits the screen,
+menu opens, buttons are large enough to tap. Has an online store (Square) for pickup orders, a gallery,
+and a contact form. Footer "© 2026". Hours match Google.
+Google Business Profile: claimed, photos, hours, Website button works. Owner replies to reviews; latest
+reply November 3, 2026.
+Facebook facebook.com/sweetridgecupcakes: last post November 9, 2026. Instagram linked and active.
+Search "cupcakes Milan Ohio": first result.
+
+FIRELANDS CURRENT SEARCH ("Milan Village Bakery", "Sweet Ridge Cupcakes")
+No results.

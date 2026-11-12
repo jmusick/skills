@@ -1,10 +1,13 @@
 """Read the prospect outreach folder: find existing records, count towns, list follow-ups due.
 
 Usage:
-  python outreach.py list <folder>
   python outreach.py match <folder> [--name N] [--website URL] [--phone P] [--facebook URL] [--email E]
+  python outreach.py match <folder> --batch <file.json | ->
   python outreach.py towns <folder>
   python outreach.py due <folder> [--days 7] [--today YYYY-MM-DD]
+
+--batch takes a JSON list of candidates, each an object with any of name, website,
+phone, facebook, email, and checks them all in one pass.
 
 Prints JSON. Reads only; never writes to the folder. Files it can't parse are listed
 under `unreadable_records`: check those by hand, since one may be the business.
@@ -91,15 +94,18 @@ def name_tokens(name):
     return {w for w in words if w not in NAME_NOISE}
 
 
-def match(records, args):
+CANDIDATE_KEYS = ("name", "website", "phone", "facebook", "email")
+
+
+def match(records, cand):
     want = {
-        "website": norm_domain(args.website),
-        "facebook": norm_facebook(args.facebook),
-        "phone": norm_phone(args.phone),
-        "email": (args.email or "").lower().strip() or None,
+        "website": norm_domain(cand.get("website")),
+        "facebook": norm_facebook(cand.get("facebook")),
+        "phone": norm_phone(cand.get("phone")),
+        "email": (cand.get("email") or "").lower().strip() or None,
     }
     want_domain_from_email = want["email"].split("@")[-1] if want["email"] else None
-    tokens = name_tokens(args.name)
+    tokens = name_tokens(cand.get("name"))
     hits = []
     for rec in records:
         why = []
@@ -122,6 +128,27 @@ def match(records, args):
         if why:
             hits.append({**rec, "matched_on": why})
     return {"matches": hits}
+
+
+def read_batch(source):
+    try:
+        if source == "-":
+            raw = sys.stdin.buffer.read().decode("utf-8-sig")
+        else:
+            with open(source, encoding="utf-8-sig") as f:
+                raw = f.read()
+        data = json.loads(raw)
+    except (OSError, UnicodeDecodeError, ValueError) as e:
+        sys.exit(f"Can't read the --batch candidates: {e}")
+    if isinstance(data, dict):
+        data = [data]
+    if not isinstance(data, list) or not all(isinstance(c, dict) for c in data):
+        sys.exit("--batch needs a JSON list of candidate objects")
+    cands = [{k: (str(c[k]) if c.get(k) is not None else None) for k in CANDIDATE_KEYS} for c in data]
+    empty = [i for i, c in enumerate(cands) if not any(c.values())]
+    if empty:
+        sys.exit(f"--batch candidates at positions {empty} have none of {', '.join(CANDIDATE_KEYS)}")
+    return cands
 
 
 def towns(records):
@@ -152,12 +179,12 @@ def due(records, days, today):
 def main():
     p = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     sub = p.add_subparsers(dest="cmd", required=True)
-    for name in ("list", "towns"):
-        sub.add_parser(name).add_argument("folder")
+    sub.add_parser("towns").add_argument("folder")
     m = sub.add_parser("match")
     m.add_argument("folder")
-    for flag in ("--name", "--website", "--phone", "--facebook", "--email"):
-        m.add_argument(flag)
+    for key in CANDIDATE_KEYS:
+        m.add_argument(f"--{key}")
+    m.add_argument("--batch", metavar="FILE", help="JSON list of candidates; - reads stdin")
     d = sub.add_parser("due")
     d.add_argument("folder")
     d.add_argument("--days", type=int, default=7)
@@ -165,12 +192,16 @@ def main():
     args = p.parse_args()
 
     records, skipped = load(args.folder)
-    if args.cmd == "list":
-        result = {"records": records}
-    elif args.cmd == "match":
-        if not any((args.name, args.website, args.phone, args.facebook, args.email)):
-            p.error("match needs at least one of --name, --website, --phone, --facebook, --email")
-        result = match(records, args)
+    if args.cmd == "match":
+        cand = {k: getattr(args, k) for k in CANDIDATE_KEYS}
+        if args.batch:
+            if any(cand.values()):
+                p.error("use --batch or the single-candidate flags, not both")
+            result = {"results": [{"candidate": c, **match(records, c)} for c in read_batch(args.batch)]}
+        elif any(cand.values()):
+            result = match(records, cand)
+        else:
+            p.error("match needs --batch or at least one of --name, --website, --phone, --facebook, --email")
     elif args.cmd == "towns":
         result = towns(records)
     else:

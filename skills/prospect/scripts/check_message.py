@@ -1,10 +1,12 @@
 """Check a drafted first message before Justin sees it.
 
 Usage:
-  python check_message.py <message file> --channel email|form|facebook [--follow-up]
+  python check_message.py <record or message file> [--channel email|form|facebook] [--follow-up]
 
-The file holds the message as it will be sent. For email, put the subject on the
-first line as `Subject: ...`. The sign-off starts at the line naming Justin Musick
+Given an outreach record, it checks the `## Message` section (`## Follow-up` with
+--follow-up) and takes the channel from the record's `channel:` field. Any other file
+holds just the message, and needs --channel. For email, put the subject on the
+message's first line as `Subject: ...`. The sign-off starts at the line naming Justin Musick
 (plus a short closing line such as "Thanks," just above it); everything above it
 is the body that gets counted.
 
@@ -26,6 +28,34 @@ DOMAIN = re.compile(r"\b[a-z0-9][a-z0-9-]*(\.[a-z0-9-]+)*\.(com|net|org|biz|info
 PHONE = re.compile(r"\(?\b\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}\b")
 OPT_OUT = re.compile(r"won'?t (reach out|contact|follow up|message|bother|write)|not (useful|interested|a fit)|let me know and I|no worries|stop (reaching|contacting)", re.I)
 POSTAL = re.compile(r"P\.?\s?O\.?\s+Box|\b\d{5}(-\d{4})?\b", re.I)
+
+
+def channel_for(value):
+    value = (value or "").lower()
+    if "email" in value:
+        return "email"
+    if "form" in value:
+        return "form"
+    if any(k in value for k in ("facebook", "messenger", "instagram", "linkedin")):
+        return "facebook"
+    return None
+
+
+def from_record(text, follow_up):
+    """Return (message, channel) from an outreach record, or (None, None) if it isn't one."""
+    fm = re.match(r"---\s*\n(.*?)\n---\s*\n", text, re.S)
+    if not fm:
+        return None, None
+    channel = None
+    for line in fm.group(1).splitlines():
+        key, _, value = line.partition(":")
+        if key.strip().lower() == "channel":
+            channel = re.sub(r"\s+#.*$", "", value).strip().strip("\"'")
+    heading = "Follow-up" if follow_up else "Message"
+    section = re.search(rf"^##[ \t]+{heading}[ \t]*$(.*?)(?=^##[ \t]|\Z)", text[fm.end():], re.S | re.M | re.I)
+    if not section:
+        sys.exit(f"The record has no '## {heading}' section to check.")
+    return section.group(1).strip(), channel
 
 
 def split(text):
@@ -110,7 +140,7 @@ def check(text, channel, follow_up):
 def main():
     p = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     p.add_argument("file")
-    p.add_argument("--channel", required=True, choices=sorted(RANGES))
+    p.add_argument("--channel", choices=sorted(RANGES), help="defaults to the record's channel")
     p.add_argument("--follow-up", action="store_true", help="40-80 words, and one link is allowed")
     args = p.parse_args()
     try:
@@ -118,7 +148,13 @@ def main():
             text = f.read()
     except OSError as e:
         sys.exit(f"Can't read {args.file}: {e}")
-    result = check(text, args.channel, args.follow_up)
+    message, record_channel = from_record(text, args.follow_up)
+    if message is not None:
+        text = message
+    channel = args.channel or channel_for(record_channel)
+    if not channel:
+        sys.exit("Pass --channel email|form|facebook (the file names no channel this script knows).")
+    result = check(text, channel, args.follow_up)
     print(json.dumps(result, indent=2))
     sys.exit(0 if result["ok"] else 1)
 

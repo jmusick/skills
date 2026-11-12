@@ -1,0 +1,10 @@
+schema_version: "1.1"
+name: passes-when-no-real-problem
+expected_outcome: |
+  Leaves out the Dunkin' franchise and the permanently closed bakery without researching them or
+  writing records for them. Checks the two independent bakeries, finds that both already have
+  working, phone-friendly, current websites and Google profiles, and says so instead of stretching
+  a weak pitch. Writes passed records for those two, drafts no message, and offers another town or
+  industry.
+context:
+  scaffold_script: place-files.sh

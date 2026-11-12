@@ -8,22 +8,20 @@ disable-model-invocation: true
 
 Find one local business that Stone Dragon Media can actually help, show Justin why, and send a first message he'd be glad to have his name on. Quality beats volume. A badly aimed pitch from a local agency gets remembered around town, so one well-researched message is worth more than ten generic ones.
 
-`references/sdm.md` holds what SDM sells, where it works, and the facts about Justin the message can use. Read it at the start of every run.
-
 ## Modes
 
-- **New** (default): `/prospect`, optionally with a town, an industry, or a named business ("/prospect Huron restaurants", "/prospect Maple Street Bakery"). Runs steps 1–7.
-- **Follow-up**: `/prospect follow-up`. Read [references/follow-up.md](references/follow-up.md) and follow it.
-- **Update**: the user reports a reply, a no, or an opt-out ("Maple Street said no thanks"). Update that business's record and stop.
+- **New** (default): `/prospect`, optionally with a town, an industry, or a named business ("/prospect Huron restaurants", "/prospect Maple Street Bakery"). Read `references/sdm.md` (what SDM sells, where it works, and the facts about Justin a message can use), then run steps 1–7.
+- **Follow-up**: `/prospect follow-up`. Read `references/sdm.md` and [references/follow-up.md](references/follow-up.md), and follow the latter.
+- **Update**: the user reports a reply, a no, or an opt-out ("Maple Street said no thanks"). Find the record with `outreach.py match` (step 2), update its status and History, and stop.
 
 If the user asks for several businesses, run the loop once per business, each with its own approval.
 
 ## The outreach folder
 
-Records live in `C:\Users\JD\projects\stone-dragon-media\Outreach\` unless the user names another folder. Create it on first use.
+Records live in `C:\Users\JD\projects\stone-dragon-media\Outreach\` unless the user names another folder. Create it on first use. Run the scripts as `python <this skill's directory>/scripts/<script>`, or with `python3` if `python` isn't found.
 
 - `sender.md`: Justin's details for signatures and forms: name, title, phone, the email address to send from (always stonedragonmedia@gmail.com), a mailing address for emails (see step 5), and which Facebook identity to message from. On a first run, or when a field the message needs is missing, ask for it once and save it. Don't guess any of it.
-- One file per business, `<town>-<business-slug>.md`, created the moment a business is ruled in or out. Format:
+- One file per business, `<town>-<business-slug>.md`:
 
 ```markdown
 ---
@@ -37,7 +35,6 @@ status: sent   # passed | drafted | sent | replied | declined | do-not-contact |
 channel: email
 service: Design & Development (website redesign)
 first_contact: 2026-11-10
-follow_up: null
 ---
 
 ## Why this business
@@ -50,43 +47,49 @@ The exact text that was sent, with the subject line if it was an email.
 - 2026-11-10: sent by email from stonedragonmedia@gmail.com
 ```
 
-Passed-over businesses get a short file with `status: passed` and one line on why, so later runs don't research them again.
+A business you checked in step 3 and passed on gets a short file with `status: passed` and one line on why, so later runs don't check it again. Businesses left out in step 1 (chains, competitors, closed) get no file, since ruling them out again takes seconds.
 
-## 1. Check the record before anything else
+## 1. Find candidates
 
-The record check is a script, because a business may be filed under a different name (an LLC, an owner's name) and only its website, phone, or Page gives it away. Before you research any candidate, run:
+A named business is the only candidate; go to step 2. Otherwise, when the user gave no town, pick one from the coverage list in `references/sdm.md`, favoring in-person towns with the fewest records (`outreach.py towns <outreach folder>` counts them) so the outreach spreads across the area.
 
-```bash
-python <this skill's directory>/scripts/outreach.py match <outreach folder> --name "<name>" --website <url> --phone "<phone>" --facebook <page url>
-```
+Gather five to eight candidates with web search, Google Maps, and Facebook: local, independently owned businesses that sell to the public or to other local businesses. Note what each listing already shows (no website, a dead or for-sale domain, a published email, the last Facebook post); that's enough to rank them in step 3 without opening every site.
 
-Pass whichever of those you have (use `python3` if `python` isn't found). Each match lists the fields it matched on; a `similar name` match alone is a lead to compare by eye, not proof. Skip any business that already has a record, whatever its status. The one exception is when the user names a business that has a record: show them the record and ask what they want to do.
-
-## 2. Find candidates
-
-When the user gave no town, pick one from the coverage list in `references/sdm.md`, favoring in-person towns with the fewest records (`outreach.py towns <outreach folder>` counts them) so the outreach spreads across the area. Then gather five to eight candidates with web search, Google Maps, and Facebook: local, independently owned businesses that sell to the public or to other local businesses.
-
-**Facebook as a lead source.** Facebook turns up the strongest kind of candidate: a business whose only presence online is a Facebook Page. Use Justin's signed-in Chrome, and read only:
-- Search Facebook Pages for the town and a category (`facebook.com/search/pages/?q=<category> <town>`), and look through the town's public community and buy-local groups for businesses that people name.
-- Search a few times, at a normal person's pace. Don't scroll the feed to build lists, and don't collect anything beyond a business's name and its Page. Meta's terms restrict automated collection, and this is Justin's personal account.
-- Don't like, follow, join, comment, react, or message anyone while researching. Those are public actions he didn't approve.
-- Use only what the business itself published. Never use a resident's post (a complaint, a review, a "can anyone recommend…") in a pitch, and never tell the business where you found it.
-- Nextdoor is off limits for research as well as for contact. Its terms prohibit commercial prospecting, and a pitch built from neighbors' posts reads like surveillance.
+**Facebook** turns up the strongest candidates: businesses whose only presence online is a Page. In Justin's signed-in Chrome, search Pages for the town and a category (`facebook.com/search/pages/?q=<category> <town>`) and look through the town's public community and buy-local groups for businesses people name. Then:
+- Search a few times, at a normal person's pace, and collect only names and Pages. Meta's terms restrict automated collection, and this is Justin's personal account.
+- Don't like, follow, join, comment, react, or message anyone, here or when sending. Those are public actions he didn't approve.
+- Stay off Nextdoor entirely: its terms prohibit commercial prospecting, and a pitch built from neighbors' posts reads like surveillance.
 
 Leave out, without researching further:
 - chains, franchises, and national brands, which buy marketing centrally
 - web designers, marketing agencies, and IT shops (competitors)
 - government offices, schools, and churches, unless the user asks for them
 - businesses that look closed: marked "permanently closed," a dead phone, no activity anywhere in over a year
-- SDM's current clients, and anyone Firelands Current is covering in an active news story (see "Firelands Current" below)
+- SDM's current clients
 
-## 3. Look at each candidate's online presence
+## 2. Check the records
 
-Use the signals in `references/signals.md`: check the website, the Google Business Profile, and the Facebook Page, and note what's missing, broken, or outdated. Facebook shows a login wall to signed-out browsers, so check the Page, and whether one exists at all, in Justin's signed-in Chrome. Search Facebook Pages for the business name before writing "no Facebook Page." Click every link on the Google profile too: a Website button that leads to a dead or unrelated page is easy to miss and costs the business customers. Check every problem yourself before writing it down. Load the site on a phone-width viewport before saying it isn't mobile-friendly, and open the page before calling a link broken. The message will name one of these problems to the owner, and getting it wrong costs the whole pitch.
+A business may be filed under another name (an LLC, an owner's name) that only its website, phone, or Page gives away, so a script does the check. Check all the candidates in one call, as a JSON list in a file or on stdin (`-`):
 
-Pick the candidate with the clearest problem SDM fixes and a contact channel you can actually use. Between close candidates, prefer an owner who is visibly engaged: recent reviews with the owner's replies, recent posts, updated hours. An engaged owner reads messages and is more likely to act on one. If none of them has a real problem, say so, write `passed` records, and offer another town or industry. Don't stretch a weak case.
+```bash
+python <this skill's directory>/scripts/outreach.py match <outreach folder> --batch - <<'EOF'
+[{"name": "Maple Street Bakery", "website": "maplestreetbakery.com", "phone": "(419) 555-0100", "facebook": "facebook.com/maplestreetbakery"}]
+EOF
+```
+
+For one business, the flags `--name`, `--website`, `--phone`, `--facebook`, and `--email` work too. Each match lists the fields it matched on; a `similar name` match alone is a lead to compare by eye, not proof. Drop any candidate that already has a record, whatever its status. When the user named the business and it has a record, show them the record and ask what they want to do.
+
+## 3. Check the strongest candidates
+
+Rank the candidates by the costliest problem their listings hint at, then check them one at a time, strongest first, against `references/signals.md`. Stop at the first with a confirmed problem SDM fixes and a channel you can use (step 4); checking all eight costs an hour for the same answer. Between two that hold up, prefer the visibly engaged owner (replies to reviews, recent posts, updated hours), who reads messages.
+
+Read pages as text (a fetch or the browser's page-text tool) rather than screenshots, which are slower and costlier. Use Justin's signed-in Chrome for Facebook, which walls off signed-out browsers (search Pages for the name before writing "no Facebook Page"), and for the phone-width check. Click every link on the Google profile: a Website button leading to a dead or unrelated page is easy to miss. The message names one of these problems to the owner, and getting it wrong costs the whole pitch, so every problem has to be one you saw yourself on this run.
+
+If none of them has a real problem, say so, write `passed` records for the ones you checked, and offer another town or industry. Don't stretch a weak case.
 
 ## 4. Choose the service and the channel
+
+Search firelandscurrent.com for the business's name first. If the paper is covering it in an active news story, pass on it (see "Firelands Current" below).
 
 **Service.** Choose the single SDM service that fixes the most important problem you found, using the mapping in `references/signals.md`. The message can mention SDM's other services in one sentence, but it pitches one thing. A message that offers everything says nothing about this business.
 
@@ -96,7 +99,7 @@ Pick the candidate with the clearest problem SDM fixes and a contact channel you
 3. Facebook Message to its Page.
 4. Another channel the business publishes for inquiries, such as an Instagram DM or a LinkedIn company page.
 
-Use only addresses the business published, and note in the record where it published the one you use and the date you saw it, so the source is on file if anyone asks how Justin got it. Don't guess `info@` addresses or pull them from email-finder sites and data brokers: a guessed address bounces or reaches the wrong person, and buying or scraping lists is what makes outreach spam. Never use Nextdoor, Yelp messaging or "Request a Quote," Google review replies, or comments on posts. Those platforms ban solicitation, and a public pitch on someone's page reads badly to their customers. If the only channel is the phone, write the record, give Justin the number and a two-line talking point, and stop.
+Use only addresses the business published, and note in the record where and when you saw the one you use, so the source is on file if anyone asks. Don't guess `info@` addresses or use email finders and data brokers: guesses bounce or reach the wrong person, and scraped lists are what make outreach spam. Never use Nextdoor, Yelp messaging or "Request a Quote," Google review replies or Business chat, public posts or comments, or a text to the business's phone. Those platforms ban solicitation, and a public pitch reads badly to the business's customers. If the only channel is the phone, write the record, give Justin the number and a two-line talking point, and stop.
 
 ## 5. Write the message
 
@@ -112,16 +115,19 @@ The message, in this order:
 7. An opt-out line in plain words, such as "If this isn't useful, just let me know and I won't reach out again."
 8. Sign-off: Justin Musick, Founder, Stone Dragon Media, and his phone number. Emails also carry the mailing address from `sender.md`, because U.S. law (CAN-SPAM) requires a valid postal address in commercial email. A P.O. box or registered mailbox is fine.
 
-Keep the body (everything above the sign-off) to 75–125 words for emails and forms and 60–100 for Facebook. Owners read these on a phone between customers, and a long message reads like a form letter. A Facebook message shows only its first line or two in the inbox preview. Give the phone number once, in the sign-off, not in the body too. For an email, write a short, plain subject line (two to six words) that names the business or the topic, like "Maple Street Bakery's website." Never write a fake "Re:" or a misleading subject, which CAN-SPAM also prohibits.
+Keep the body (everything above the sign-off) to 75–125 words for emails and forms and 60–100 for Facebook, whose inbox preview shows only the first line or two. Owners read these on a phone between customers, and a long message reads like a form letter. Give the phone number once, in the sign-off. For an email, write a plain subject line of two to six words that names the business or the topic, like "Maple Street Bakery's website." Never write a fake "Re:" or a misleading subject, which CAN-SPAM also prohibits.
 
-**No links in a first message.** That means no URLs, no bare domains (email apps turn `stonedragonmedia.com` into a link), no email address written into the body, and no signature block that adds them. A link from a stranger looks like phishing and gets filtered. The business can reply or call. The phone number is fine.
+**No links in a first message**: no URLs, no bare domains (email apps turn `stonedragonmedia.com` into a link), and no email address in the body or signature. A link from a stranger looks like phishing and gets filtered. The business can reply or call.
+
+Build the pitch only from what you saw yourself and what the business published. Never use a customer's review or a resident's post (a complaint, a "can anyone recommend…") in a first message or a follow-up, and never tell the business where you found it: quoting their customers back at them reads like surveillance.
 
 Don't invent a connection or experience: no "I've been a customer for years," "a friend recommended you," or "I drove past your shop" unless Justin told you so in this conversation. Don't promise results or quote prices; SDM's pricing depends on scope.
 
 Then, in this order:
 1. Run the **humanize** skill on the draft in Rewrite mode, and tell it to keep every fact, the opt-out line, the signature, and the no-links rule.
-2. Save the humanized message (with `Subject: ...` as the first line for an email) to a scratch file and run `python <this skill's directory>/scripts/check_message.py <file> --channel email|form|facebook`. It counts the body words and flags links, bare domains, email addresses, a phone number in the body, a missing sign-off, and a bad subject line. Drafts run long and estimates run short, which is why the count is a script.
-3. Fix every issue it lists, confirm its warnings by eye, and check yourself that humanize kept every fact. Rerun until it passes. Report its word count in step 6.
+2. Only then write the record, with `status: drafted` and the humanized message (subject, body, and sign-off) under `## Message`, `Subject: ...` first for an email. Humanize changes the length, so a check run before it is wasted. A follow-up run quotes the message from here.
+3. Run `check_message.py <record file>`. It reads the message and channel from the record, counts the body words (drafts run long and estimates run short), and flags links, a phone number in the body, a missing sign-off, and a bad subject line.
+4. Fix every issue it lists in the record, confirm its warnings by eye, and check that humanize kept every fact. Rerun until it passes.
 
 ## 6. Get Justin's approval
 
@@ -131,19 +137,15 @@ Show Justin, in this order:
 - the service being pitched
 - the channel and the exact destination (the address, form URL, or Page)
 - for a form, every field and the value that will go in it
-- the final message, exactly as it will be sent, with its body word count
+- the final message, exactly as it will be sent, with its body word count from the check
 
-Write the record with `status: drafted` and the full message (subject, body, and sign-off) under `## Message`, since a follow-up run quotes it from there. Then ask: send it, edit it, or pass on this business. Send nothing until he says yes to this message. His name is on it, and a sent message can't be taken back. An edit means showing the revised message and asking again.
+Then ask: send it, edit it, or pass on this business. Send nothing until he says yes to this message. His name is on it, and a sent message can't be taken back. An edit means updating the record, rerunning the check, and asking again.
 
 ## 7. Send it and record it
 
-Use Justin's real browser, where he's signed in (Claude in Chrome, or the browser your agent has that uses his sign-ins), and read that browser's skill first if your agent has one. `references/channels.md` covers each channel's steps and traps. Most important:
+Use Justin's real browser, where he's signed in (Claude in Chrome, or the browser your agent has that uses his sign-ins), read that browser's skill first if your agent has one, and follow the channel's section of `references/channels.md`. Above all: email goes from stonedragonmedia@gmail.com, not whichever Google account Gmail opens first, so replies land in SDM's inbox; and if a form has a CAPTCHA, stop and let Justin complete and submit it himself.
 
-- **Email** always goes from stonedragonmedia@gmail.com. Chrome may be signed in to several Google accounts, so confirm the From address is that one before sending, not whichever account Gmail opens first. Replies need to land in SDM's inbox. Remove any signature Gmail adds automatically if it contains links.
-- **Contact forms**: fill in only the fields shown in step 6. If the form has a CAPTCHA or "I'm not a robot" check, stop and ask Justin to complete and submit it himself. Don't try to get around it.
-- **Facebook**: send from the identity in `sender.md`.
-
-After sending, confirm it went: Gmail's "Message sent," the form's thank-you page, the message appearing in the Facebook thread. Then update the record: `status: sent`, the date, the channel, the final text, and a History line. If sending failed, say so, keep `status: drafted`, and record what happened.
+After sending, confirm it went: Gmail's "Message sent," the form's thank-you page, the message appearing in the Facebook thread. Then update the record: `status: sent`, `first_contact`, the final text, and a History line. If sending failed, say so, keep `status: drafted`, and record what happened.
 
 End by telling Justin what was sent, where, and when a follow-up would be due (seven days out).
 
@@ -151,5 +153,5 @@ End by telling Justin what was sent, where, and when a follow-up would be due (s
 
 SDM owns Firelands Current, a local news site. Advertising in it may be mentioned in one clause when the business sells to local customers and the paper's readers are its market: "We also run Firelands Current, the local news site, if you ever want to reach readers in the area." Keep the newsroom and sales separate, because the paper's credibility depends on readers believing coverage can't be bought:
 - Never mention a story the paper ran or might run about the business, and never suggest that advertising affects coverage.
-- Don't pitch a business the paper is covering in an active news story. Check firelandscurrent.com for its name before you choose it.
+- Don't pitch a business the paper is covering in an active news story (step 4 checks).
 - Don't use anything learned through the newsroom (tips, sources, interviews) in a pitch.
