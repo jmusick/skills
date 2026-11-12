@@ -7,7 +7,7 @@ disable-model-invocation: true
 
 # Work an issue end to end
 
-Take one GitHub issue from open to released. By default the run works in the user's checkout on the default branch and lands exactly one commit: the change and the version bump together, under the release subject `vX.Y.Z - <Summary>`, tagged and pushed. With `--branch` it works in its own worktree and ships through a PR instead, for bigger work, a dirty checkout, or a repo where others review. The user's go after the local-dev test (step 7) covers every later step, including the commit, pushes, and tag, so don't confirm routine steps. Stop only where this file says to; those stops protect what's hard to undo: a release the user never tried, a pushed tag, or someone else's work.
+Take one GitHub issue from open to released. By default the run works in the user's checkout on the default branch and lands exactly one commit: the change and the version bump together, under the release subject `vX.Y.Z - <Summary>`, tagged and pushed. With `--branch` it works in its own worktree and ships through a PR instead, for bigger work, a checkout on another branch, or a repo where others review. The user's go after the local-dev test (step 7) covers every later step, including the commit, pushes, and tag, so don't confirm routine steps. Stop only where this file says to; those stops protect what's hard to undo: a release the user never tried, a pushed tag, or someone else's work.
 
 Arguments:
 - `/issue 42` works issue 42, or resumes it if an earlier run left your PR open. A bare `/issue` picks one.
@@ -19,7 +19,7 @@ Arguments:
 
 A batch, a resumed PR, and `--no-merge` all need a branch, so they always run as `--branch`. Before step 1, read [references/batch.md](references/batch.md) for a batch (it changes most steps) and [references/unattended.md](references/unattended.md) for `--no-test` (it turns every stop to ask into the failure path). For a backlog, the user can run `/loop /issue`, or `/loop /issue --batch --no-test` to work it unattended.
 
-Keep a list of everything this run creates (claim, worktree, branches, PR, commit, tag). Cleanup and the report depend on it.
+Keep a list of everything this run creates (claim, worktree, branches, PR, commit, tag) and every file it edits or adds. Staging, cleanup, and the report depend on it.
 
 ## 1. Survey
 
@@ -39,19 +39,20 @@ Stop before doing anything if:
 
 If the issue has `resume` set, its open PR is yours from an earlier run: read [references/branch.md](references/branch.md) and [references/resuming.md](references/resuming.md) and follow them instead of picking and claiming.
 
-Without `--branch`, the release commit goes straight onto the default branch from the user's checkout, and it stages everything. So check the checkout before going further:
+Without `--branch`, the release commit goes straight onto the default branch from the user's checkout. So check the checkout before going further:
 - `direct_push_may_be_blocked` is true: a rule you can't bypass would likely reject the push. Switch to `--branch` and say so. When it's false the script has already counted your bypass (admin, or a ruleset bypass actor), so don't switch just because the branch shows as protected.
-- `current_branch` isn't the default branch, `uncommitted_changes` isn't empty, or `in_progress_operation` is set: the user's own work would end up in the release. Ask whether they want to commit, stash, or switch it themselves, or have the run use `--branch`, which leaves their checkout alone. With `--no-test`, switch to `--branch`.
+- `current_branch` isn't the default branch, or `in_progress_operation` is set: the release would land on the wrong branch or mid-operation. Ask whether they want to switch or finish it themselves, or have the run use `--branch`, which leaves their checkout alone. With `--no-test`, switch to `--branch`.
+- `uncommitted_changes` isn't empty: that's fine. Those paths are the user's work in progress: never edit, stage, stash, or review them, and step 9 stages only this run's files. A worktree would cost a fresh install, copied config, a PR, and a CI wait, so don't switch to `--branch` for this alone. If the issue needs one of those files (including a version file or changelog step 8 would bump), stop before editing it and ask whether they'll commit or stash it, or want the run to use `--branch`. With `--no-test`, switch to `--branch`.
 
 ## 2. Pick the issue
 
-Read the top three to five candidates in full; labels are only a hint. Use the JSON form, because off a terminal `gh issue view --comments` drops the body:
+Read the top-ranked candidate in full; labels are only a hint. Use the JSON form, because off a terminal `gh issue view --comments` drops the body:
 
 ```bash
 gh issue view N --json title,body,labels,comments --jq '{title, body, labels: [.labels[].name], comments: [.comments[] | {author: .author.login, body}]}'
 ```
 
-Pick the highest priority. Among ties, prefer one you can finish without the user's decisions, but a higher-priority issue beats an easier one: ask its questions now, before coding, while the user is present. If they can't answer, take the next issue.
+Take it if it's workable. Read the next candidate only when it isn't. If it needs the user's decisions, ask now, before coding, while the user is present; a higher-priority issue beats an easier one. If they can't answer, read the next candidate.
 
 An issue isn't workable if it has no clear done state, needs access you don't have, or needs a product decision the user hasn't made. Ask, or move on.
 
@@ -72,7 +73,7 @@ git fetch origin --tags
 git merge --ff-only origin/<default>
 ```
 
-If the merge refuses because the local branch has diverged, stop and ask; don't rebase or reset someone's commits. Dependencies and gitignored config are already in place, since it's the user's own checkout.
+If the merge refuses because the local branch has diverged, or because incoming commits touch files the user has uncommitted changes in, stop and ask; don't rebase, reset, or stash someone's work. Dependencies and gitignored config are already in place, since it's the user's own checkout.
 
 ## 5. Do the work
 
@@ -88,13 +89,13 @@ Leave the change uncommitted: step 9 commits it together with the version bump a
 
 ## 6. Review
 
-1. Read the whole change: `git diff` plus any new files `git status --short` lists. Does it meet the criteria and do nothing more? Watch for unrelated edits, deleted tests, and debug leftovers.
-2. Run `/code-review` for fresh eyes, with the effort the size calls for (low for trivial or small, medium for normal, high for large and up), e.g. `/code-review medium`. Pass the level: without one it reuses whatever the user last typed. With no target it reviews the checkout's uncommitted change, which is this run's. Without `/code-review`, do a careful correctness review by hand.
+1. Read the whole change: `git diff -- <this run's files>` plus the new files it added. Does it meet the criteria and do nothing more? Watch for unrelated edits, deleted tests, and debug leftovers.
+2. Run `/code-review` for fresh eyes, at `low` for a trivial or small issue and `medium` for anything bigger, e.g. `/code-review medium`. Don't go higher unless the user asks: `high` reviews from more angles and returns more findings, and each fix round costs another full run of the checks. Pass the level: without one it reuses whatever the user last typed. With no target it reviews every uncommitted change, so when the checkout also has the user's changes, pass this run's files as the target. Without `/code-review`, do a careful correctness review by hand.
 
-Fix and rerun the checks. Stop after two rounds; if it still isn't right, take the failure path.
+Fix the correctness findings and rerun the checks. Put cleanup findings (reuse, simplification, style) in the report's **Noticed** section instead of applying them: they widen the change and cost another round. Stop after two rounds; if it still isn't right, take the failure path.
 
 Then catch the docs up so they ship with the change. Run `/update-docs` and tell it:
-- Check only docs the uncommitted change could have made wrong. A full audit is slow and pulls unrelated edits in.
+- Check only docs this run's change could have made wrong, and leave the user's uncommitted files alone. A full audit is slow and pulls unrelated edits in.
 - Skip the changelog. Step 8 writes the release section, so an `Unreleased` entry would duplicate it.
 
 Read its edits like code, and rerun the checks if it changed anything. Without `/update-docs`, check by hand that the README, AGENTS.md / CLAUDE.md, and any doc naming what you changed are still true.
@@ -104,13 +105,13 @@ Read its edits like code, and rerun the checks if it changed anything. Without `
 A stop on every run unless `--no-test` was passed. Nothing is committed or pushed yet, and the go releases it, so the user tries it first. Review catches broken code, not "that's not what I meant."
 
 1. Find how the repo runs locally (README, AGENTS.md / CLAUDE.md, `package.json` scripts, Makefile, `docker-compose.yml`, `.claude/launch.json`). If unclear, ask.
-2. If the user's own dev server is already running from this checkout, it likely reloaded with the change; use it. Otherwise start the app in the background, wait until it serves, and note the URL. For a CLI or library, prepare the exact commands to run. If there's nothing to run (docs, comment wording), show the diff or rendered page instead: nothing ships unseen.
+2. If the user's own dev server is already running from this checkout, it likely reloaded with the change; use it. Otherwise start the app in the background, wait until it serves, and note the URL. Check only that it serves; don't click through it or take screenshots yourself, since the user is about to test it and review already checked the code. If the checkout has the user's own uncommitted changes, the app runs with those too; say so. For a CLI or library, prepare the exact commands to run. If there's nothing to run (docs, comment wording), show the diff or rendered page instead: nothing ships unseen.
 3. Stop and wait. Give the URL or commands, a few lines on what changed (including doc edits), and a short checklist from the acceptance criteria plus the likeliest edge cases. Say plainly that nothing is committed and their go releases it.
 
 Then:
 - **Go:** stop any dev server you started and continue to step 8.
 - **Something's wrong:** fix it, run the checks, read the new diff, reload or restart, and ask again. These rounds don't count against the two review rounds.
-- **Stop or not now:** stop any dev server you started and ask once whether to keep the work on a branch with a draft PR or discard it. **Keep:** take the failure path, recording what the user found. **Discard:** `git stash push -u -m "/issue N: discarded"`, which empties the checkout but leaves the work recoverable, and say so. Then take the failure path's "nothing pushed" case, putting what the user found in the comment.
+- **Stop or not now:** stop any dev server you started and ask once whether to keep the work on a branch with a draft PR or discard it. **Keep:** take the failure path, recording what the user found. **Discard:** `git stash push -u -m "/issue N: discarded" -- <this run's files>`, which removes this run's work but leaves it recoverable and leaves the user's own changes in place, and say so. Then take the failure path's "nothing pushed" case, putting what the user found in the comment.
 
 ## 8. Bump the version
 
@@ -145,7 +146,7 @@ Rerun the checks if the bump touched something they read, such as a lockfile. Wr
 
 ## 9. Commit, tag, and push
 
-Run `git status --short` and check that everything listed is this run's: the change, its doc edits, and the bump. Then stage it all and commit from a message file (temp directory, deleted after), so the blank line survives:
+Stage this run's files by path: the change, its doc edits, and the bump. Never `git add -A`, `git add .`, or `git commit -a`, which would sweep the user's uncommitted work into the release. Check that `git diff --cached --name-only` lists only this run's files and that `git status --short` shows nothing else of this run's left unstaged. Then commit from a message file (temp directory, deleted after), so the blank line survives:
 
 ```
 vX.Y.Z - <Summary>
@@ -169,7 +170,7 @@ Never force-push. If the branch push is rejected because the remote moved, stop:
 
 Pushing a `Closes #N` commit to the default branch closes the issue. Confirm it (`gh issue view N --json state`); if it's still open, close it with a comment naming the commit.
 
-Don't wait for CI; step 5's checks already ran. Mention in the report that CI runs on the push.
+Don't wait for CI or a deploy, even to confirm it went live; step 5's checks already ran, and the user can ask for a check later. Mention in the report that CI runs on the push.
 
 ## 10. Clean up
 

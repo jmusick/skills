@@ -112,6 +112,8 @@ git -C <worktree> push origin vX.Y.Z
 
 If `ready_to_tag` is false, don't tag; report its `problems` with the fix as the follow-up. If the push is rejected, keep the local tag and put `git push origin vX.Y.Z` in the follow-up.
 
+Don't wait for a deploy the merge starts, even to confirm it went live; mention it in the report, and the user can ask for a check later.
+
 ## Step 10: Clean up
 
 Remove only what this run created. Stop any dev server first; a running process can hold files and block worktree removal, especially on Windows.

@@ -6,7 +6,7 @@ Read this when an issue can't be finished. Leave the work where the user can pic
 
   ```bash
   git switch -c issue-N-<short-slug>
-  git add -A
+  git add -- <this run's files>   # never -A: the user's own uncommitted changes stay out
   git commit -m "<Imperative subject> (#N, unfinished)"
   git push -u origin issue-N-<short-slug>
   gh pr create --draft --base <default> --title "<imperative title>" --body-file <file>
