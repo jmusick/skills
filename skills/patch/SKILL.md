@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Patch release
 
-Ship the work in this repo as the next **patch** version: `X.Y.Z` becomes `X.Y.(Z+1)`. Typing the command is the go-ahead to commit, tag, and push, so don't confirm along the way. Stop only for the cases under "When to stop", because a pushed tag is awkward to take back.
+Ship the work in this repo as the next **patch** version: `X.Y.Z` becomes `X.Y.(Z+1)`. Typing the command is the go-ahead to commit, tag, and push, so don't confirm along the way. Stop only for the cases under "When to stop and ask", because a pushed tag is awkward to take back.
 
 Convention: one commit holds the session's work and the version bump, subject `vX.Y.Z - <summary>` (e.g. `v1.20.5 - Secure staff story previews`), tagged `vX.Y.Z`.
 
@@ -21,7 +21,7 @@ python <this skill's directory>/scripts/version_info.py patch
 
 It prints JSON: current and next version, latest tag and `tag_style`, whether origin already has the next tag or a newer one, version files with `in_lockstep`, changelog path and whether it has an `Unreleased` section, branch and upstream, uncommitted changes, and commits since the tag. If it can't run, gather the same from git and the project's version files.
 
-Skim `AGENTS.md` / `CLAUDE.md` for a release section; follow any project-specific steps. If `versions_disagree` is true, see "When to stop".
+Skim `AGENTS.md` / `CLAUDE.md` for a release section; follow any project-specific steps. If `versions_disagree` is true, see "When to stop and ask".
 
 ## 2. Understand what's being released
 

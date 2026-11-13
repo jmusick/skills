@@ -80,4 +80,4 @@ Removing tells is half the job, and the other half is not replacing them with a 
 2. Mark the tells, looking at paragraph shape as well as sentences.
 3. Rewrite. Keep original sentences and paragraph structure that already work, and prefer cutting to adding. When a sentence has several tells, rewrite the sentence rather than swapping words one at a time.
 4. Check the draft against the source: has any fact been added or dropped, or any distinctive phrasing made generic? Then rescan for the tells that most often survive: contrasts, closers, triads, dashes, and bold labels. Fix what's left once.
-5. Return the final text once, followed by a brief "What changed" list (3 to 6 bullets); if the text was already clean, say so instead of the list. In file mode, report the changes instead of pasting the file back.
+5. Return the final text once, followed by a brief "What changed" list, one bullet per kind of change; if the text was already clean, say so instead of the list. In file mode, report the changes instead of pasting the file back.

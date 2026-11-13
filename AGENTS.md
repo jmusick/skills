@@ -1,6 +1,6 @@
 # AGENTS.md
 
-This repo holds agent skills in the [Agent Skills](https://agentskills.io) format. There is no build or package manager. The only tests are the eval cases some skills carry and unit tests for the issue skill's scripts. The files are the product.
+This repo holds agent skills in the [Agent Skills](https://agentskills.io) format. There is no build or package manager. The only tests are the eval cases and script unit tests some skills carry. The files are the product.
 
 CI (`.github/workflows/ci.yml`) calls the shared [jmusick/ci](https://github.com/jmusick/ci) baseline (a secret scan, plus dependency review on pull requests), pinned by commit SHA; Dependabot (`.github/dependabot.yml`) proposes new releases and keeps the pins current. The **CI gate** job is the one check to require.
 
