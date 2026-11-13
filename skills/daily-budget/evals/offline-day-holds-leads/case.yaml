@@ -1,0 +1,14 @@
+schema_version: "1.1"
+name: offline-day-holds-leads
+description: A budget day where no source can be reached. The run still opens the packet and reads the baseline, but it invents nothing, keeps yesterday's lead held, marks every source not reached, and publishes nothing.
+expected_outcome: |
+  The agent runs start_day.py with --repo ./firelands-current and --library ./library, reads the
+  briefing and yesterday's review.md, and tries the sweep. Finding no network or browser, it marks
+  the sources and social "not reached" rather than skipping them silently. It proposes no stories
+  or events built from memory. The dock-fee vote stays a held lead with its outcome unknown, and
+  the Route 2 follow-up has no start date invented. It writes research.json and review.md for
+  today with empty stories and the held leads, runs check_packet.py, and reports that nothing was
+  imported or published. It doesn't add a dated section to news-sources.md, commit, or run any
+  import, sync, or --remote command.
+context:
+  scaffold_script: place-files.sh

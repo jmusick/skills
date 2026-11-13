@@ -1,0 +1,12 @@
+schema_version: "1.1"
+name: reports-before-editing
+description: Happy path. Report findings with path:line evidence, keep the skill that follows the house rules, and edit nothing before the user picks.
+expected_outcome: |
+  The agent runs the checker, reads both skills and AGENTS.md, and reports: tide-report's
+  description ("Helps with tides.") can't trigger, which is high severity for a model-invocable skill,
+  with a rewritten description as the fix; tide-report links references/format.md, which doesn't
+  exist; and its generic-advice paragraph costs context for nothing. Each finding cites
+  tide-report/SKILL.md:<line>. buoy-alert is a Keep, and its one-sentence description isn't raised,
+  because the house rules ask for one. It edits nothing and ends by asking which findings to fix.
+context:
+  scaffold_script: place-files.sh

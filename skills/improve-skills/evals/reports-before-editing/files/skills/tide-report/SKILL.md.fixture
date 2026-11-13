@@ -1,0 +1,16 @@
+---
+name: tide-report
+description: Helps with tides.
+---
+
+# Tide report
+
+Write the morning tide summary that goes on the harbor office board.
+
+Be thorough and accurate. Double-check your work, write clearly, and make sure
+the summary is helpful to the people who read it.
+
+1. Read today's readings from `data/tides.json` in the user's project.
+2. List each high and low with its time and height in feet, in time order.
+3. Flag any low below -0.5 ft: boats with a deep draft can't use the east slips then.
+4. Format the summary as in [the output format](references/format.md).

@@ -1,0 +1,8 @@
+schema_version: "1.1"
+name: notes-trigger-without-slash
+description: Routing case. A plain-English request to turn meeting notes into a story, with no slash command, should fire newsroom and keep its no-invented-facts rule.
+expected_outcome: |
+  The agent loads newsroom and writes the story from the notes: the lede leads with the levy going
+  on the ballot, numbers follow AP style ($1.4 million, 4-1, Dec. 10, 7 p.m.), Wurm's quote is
+  verbatim, and the treasurer's and superintendent's missing names are marked as gaps rather than
+  invented.

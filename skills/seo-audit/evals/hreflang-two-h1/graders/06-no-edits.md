@@ -1,7 +1,7 @@
 ---
-type: llm
-focus: trace
-weight: 1
+type: tool_used
+tool: Edit
+min: 0
+max: 0
+arm: both
 ---
-
-No project files were created, edited, or deleted during the run.

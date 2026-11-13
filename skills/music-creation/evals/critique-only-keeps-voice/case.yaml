@@ -1,0 +1,9 @@
+schema_version: "1.1"
+name: critique-only-keeps-voice
+description: Critique-only request. The writer asked not to have it rewritten, so the answer is a critique of specific lines, not new lyrics.
+expected_outcome: |
+  The response critiques specific lines: it keeps the concrete opening (ferry horn, father's coat,
+  the rail), points out that lines 3 and 4 swap that scene for stock phrases (an ocean on a lake
+  song, "every single moment"), and comments on the chorus (three near-identical lines; whether the
+  repetition is intentional). It separates what's demonstrable from taste and gives no rewritten
+  verse or chorus.

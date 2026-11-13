@@ -1,0 +1,11 @@
+schema_version: "1.1"
+name: release-promotes-unreleased
+description: Happy path, plus the fixed failure where an Unreleased changelog section got a duplicate instead of being promoted.
+expected_outcome: |
+  The agent releases v1.2.4. pyproject.toml says 1.2.4. CHANGELOG.md turns the Unreleased section
+  into "## [1.2.4] - <today>" with the negative-heights fix and leaves a fresh empty Unreleased
+  section above it, so the fix is listed once. It runs python -m unittest after the bump, commits
+  one "v1.2.4 - <Summary>" commit with no AI attribution trailer, tags v1.2.4 (lightweight, like
+  v1.2.3), pushes main and the tag to origin without forcing, and reports briefly.
+context:
+  scaffold_script: place-files.sh

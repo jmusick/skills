@@ -1,0 +1,7 @@
+schema_version: "1.1"
+name: exact-title-given
+description: An exact title comes with the command, so the skill uses it as written, and with no rename tool it hands the title over to copy instead of claiming a rename.
+expected_outcome: |
+  The agent uses "Harbor cam upload retries" exactly as given, shows it as
+  "Suggested title: `Harbor cam upload retries`", says where to apply it, and doesn't claim it
+  renamed the session.

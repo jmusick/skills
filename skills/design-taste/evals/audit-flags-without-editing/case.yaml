@@ -1,0 +1,15 @@
+schema_version: "1.1"
+name: audit-flags-without-editing
+description: Audit mode on a landing page full of tells and floor violations. Report with file:line and severity, change nothing, and mark screenshots not verified when no browser is available.
+expected_outcome: |
+  The agent runs lint_tells.py and reads the files, then reports, grouped and most severe first:
+  floor failures as HIGH (zoom disabled in the viewport meta, outline: none with no focus style, a
+  div used as a button, the image with no alt, width, or height, grey #9ca3af body text at 14px
+  failing contrast); tells as MEDIUM (violet-indigo gradients and gradient text, the uppercase
+  eyebrow and "Introducing" label, "Elevate" and "seamless", three icon cards with emoji icons,
+  glow, hover lift, arrows on every link, middle-dot strings); and the invented proof line
+  ("Trusted by 10,000+ marinas", "99.9% uptime", "5-star rated") as a claim to replace with real
+  figures or a placeholder. Each row cites file:line. It edits nothing, and says screenshots weren't
+  taken or are "not verified" if it had no browser.
+context:
+  scaffold_script: place-files.sh

@@ -1,0 +1,9 @@
+schema_version: "1.1"
+name: second-verse-only
+description: Narrow revision. Asked for a better second verse, the answer is one replacement verse 2 that fits verse 1's meter and detail, not a new song.
+expected_outcome: |
+  The response leads with a replacement verse 2 of four lines that roughly match verse 1's line
+  length and stress pattern and its concrete, observed detail, and that move the story forward
+  rather than restating abstractions. Verse 1 and the chorus aren't rewritten. Any new life detail
+  the writer didn't give is offered as a proposal, not stated as their memory. Notes after the verse
+  are short.

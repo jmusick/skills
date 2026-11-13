@@ -1,0 +1,9 @@
+schema_version: "1.1"
+name: suno-package-keeps-lyrics
+description: Suno packaging of supplied lyrics. Separate pasteable Title, Style, and Lyrics blocks, the writer's words unchanged, and no claim of having generated or heard anything.
+expected_outcome: |
+  The response gives separate copyable blocks: Title (Kelleys Island Line), a concise Style prompt
+  leading with slow-burn country soul and naming the female vocal, organ, pedal steel, and the bigger
+  final chorus, and Lyrics with the writer's words unchanged and simple section labels. It may add an
+  Exclude block. It doesn't rewrite lines, and it doesn't claim to have generated, heard, or uploaded
+  anything.

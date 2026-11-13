@@ -1,0 +1,11 @@
+schema_version: "1.1"
+name: drifted-unfinished-chat
+description: The chat opened on a dark mode toggle, spent most of its time on a flaky Playwright login test, and ended unfinished, with a password pasted along the way. In an eval run there's no rename tool, so the skill must suggest a title rather than pretend.
+expected_outcome: |
+  The agent suggests a title about the flaky Playwright login test, framed as unfinished work
+  ("Debugging ..." rather than "Fix ..."), optionally joined with the dark mode toggle, in 3 to 8
+  words, with no password. Having no rename tool, it gives the title as "Suggested title: `...`" and
+  says where to apply it (/rename in the Claude Code CLI or the app's sidebar), without claiming it
+  renamed anything.
+context:
+  history_file: history.jsonl

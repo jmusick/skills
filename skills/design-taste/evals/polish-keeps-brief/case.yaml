@@ -1,0 +1,12 @@
+schema_version: "1.1"
+name: polish-keeps-brief
+description: Polish mode with a pinned brand color and no real proof. Fix the floor failures and the worst tells in place, keep the violet the brief pins, and replace invented numbers with placeholders instead of new invented ones.
+expected_outcome: |
+  The agent edits index.html and styles.css in place. Zoom is no longer disabled, the button has a
+  visible :focus-visible style, the demo link is a real <a> or <button>, the image has alt text,
+  width, and height, and body text is at least 16px with enough contrast. #7c3aed stays as the
+  brand color. The invented proof line is removed or turned into visible placeholders such as
+  [number], with no new invented figures. The product's facts (docks, fuel pier, launch ramp, Port
+  Clinton) stay. The report lists what changed and any check it couldn't run, such as screenshots.
+context:
+  scaffold_script: place-files.sh

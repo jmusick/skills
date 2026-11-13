@@ -1,0 +1,16 @@
+---
+name: buoy-alert
+description: Drafts a small-craft alert for the harbor board from the latest NOAA buoy readings.
+disable-model-invocation: true
+---
+
+# Buoy alert
+
+Draft a small-craft alert when the Lake Erie buoy readings cross the harbor's thresholds.
+
+1. Read the latest readings from `data/buoy.json` in the user's project: wind in knots, gusts, and wave height in feet.
+2. An alert is due when sustained wind is 22 knots or more, gusts reach 30, or waves reach 4 ft. If none is met, say so and stop; a needless alert teaches people to ignore the real ones.
+3. Use the tide-report skill for the day's lows, and add any low below -0.5 ft to the alert, since a rough day at a low tide is when boats ground at the east slips.
+4. Write the alert in three lines: what (the reading that crossed), when (from the buoy's timestamp), and what to do (stay in, or double the lines at the east slips).
+
+Don't post the alert. The harbor master reads it and posts it.

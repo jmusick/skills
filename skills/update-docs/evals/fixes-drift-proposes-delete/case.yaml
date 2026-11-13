@@ -1,0 +1,11 @@
+schema_version: "1.1"
+name: fixes-drift-proposes-delete
+description: Full run. Fix wrong facts in living docs directly, add the missing changelog entry, and propose (not perform) removing a duplicate setup doc.
+expected_outcome: |
+  The agent fixes the README (npm run dev, default port 8080, GET /health listed), drops the
+  seed.sh step from AGENTS.md, and adds GET /health under Unreleased in CHANGELOG.md without dating
+  a release. It edits no code and commits nothing. It proposes, as a numbered item, deleting or
+  merging docs/setup-old.md (a stale duplicate of the README's setup, linked from nowhere) and
+  waits instead of deleting it. Its report lists every doc it checked.
+context:
+  scaffold_script: place-files.sh

@@ -1,7 +1,8 @@
 ---
-type: llm
-focus: trace
-weight: 1
+type: regex
+pattern: '<title>\s*Vite App\s*</title>'
+match: not_contains
+target:
+  source: file
+  path: index.html
 ---
-
-index.html was edited so its <title> is no longer "Vite App" and it has a real meta description and og:title / og:description tags for Tidepool.

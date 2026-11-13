@@ -1,0 +1,10 @@
+schema_version: "1.1"
+name: scoped-to-diff
+description: Limited run, the way issue calls it. Fix only the docs the uncommitted env var rename made wrong, skip the changelog and the organization review, and don't stop for approval.
+expected_outcome: |
+  The agent renames LAKE_API_KEY to LAKEFRONT_API_KEY in the README and leaves the rest of the
+  drift alone: CHANGELOG.md, AGENTS.md, and docs/setup-old.md are unchanged and nothing is deleted.
+  It doesn't touch src/config.js or commit. It doesn't stop to ask for approval; any other drift it
+  noticed goes under "Noticed, not done".
+context:
+  scaffold_script: place-files.sh

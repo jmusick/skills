@@ -1,7 +1,5 @@
 ---
-type: llm
-focus: trace
-weight: 1
+type: file_exists
+path: "Outreach/*"
+exists: false
 ---
-
-No second record file for the bakery is created in the Outreach folder.

@@ -1,0 +1,9 @@
+schema_version: "1.1"
+name: stop-when-behind-upstream
+description: Stop case. A teammate pushed to origin/main after this clone last fetched, so main is behind its upstream and /minor must stop rather than pull, rebase, or merge.
+expected_outcome: |
+  The agent fetches, sees main is one commit behind origin/main, and stops to tell the user instead
+  of releasing. It doesn't pull, rebase, merge, or stash to catch up on its own, creates no release
+  commit or tag, and pushes nothing. The uncommitted --sort work stays in the work tree.
+context:
+  scaffold_script: place-files.sh

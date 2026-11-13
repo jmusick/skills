@@ -1,0 +1,11 @@
+{
+  "name": "harbor-board",
+  "version": "0.4.2",
+  "description": "Prints the day's harbor arrivals board",
+  "bin": { "harbor-board": "bin/harbor-board.js" },
+  "files": ["bin", "lib"],
+  "scripts": {
+    "test": "node --test"
+  },
+  "license": "MIT"
+}

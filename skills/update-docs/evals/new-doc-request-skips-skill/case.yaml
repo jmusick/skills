@@ -1,0 +1,8 @@
+schema_version: "1.1"
+name: new-doc-request-skips-skill
+description: Neighbouring task. Writing a new doc is out of update-docs' scope ("Not for writing new docs"), so the skill shouldn't fire, and the agent should still write the file.
+expected_outcome: |
+  The agent writes CONTRIBUTING.md without invoking update-docs. The file gives the real commands
+  from package.json (npm run dev, npm test), not the README's stale start:dev.
+context:
+  scaffold_script: place-files.sh

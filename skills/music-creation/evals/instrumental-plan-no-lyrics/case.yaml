@@ -1,0 +1,9 @@
+schema_version: "1.1"
+name: instrumental-plan-no-lyrics
+description: Instrumental request. The answer is a musical plan that bridges the two tracks, with no invented lyrics and honest limits on what a description can promise.
+expected_outcome: |
+  The response proposes a 90-second plan with sections and rough timings that comes down from track
+  3's distorted E minor and lands where track 4's solo acoustic guitar in G can begin (E minor and G
+  share a key signature, which helps), with instrumentation, a small motif or hook, and dynamics. It
+  writes no sung lyrics. It doesn't claim to have heard or rendered anything, and treats timings and
+  sounds as a plan, not a recording.

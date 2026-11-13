@@ -1,0 +1,10 @@
+schema_version: "1.1"
+name: stop-when-next-tag-on-origin
+description: Stop case. A teammate pushed a hotfix branch tagged v1.2.4 to origin, so the next patch tag is taken and the tags disagree with pyproject.toml. Regression for /patch fetching before it surveys.
+expected_outcome: |
+  The agent fetches origin, finds that v1.2.4 already exists there (on a hotfix branch cut from
+  v1.2.3, without main's fix), and stops to ask how to proceed instead of releasing, since the next
+  patch tag is taken and the tags no longer agree with pyproject.toml. It creates no release commit
+  or tag and pushes nothing.
+context:
+  scaffold_script: place-files.sh

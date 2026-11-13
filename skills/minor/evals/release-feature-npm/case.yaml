@@ -1,0 +1,11 @@
+schema_version: "1.1"
+name: release-feature-npm
+description: Happy path for an npm project with annotated tags, uncommitted work, and no changelog. Covers the package.json reformat check in step 3.
+expected_outcome: |
+  The agent releases v0.5.0. package.json and both version fields in package-lock.json say 0.5.0,
+  and package.json's other lines are unchanged ("files" stays on one line, even if it ran npm
+  version). No changelog is created. It runs npm test after the bump, stages the uncommitted --sort
+  work into the one "v0.5.0 - <Summary>" commit with no AI trailer, creates an annotated v0.5.0 tag
+  like the earlier ones, pushes main and the tag without forcing, and reports briefly.
+context:
+  scaffold_script: place-files.sh

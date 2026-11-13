@@ -1,0 +1,7 @@
+schema_version: "1.1"
+name: triggers-without-slash
+description: Routing case. A plain-English "sounds like ChatGPT" request, with no slash command, should fire humanize and get a rewrite that keeps the facts.
+expected_outcome: |
+  The agent loads humanize and returns a rewrite that drops the stock phrases ("In today's
+  fast-paced world", "one-stop shop", "we've got you covered", "Let's dive in"), keeps the facts (a
+  new monthly newsletter about Erie MetroParks, trails and seasonal events), and adds none.

@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: ap-news-edit-skips-humanize
+description: Neighbouring task. An AP-style news edit belongs to newsroom ("Not for AP-style news edits"), so humanize shouldn't fire on it.
+expected_outcome: |
+  The agent edits the brief for AP style without loading humanize: "approximately $310,000 dollars"
+  becomes "about $310,000", and the facts, names, and vote stay as given.
