@@ -27,7 +27,7 @@ Check this first. Every other fix depends on it.
 - **Special-case growth.** One-off flags, nullable modes, and `if` branches bolted onto a busy function. Often a missing type or a missing separate path.
 - **Size.** Files over roughly 500 lines or functions over roughly 80 are worth a look, not automatically a finding. Ask whether they hold more than one concept. Generated files, data tables, and test fixtures are fine.
 - **Cycles.** Circular imports between modules.
-- Tools: `npx madge --circular src` (JS/TS), `pydeps --show-cycles` (Python), `go vet ./...`.
+- Tools: `npx --no madge --circular src` (JS/TS), `pydeps --show-cycles` (Python), `go vet ./...`.
 
 ## 3. Duplication and consistency
 
@@ -38,7 +38,7 @@ Check this first. Every other fix depends on it.
 
 - Flag: unused code and dependencies, feature flags that are always on or off, compatibility shims and fallbacks with no remaining caller.
 - Before calling something dead, search for dynamic uses: string-based lookups, reflection, plugin registries, framework conventions (routes, migrations, entry points named in config), public API a library exports for others.
-- Tools: `npx knip` (JS/TS), `vulture` (Python), `cargo machete` or `cargo udeps` (Rust), `staticcheck` (Go), `npx depcheck`.
+- Tools: `npx --no knip` (JS/TS), `vulture` (Python), `cargo machete` or `cargo udeps` (Rust), `staticcheck` (Go), `npx --no depcheck`.
 
 ## 5. Types and contracts
 
@@ -61,7 +61,7 @@ Check this first. Every other fix depends on it.
 
 - Flag: known vulnerabilities, dependencies nothing uses, two libraries doing one job, a major version far behind on a package that still gets security fixes only on newer lines, environment variables read in code but not documented, defaults that differ between environments without a reason.
 - Report a major upgrade as its own issue with what breaks, not as a quick fix.
-- Tools: `npm audit` / `pnpm audit`, `pip-audit`, `cargo audit`, `govulncheck`, `npx depcheck`.
+- Tools: `npm audit` / `pnpm audit`, `pip-audit`, `cargo audit`, `govulncheck`, `npx --no depcheck`.
 
 ## 9. Performance
 

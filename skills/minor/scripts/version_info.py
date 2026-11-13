@@ -171,7 +171,7 @@ def verify(version, ref):
     subject = git("log", "-1", "--format=%s", sha) or ""
     def read_at_ref(path):
         text = git("show", f"{sha}:{path}")
-        return text.lstrip("﻿") if text is not None else None
+        return text.lstrip("\ufeff") if text is not None else None
 
     files = find_version_files((git("ls-tree", "-r", "--name-only", sha) or "").splitlines(), read_at_ref)
     for f in files:

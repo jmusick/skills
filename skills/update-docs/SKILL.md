@@ -1,6 +1,6 @@
 ---
 name: update-docs
-description: "Audit and tidy a repo's docs: fix what no longer matches the code, then propose deleting, merging, or moving stale, duplicated, or misplaced docs. Not for writing new docs, code comments, de-AI'ing prose (use humanize), or releases (use /patch or /minor)."
+description: "Audit and tidy a repo's docs: fix what no longer matches the code, then propose deleting, merging, or moving stale, duplicated, or misplaced docs. Use when asked to update, audit, or clean up docs, to check that the README, AGENTS.md, or CHANGELOG still matches the code, or after a change that may have left docs stale. Not for writing new docs, code comments, de-AI'ing prose (use humanize), or releases (use /patch or /minor)."
 ---
 
 # Update docs

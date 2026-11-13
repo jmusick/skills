@@ -1,6 +1,6 @@
 ---
 name: newsroom
-description: Write, edit, or AP-check news stories, briefs, obituaries, features, and headlines for Firelands Current, including turning notes, transcripts, agendas, or press releases into stories. Not for opinion columns, marketing copy, press releases written for an organization, or proofreading text that isn't news.
+description: Write, edit, or AP-check news stories, briefs, obituaries, features, and headlines for Firelands Current. Use when asked to write up, edit, or AP-check a story or headline, or to turn notes, a transcript, a meeting agenda, or a press release into a story. Not for opinion columns, marketing copy, press releases written for an organization, or proofreading text that isn't news.
 ---
 
 # Newsroom
