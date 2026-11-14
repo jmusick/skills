@@ -23,7 +23,8 @@ import subprocess
 import sys
 
 SEMVER = re.compile(r"^v?(\d+)\.(\d+)\.(\d+)$")
-SKIP_DIRS = ("node_modules/", "vendor/", "Library/", "dist/", "build/", ".venv/")
+# evals/ and fixtures/ hold test projects whose versions are not the release version.
+SKIP_DIRS = ("node_modules/", "vendor/", "Library/", "dist/", "build/", ".venv/", "evals/", "fixtures/")
 
 
 def git(*args, check=False):
