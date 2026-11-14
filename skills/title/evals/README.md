@@ -22,7 +22,7 @@ Every case's source is `confirmed_by: none`: no user has confirmed it's real wor
 | Recovery | none |  | Not applicable |
 | Ambiguity | none |  | Two threads joined in one title isn't tested |
 | Constraints | drifted-unfinished-chat | draft | no secrets in the title |
-| Negative tasks | none |  | "The current title already fits" needs get_session, which isn't available in a run |
+| Negative tasks | none |  | Not applicable: the skill always proposes a title |
 | Neighbouring tasks | none |  | Manual-only skill |
 
 Draft scenarios (they don't cover anything until reviewed): drifted-unfinished-chat, exact-title-given.
