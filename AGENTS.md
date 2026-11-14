@@ -9,8 +9,6 @@ CI (`.github/workflows/ci.yml`) calls the shared [jmusick/ci](https://github.com
 - `skills/<name>/SKILL.md`: one folder per skill. The folder name must match the `name` in the frontmatter. Each skill is currently this one file, with no scripts, references, evals, or Codex settings.
 - `README.md`: the public index. Keep its skills table in sync when you add, rename, or remove a skill.
 
-`skills/patch/SKILL.md` and `skills/minor/SKILL.md` are twins: they differ only in the name, description, and bump rule. Keep everything else the same in both.
-
 ## Writing a skill
 
 - Frontmatter needs `name` (lowercase, hyphens) and `description`.
@@ -22,4 +20,6 @@ CI (`.github/workflows/ci.yml`) calls the shared [jmusick/ci](https://github.com
 
 ## Commits
 
-Use short imperative subjects, e.g. `Add title skill` or `patch: tighten the bump rule`.
+Use [Conventional Commits](https://www.conventionalcommits.org), with the skill name as the scope: `feat(title): add trigger phrases`, `fix(release): stop on uncommitted changes`, `docs: update the skills table`. The type sets the next version, so pick it by what changes for people using the skill: `feat` for something new (minor), `fix` for a correction (patch), `!` after the type for a breaking change such as a rename or removal (major), and `docs`, `chore`, or `ci` for anything that doesn't change a skill's behavior (no release).
+
+Commit as you go, and cut releases with the `release` skill, which tags `vX.Y.Z` and pushes. There are no version files, so the tags are the version.
