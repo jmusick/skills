@@ -2,7 +2,7 @@
 
 Run them (billed model runs, so only when asked): `claude plugin eval skills/patch --scaffold --allow-tools Bash`
 
-The scaffold builds a git repo whose `origin` is a bare repo inside the workspace, so pushes stay local. Bash grants need the OS sandbox, which on Windows means WSL2. The fixture's checks are `python -m unittest`.
+The scaffold builds a git repo whose `origin` is a bare repo inside the workspace, so pushes stay local. A Bash grant needs an OS sandbox, or the run is refused. Native Windows has none yet (its sandbox is behind a feature gate, off as of 2026-11-14), so run these from Linux, macOS, or WSL2. Even there, the sandbox mounts `.git` read-only (checked 2026-11-14 with Claude Code 2.1.325), so `git fetch`, commit, and tag fail and a case that has to release can't pass; the agent stops and says why. The fixture's checks are `python -m unittest`.
 
 ## Scenarios
 
