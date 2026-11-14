@@ -1,3 +1,0 @@
-# staging: keep crawlers out until launch
-User-agent: *
-Disallow: /

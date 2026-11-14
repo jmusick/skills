@@ -1,4 +1,0 @@
-User-agent: *
-Disallow:
-
-Sitemap: https://trailheadmaps.example/sitemap-index.xml
