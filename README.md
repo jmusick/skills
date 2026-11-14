@@ -10,7 +10,7 @@ Agent skills I write and use with Claude Code, Codex, and other agents that supp
 | [issue](skills/issue/SKILL.md) | Picks an issue from GitHub Issues and works it. |
 | [release](skills/release/SKILL.md) | Cuts a release: works out the version bump from the Conventional Commits since the last tag, then tags and pushes. |
 | [title](skills/title/SKILL.md) | Renames the session to match what was actually done in it. |
-| [update-docs](skills/update-docs/SKILL.md) | Reviews docs like README.md and AGENTS.md and updates them to match the project. |
+| [update-docs](skills/update-docs/SKILL.md) | Checks docs like README.md and AGENTS.md against the code and fixes what's no longer true. |
 
 ## Install
 
