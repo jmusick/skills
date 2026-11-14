@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Patch release
 
-Ship the work in this repo as the next **patch** version: `X.Y.Z` becomes `X.Y.(Z+1)`. Typing the command is the go-ahead to commit, tag, and push, so don't confirm along the way. Stop only for the cases under "When to stop and ask", because a pushed tag is awkward to take back.
+Ship the work in this repo as the next **patch** version: `X.Y.Z` becomes `X.Y.(Z+1)`. Typing the command is the go-ahead to commit, tag, and push, so don't confirm along the way.
 
 Convention: one commit holds the session's work and the version bump, subject `vX.Y.Z - <summary>` (e.g. `v1.20.5 - Secure staff story previews`), tagged `vX.Y.Z`.
 
@@ -25,13 +25,13 @@ Skim `AGENTS.md` / `CLAUDE.md` for a release section; follow any project-specifi
 
 ## 2. Understand what's being released
 
-The release covers everything since the last tag. Combine the conversation (intent) with `git diff`, `git diff --staged`, and `git log <tag>..HEAD` (what changed). Everything gets staged, so check the tree for `.env` files, credentials, large build output, or debug junk.
+The release covers everything since the last tag. Combine the conversation (intent) with `git diff`, `git diff --staged`, and `git log <tag>..HEAD` (what changed). Everything gets staged, so check the tree for `.env` files, credentials, large build output, debug junk, or unrelated changes, and stop and ask if you find any.
 
 Check that the work fits the bump. A patch is fixes and tweaks that add nothing new for users, a minor adds something users couldn't do before, and anything that breaks existing use (a removed or renamed feature, changed behavior people rely on) is a major. If it breaks something, stop and ask: a major bump is the user's call. If it otherwise fits a different bump than this one, say which and ask once, since the version number tells users what to expect.
 
 ## 3. Bump the version
 
-Update every version file with `in_lockstep` true, as its `update` hint says. After `npm version`, check `git diff package.json` and restore any reformatted lines; only the version should change. Leave independently versioned files alone (e.g. a separately versioned extension) and mention them in the report.
+Update every version file with `in_lockstep` true, as its `update` hint says. After `npm version`, check `git diff package.json` and restore any reformatted lines; only the version should change.
 
 **Changelog:** if one exists, add a section at the top matching its format exactly (heading style, today's date, categories). If it has an `Unreleased` section (`changelog_has_unreleased`), turn that into this version's section instead of writing a second one for the same changes, and leave a fresh empty `Unreleased` above it. Write for readers, describing what changed for them, and leave out what they can't see (refactors, CI, tests). Don't create one if absent.
 
@@ -82,8 +82,6 @@ Mention anything left alone, such as independently versioned files or a skipped 
 - **Versions disagree** unexplainably, e.g. `package.json` is ahead of the latest tag (a bump may have been made but never tagged, so the right release might be that version).
 - **Detached HEAD**, or mid-merge or mid-rebase.
 - **Branch is behind upstream** (first number of `behind_ahead_upstream` above 0).
-- **Checks fail**, or **the work breaks existing use** (see step 2).
-- **The tree has something that shouldn't be committed** (secrets, large binaries) or unrelated changes.
 - **No remote:** commit and tag, and say nothing was pushed.
 
 A missing changelog or version file is fine; tags alone carry the version.
