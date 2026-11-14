@@ -4,7 +4,7 @@ description: Commits the current work with Conventional Commits messages (feat, 
 ---
 Commit the work as Conventional Commits, because the release step works out the next version from their types.
 
-1. Read the uncommitted changes (`git status`, `git diff`, `git diff --staged`). If they cover unrelated things, make one commit for each. Leave out anything that shouldn't be committed (secrets, `.env` files, build output, debug leftovers) and tell the user.
+1. Read the uncommitted changes (`git status`, `git diff`, `git diff --staged`). If they cover unrelated things, make one commit for each. Leave out anything that shouldn't be committed (secrets, `.env` files, build output, debug leftovers) and tell the user. If the user or a calling skill names the files, commit only those.
 2. Pick each commit's type by what changes for users, since the type sets the version bump:
    - `feat`: something users couldn't do before (minor).
    - `fix`: a bug or security fix (patch). `perf`: faster, same behavior (patch).
