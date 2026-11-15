@@ -8,7 +8,7 @@ Agent skills I write and use with Claude Code, Codex, and other agents that supp
 | --- | --- |
 | [commit](skills/commit/SKILL.md) | Commits the current work with [Conventional Commits](https://www.conventionalcommits.org) messages. |
 | [issue](skills/issue/SKILL.md) | Picks an open GitHub issue, works it, and commits the change so the issue closes when it's released. Add `--branch` to work it on its own branch and open a PR instead. Needs `commit`. |
-| [release](skills/release/SKILL.md) | Cuts a release: works out the version bump from the Conventional Commits since the last tag, then tags and pushes. |
+| [release](skills/release/SKILL.md) | Cuts a release: works out the version bump from the Conventional Commits since the last tag, then tags and pushes. When nothing calls for a version, it still pushes the pending commits. |
 | [title](skills/title/SKILL.md) | Renames the session to match what was actually done in it. |
 | [update-docs](skills/update-docs/SKILL.md) | Checks docs like README.md and AGENTS.md against the code and fixes what's no longer true. |
 
