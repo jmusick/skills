@@ -3,8 +3,9 @@
 
 Prints JSON: the files touched by the most recent commits in scope (with how
 many of those commits look like fixes, the file's size, and when it last
-changed), counted under each file's current name across renames, and the
-largest tracked source files. Lockfiles, changelogs, vendored code, build
+changed), counted under each file's current name across renames, the
+largest tracked source files, and the large files that rarely change (with
+when each last changed), which churn ranking would otherwise hide. Lockfiles, changelogs, vendored code, build
 output, and binary files are left out, and so are docs and data files
 (.md, .json, .yaml, ...) unless --include-docs is passed.
 
@@ -31,6 +32,7 @@ SKIP_EXT = re.compile(r"\.(min\.(js|css)|map|snap|svg|png|jpe?g|gif|webp|ico|pdf
 # Docs and data churn a lot without being code a refactor would touch.
 DOC_EXT = re.compile(r"\.(md|mdx|markdown|rst|adoc|txt|json|jsonc|ya?ml|toml|ini|cfg|csv|tsv|xml)$", re.I)
 LARGE = 500
+COLD = 2  # a large file with at most this many commits in the window read is "cold"
 
 
 def git(*args, cwd=None):
@@ -160,8 +162,15 @@ def main():
             sizes.append({"path": path, "lines": n, "commits": stats.get(path, {}).get("commits", 0)})
     sizes.sort(key=lambda s: -s["lines"])
 
+    # Stable or avoided: either way churn ranking never surfaces them.
+    cold = [dict(s) for s in sizes if s["commits"] <= COLD][: args.top]
+    for s in cold:
+        s["last_changed"] = (git("log", "-1", "--format=%aI", "--", s["path"], cwd=root) or "").strip()[:10] or None
+
     shallow = (git("rev-parse", "--is-shallow-repository", cwd=root) or "").strip() == "true"
-    notes = ["Fix commits are guessed from commit subjects (fix, bug, revert, ...), so they depend on how the repo writes messages."]
+    notes = ["Fix commits are guessed from commit subjects (fix, bug, revert, ...), so they depend on how the repo writes messages.",
+             f"cold_large_files are files of {LARGE}+ lines with at most {COLD} commits in the window read: "
+             "stable, or avoided because people work around them."]
     if shallow:
         notes.append("This is a shallow clone, so history is cut off and every file looks colder than it is. "
                      "Run `git fetch --unshallow` for real counts, or weight the large files list instead.")
@@ -179,6 +188,7 @@ def main():
         "date_range": [oldest[:10] if oldest else None, newest[:10] if newest else None],
         "hotspots": hot[: args.top],
         "large_files": sizes[: args.top],
+        "cold_large_files": cold,
         "notes": notes,
     }
     json.dump(out, sys.stdout, indent=2)

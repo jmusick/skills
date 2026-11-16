@@ -34,6 +34,7 @@ Check this first. Every other fix depends on it.
 - **Scattered concepts.** Understanding or changing one concept means touching many small files. Propose merging them into one module that owns the concept.
 - **Leaky abstractions.** Public types that expose internal representation; callers forced to sequence calls (`startX()` then `finishX()` instead of `x()`); methods that exist only for tests.
 - **Logic in the wrong layer.** Business rules in views or handlers, UI state in models, feature checks sprinkled through shared code, the same config read from several places.
+- **Avoided modules.** Busy code working around a module that rarely changes: wrappers or adapters around it, logic copied out of it instead of changed in it, comments warning not to touch it (`grep -rniE "don'?t (touch|change|modify)|do not (touch|change|modify)|workaround"`). Its low churn comes from fear, not health. The module is the finding, and the evidence is the workarounds in the busy files, with `path:line`, plus its commit count from `hotspots.py`.
 - **Special-case growth.** One-off flags, nullable modes, and `if` branches bolted onto a busy function. Often a missing type or a missing separate path.
 - **Size.** Files over roughly 500 lines or functions over roughly 80 are worth a look, not automatically a finding. Ask whether they hold more than one concept. Generated files, data tables, and test fixtures are fine.
 - **Cycles.** Circular imports between modules.
