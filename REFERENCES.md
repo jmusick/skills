@@ -2,7 +2,7 @@
 
 The sources each skill was built from, kept in one file so the skills themselves stay a single `SKILL.md`. Add a section here when a skill draws on outside material.
 
-In each table, **Pin** marks where the source stood when it was read, so a later check can diff from there. **Track** marks the sources worth checking for updates; the rest are credited only. **Contributed** names the rules that came from that one source; rules most sources share have no owner. No text was copied from any source, so there is no NOTICE file.
+In each table, **Pin** marks where the source stood when it was read, so a later check can diff from there. **Track** marks the sources worth checking for updates; the rest are credited only. **Contributed** names the rules that came from that one source; rules most sources share have no owner. Only newsroom adapts text from a source, so its MIT notice sits in its section here instead of in a NOTICE file.
 
 ## commit
 
@@ -74,6 +74,40 @@ issue had no upstream skill. These issue-to-PR skills were reviewed against it o
 | [openai/skills](https://github.com/openai/skills) | [skills/.curated/gh-address-comments/SKILL.md](https://github.com/openai/skills/blob/49f948faa925/skills/.curated/gh-address-comments/SKILL.md) | `49f948faa925` | none stated |  |  |
 
 Considered, not adopted: a gate where the user approves the requirements before any coding. The local-dev test pause already gives the user that check, closer to the commit.
+
+## newsroom
+
+newsroom builds on one upstream skill, keeping the rules most published newsroom skills agree on. The original, written for Firelands Current, was removed in the 2026-11-14 cut and returned on 2026-11-16 as a single file. The rewrite folded its AP-style, story-type, and AI-tells references into SKILL.md and swapped the Firelands house-style file for a step that reads the project's own style guide. The crime-naming policy stayed as a default. The row moved here from the old skill's `SOURCES.md`, and its pin was backfilled on 2026-11-11 from the repo's latest commit, so it marks where to start watching rather than the exact version read. The source wasn't re-read for the rewrite.
+
+| Source | Path | Pin | License | Track | Contributed |
+| --- | --- | --- | --- | --- | --- |
+| [jamditis/claude-skills-journalism](https://github.com/jamditis/claude-skills-journalism) | [journalism-core/skills/newsroom-style/SKILL.md](https://github.com/jamditis/claude-skills-journalism/blob/e1f38cb11521/journalism-core/skills/newsroom-style/SKILL.md) | `e1f38cb11521` | MIT | yes | The base the skill was adapted from. |
+
+Parts of newsroom are adapted from that skill under the MIT License:
+
+```
+MIT License
+
+Copyright (c) 2025 Joe Amditis
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
 
 ## release
 

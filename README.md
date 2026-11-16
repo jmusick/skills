@@ -10,6 +10,7 @@ Agent skills I write and use with Claude Code, Codex, and other agents that supp
 | [daily-news](skills/daily-news/SKILL.md) | Runs [Firelands Current](https://firelandscurrent.com)'s daily news budget: sweeps the paper's sources, verifies and drafts the best stories, and writes a review packet for the editor. Built for that paper's repo and its `packet.mjs` publishing tool. |
 | [humanize](skills/humanize/SKILL.md) | Rewrites or audits text so it stops reading as AI-generated, keeping its meaning, facts, and voice. Built on Wikipedia's [Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing). |
 | [issue](skills/issue/SKILL.md) | Picks an open GitHub issue, works it, reviews it, pauses for you to test it, and commits the change so the issue closes when it's released. It can also work on its own branch with a PR, on several issues in parallel, or unattended. Needs `commit`; uses `update-docs` and Claude Code's `/code-review` when present. |
+| [newsroom](skills/newsroom/SKILL.md) | Writes, edits, and checks news stories and headlines in AP style, following your publication's house style when the project has one, with story-type playbooks and editor flags. |
 | [release](skills/release/SKILL.md) | Cuts a release: works out the version bump from the Conventional Commits since the last tag, then tags and pushes. When nothing calls for a version, it still pushes the pending commits. |
 | [title](skills/title/SKILL.md) | Renames the session to match what was actually done in it. |
 | [update-docs](skills/update-docs/SKILL.md) | Checks docs like README.md and AGENTS.md against the code, fixes what's no longer true, and proposes cleanups for stale or duplicated docs. |
@@ -30,6 +31,8 @@ Each skill runs with no options. These change what it does. Type them after the 
 | issue | `--batch [N]` | Picks a batch of up to N issues (default 4) and works them in parallel. |
 | issue | `--branch` | Works in its own worktree on a new branch and opens a PR, leaving your checkout alone. You review and merge it. |
 | issue | `--no-test` | Runs unattended: skips the local-dev test pause and every other stop to ask. Pairs with `/loop /issue --no-test` for a backlog. |
+| newsroom | "edit" | Revises your draft instead of writing a new one, and says what changed. |
+| newsroom | "check", "AP check", "review", or "flag only" | Lists problems as editor flags, each with a fix, without rewriting. |
 | title | `/title <title>` | Uses that exact title as written. |
 | title | `/title <guidance>` | Picks the title itself, following the guidance (`shorter`, `focus on the deploy fix`). |
 | update-docs | `/update-docs <files>` | Checks only the named docs and skips the organization review. |
