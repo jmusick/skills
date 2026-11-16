@@ -2,7 +2,7 @@
 
 The sources each skill was built from, kept in one file so credits stay out of the skill folders. Add a section here when a skill draws on outside material.
 
-In each table, **Pin** marks where the source stood when it was read, so a later check can diff from there. **Track** marks the sources worth checking for updates; the rest are credited only. **Contributed** names the rules that came from that one source; rules most sources share have no owner. Only newsroom adapts text from a source, so its MIT notice sits in its section here instead of in a NOTICE file.
+In each table, **Pin** marks where the source stood when it was read, so a later check can diff from there. **Track** marks the sources worth checking for updates; the rest are credited only. **Contributed** names the rules that came from that one source; rules most sources share have no owner. Only newsroom and music-creation adapt text from sources, so their notices sit in their sections here instead of in NOTICE files.
 
 ## commit
 
@@ -88,6 +88,54 @@ These anti-AI-writing skills supplement the article; most of them descend from i
 | [Aboudjem/humanizer-skill](https://github.com/Aboudjem/humanizer-skill) | [skills/humanizer/SKILL.md](https://github.com/Aboudjem/humanizer-skill/blob/a58df0653675/skills/humanizer/SKILL.md) | `a58df0653675` | MIT |  | Markdown that won't render, and docs that narrate a change. |
 | [MohamedAbdallah-14/unslop](https://github.com/MohamedAbdallah-14/unslop) | [skills/unslop/SKILL.md](https://github.com/MohamedAbdallah-14/unslop/blob/5e955765a78c/skills/unslop/SKILL.md) | `5e955765a78c` | MIT |  | Change style, not stance: no added warmth or agreement. |
 
+## improve-codebase
+
+improve-codebase is what about twenty codebase-improvement skills agree on. These are the ones that were recorded. The 2026-11-14 cut removed it, and it returned on 2026-11-16 as it stood before, made model-invocable with trigger phrases in its description and without its evals, tests, and Codex settings, per AGENTS.md. The sources weren't re-read for the return; the rows moved here from the skill's old `SOURCES.md`.
+
+Pins were backfilled on 2026-11-11 from each repo's latest commit, after the skill was written. They mark where to start watching for changes, not the exact version that was read. **Track** marks the sources worth checking for updates; the rest are credited only.
+
+| Source | Path | Pin | License | Track | Contributed |
+| --- | --- | --- | --- | --- | --- |
+| [mattpocock/skills](https://github.com/mattpocock/skills) | [skills/engineering/improve-codebase-architecture/SKILL.md](https://github.com/mattpocock/skills/blob/4ae2317ddb22/skills/engineering/improve-codebase-architecture/SKILL.md) | `4ae2317ddb22` | MIT | yes | With codebase-design: the deletion test, deep modules, git-history hotspots. |
+| [mattpocock/skills](https://github.com/mattpocock/skills) | [skills/engineering/codebase-design/SKILL.md](https://github.com/mattpocock/skills/blob/4ae2317ddb22/skills/engineering/codebase-design/SKILL.md) | `4ae2317ddb22` | MIT | yes | See improve-codebase-architecture. |
+| [shadcn/improve](https://github.com/shadcn/improve) | [skills/improve/SKILL.md](https://github.com/shadcn/improve/blob/cac56e1ebd3c/skills/improve/SKILL.md) | `cac56e1ebd3c` | MIT | yes | Vetting subagent findings, self-contained plans. |
+| [ksimback/tech-debt-skill](https://github.com/ksimback/tech-debt-skill) | [SKILL.md](https://github.com/ksimback/tech-debt-skill/blob/5a15c1ca4a92/SKILL.md) | `5a15c1ca4a92` | none stated | yes | The required "looks bad but is actually fine" section. |
+| [max4c/skills](https://github.com/max4c/skills) | [skills/improve-codebase/SKILL.md](https://github.com/max4c/skills/blob/825b94d5c28b/skills/improve-codebase/SKILL.md) | `825b94d5c28b` | MIT |  |  |
+| [tomzx/agents](https://github.com/tomzx/agents) | [skills/improve-codebase/SKILL.md](https://github.com/tomzx/agents/blob/e9c4674dd397/skills/improve-codebase/SKILL.md) | `e9c4674dd397` | MIT |  |  |
+| [cursor/plugins](https://github.com/cursor/plugins) | [cursor-team-kit/skills/thermo-nuclear-code-quality-review/SKILL.md](https://github.com/cursor/plugins/blob/5866df557357/cursor-team-kit/skills/thermo-nuclear-code-quality-review/SKILL.md) | `5866df557357` | none stated |  |  |
+| [cursor/plugins](https://github.com/cursor/plugins) | [cursor-team-kit/skills/deslop/SKILL.md](https://github.com/cursor/plugins/blob/5866df557357/cursor-team-kit/skills/deslop/SKILL.md) | `5866df557357` | none stated |  |  |
+| [anthropics/knowledge-work-plugins](https://github.com/anthropics/knowledge-work-plugins) | [engineering/skills/tech-debt/SKILL.md](https://github.com/anthropics/knowledge-work-plugins/blob/877a617b435e/engineering/skills/tech-debt/SKILL.md) | `877a617b435e` | Apache-2.0 |  |  |
+| [JuliusBrussee/caveman](https://github.com/JuliusBrussee/caveman) | [skills/safe-refactor/SKILL.md](https://github.com/JuliusBrussee/caveman/blob/3dc497a7f858/skills/safe-refactor/SKILL.md) | `3dc497a7f858` | Apache-2.0 |  |  |
+| [chrisallenlane/claude-swe-workflows](https://github.com/chrisallenlane/claude-swe-workflows) | [skills/refactor/SKILL.md](https://github.com/chrisallenlane/claude-swe-workflows/blob/20f50d4a7d04/skills/refactor/SKILL.md) | `20f50d4a7d04` | MIT |  |  |
+| [jnsahaj/skills](https://github.com/jnsahaj/skills) | [skills/zero-tech-debt/SKILL.md](https://github.com/jnsahaj/skills/blob/170b0b919284/skills/zero-tech-debt/SKILL.md) | `170b0b919284` | none stated |  |  |
+| [wondelai/skills](https://github.com/wondelai/skills) | [remove-technical-debt/SKILL.md](https://github.com/wondelai/skills/blob/d8d5d75f83da/remove-technical-debt/SKILL.md) | `d8d5d75f83da` | MIT |  |  |
+
+## improve-skills
+
+improve-skills is what fifteen skill-writing and skill-improvement skills agree on, beyond Anthropic's and OpenAI's skill-creators. The 2026-11-14 cut removed it, and it returned on 2026-11-16 as it stood before, made model-invocable with trigger phrases in its description and without its evals and Codex settings, per AGENTS.md. The sources weren't re-read for the return; the rows moved here from the skill's old `SOURCES.md`.
+
+Pins were backfilled on 2026-11-11 from each repo's latest commit, after the skill was written. They mark where to start watching for changes, not the exact version that was read. **Track** marks the sources worth checking for updates; the rest are credited only.
+
+| Source | Path | Pin | License | Track | Contributed |
+| --- | --- | --- | --- | --- | --- |
+| [anthropics/skills](https://github.com/anthropics/skills) | [skills/skill-creator/SKILL.md](https://github.com/anthropics/skills/blob/2c5958ecac7c/skills/skill-creator/SKILL.md) | `2c5958ecac7c` | folder LICENSE.txt | yes | The baseline. |
+| [openai/skills](https://github.com/openai/skills) | [skills/.system/skill-creator/SKILL.md](https://github.com/openai/skills/blob/49f948faa925/skills/.system/skill-creator/SKILL.md) | `49f948faa925` | folder LICENSE.txt | yes | The baseline. |
+| [mattpocock/skills](https://github.com/mattpocock/skills) | [skills/productivity/writing-for-agents/SKILL.md](https://github.com/mattpocock/skills/blob/4ae2317ddb22/skills/productivity/writing-for-agents/SKILL.md) | `4ae2317ddb22` | MIT | yes | Context pointers, no-ops, positive phrasing over bans. |
+| [obra/superpowers](https://github.com/obra/superpowers) | [skills/writing-skills/SKILL.md](https://github.com/obra/superpowers/blob/22f0b463e7a5/skills/writing-skills/SKILL.md) | `22f0b463e7a5` | MIT | yes | Baseline first, and matching the form of a fix to the failure. |
+| [dotnet/skills](https://github.com/dotnet/skills) | [.agents/skills/improve-skill-quality/SKILL.md](https://github.com/dotnet/skills/blob/96c3d68dad28/.agents/skills/improve-skill-quality/SKILL.md) | `96c3d68dad28` | MIT | yes | Classify the failure before editing; retirement as a valid outcome. |
+| [warpdotdev/common-skills](https://github.com/warpdotdev/common-skills) | [.agents/skills/skill-doctor/SKILL.md](https://github.com/warpdotdev/common-skills/blob/8792394ff1b6/.agents/skills/skill-doctor/SKILL.md) | `8792394ff1b6` | MIT | yes | Change only what would have prevented a real failure. |
+| [alchaincyf/darwin-skill](https://github.com/alchaincyf/darwin-skill) | [SKILL.md](https://github.com/alchaincyf/darwin-skill/blob/8a8b66258e3c/SKILL.md) | `8a8b66258e3c` | MIT | yes | Paired before/after judging. |
+| [trailofbits/skills](https://github.com/trailofbits/skills) | [plugins/code-improver/skills/skill-improver/SKILL.md](https://github.com/trailofbits/skills/blob/e4dd0bb5b155/plugins/code-improver/skills/skill-improver/SKILL.md) | `e4dd0bb5b155` | CC-BY-SA-4.0 | yes | Don't weaken a guarantee to close a finding. |
+| [affaan-m/ECC](https://github.com/affaan-m/ECC) | [skills/skill-stocktake/SKILL.md](https://github.com/affaan-m/ECC/blob/d2ef2680594f/skills/skill-stocktake/SKILL.md) | `d2ef2680594f` | MIT | yes | Keep, improve, merge, retire verdicts. |
+| [softaworks/agent-toolkit](https://github.com/softaworks/agent-toolkit) | [skills/skill-judge/SKILL.md](https://github.com/softaworks/agent-toolkit/blob/3027f20f3181/skills/skill-judge/SKILL.md) | `3027f20f3181` | MIT | yes | Knowledge delta. |
+| [grafana/skills](https://github.com/grafana/skills) | [skills/grafana-core/skill-authoring/SKILL.md](https://github.com/grafana/skills/blob/8fb72a527961/skills/grafana-core/skill-authoring/SKILL.md) | `8fb72a527961` | Apache-2.0 |  |  |
+| [mcollina/skills](https://github.com/mcollina/skills) | [skills/skill-optimizer/SKILL.md](https://github.com/mcollina/skills/blob/c75d70dbfbe9/skills/skill-optimizer/SKILL.md) | `c75d70dbfbe9` | MIT |  |  |
+| [sanyuan0704/sanyuan-skills](https://github.com/sanyuan0704/sanyuan-skills) | [skills/skill-review/SKILL.md](https://github.com/sanyuan0704/sanyuan-skills/blob/08b6572ef108/skills/skill-review/SKILL.md) | `08b6572ef108` | MIT |  |  |
+| [daymade/claude-code-skills](https://github.com/daymade/claude-code-skills) | [daymade-skill/skill-reviewer/SKILL.md](https://github.com/daymade/claude-code-skills/blob/0619a9543d9a/daymade-skill/skill-reviewer/SKILL.md) | `0619a9543d9a` | MIT |  |  |
+| [tradermonty/claude-trading-skills](https://github.com/tradermonty/claude-trading-skills) | [skills/dual-axis-skill-reviewer/SKILL.md](https://github.com/tradermonty/claude-trading-skills/blob/163ceb48968c/skills/dual-axis-skill-reviewer/SKILL.md) | `163ceb48968c` | MIT |  |  |
+| [expo/skills](https://github.com/expo/skills) | [.claude/skills/expo-skill-eval/SKILL.md](https://github.com/expo/skills/blob/a9e5bd3fa00b/.claude/skills/expo-skill-eval/SKILL.md) | `a9e5bd3fa00b` | MIT |  |  |
+| [dboeckli/ai-agent-skills](https://github.com/dboeckli/ai-agent-skills) | [.claude/skills/skill-best-practices/SKILL.md](https://github.com/dboeckli/ai-agent-skills/blob/ab99d0c7b12e/.claude/skills/skill-best-practices/SKILL.md) | `ab99d0c7b12e` | MIT |  |  |
+
 ## issue
 
 issue had no upstream skill. These issue-to-PR skills were reviewed against it on 2026-11-11, and their pins are the commits reviewed then. The section moved here from the skill's old `SOURCES.md`, which the 2026-11-14 cut to a single file removed. The 2026-11-15 rewrite restored the picking rules, sizing, review, local-dev test, branch, batch, unattended, and failure-path steps, along with the report. The sources weren't re-read for it. The old file also credited jssblck/agents and tobi/qmd, for the version bump and tagging the old skill did itself. That work belongs to release now, so those rows sit in its section. addyosmani/agent-skills appears under commit too. On 2026-11-16 an audit against Anthropic's [The Complete Guide to Building Skills for Claude](https://resources.anthropic.com/hubfs/The-Complete-Guide-to-Building-Skill-for-Claude.pdf) moved branch and batch mode into `references/` (its progressive disclosure: most runs use neither) and added `scripts/candidates.py` for step 2's skip rules. Neither was taken from the sources below.
@@ -106,6 +154,167 @@ issue had no upstream skill. These issue-to-PR skills were reviewed against it o
 | [openai/skills](https://github.com/openai/skills) | [skills/.curated/gh-address-comments/SKILL.md](https://github.com/openai/skills/blob/49f948faa925/skills/.curated/gh-address-comments/SKILL.md) | `49f948faa925` | none stated |  |  |
 
 Considered, not adopted: a gate where the user approves the requirements before any coding. The local-dev test pause already gives the user that check, closer to the commit.
+
+## job-search
+
+job-search had no upstream skill: it follows the preferences Justin set in an interview on 2026-11-12. These job-search, application, and resume-tailoring skills were reviewed against it, led by career-ops (by far the most used) and srikar0805's career-agent. The rules most of them share (never invent experience, never submit for the user, fewer and better applications, keep a record of every posting seen) were already in the plan; the rows below credit what each added. v0.18.0 removed it on 2026-11-12, and it returned on 2026-11-16 as it stood before, made model-invocable with trigger phrases in its description and without its evals, tests, and Codex settings, per AGENTS.md. The sources weren't re-read for the return; the rows moved here from the skill's old `SOURCES.md`.
+
+Pins are the commits reviewed on 2026-11-12. **Track** marks the sources worth checking for updates; the rest are credited only. No text was copied.
+
+| Source | Path | Pin | License | Track | Contributed |
+| --- | --- | --- | --- | --- | --- |
+| [career-ops-hq/career-ops](https://github.com/career-ops-hq/career-ops) | [modes/oferta.md](https://github.com/career-ops-hq/career-ops/blob/eaa74c4b0d55/modes/oferta.md) | `eaa74c4b0d55` | MIT | yes | Checking the posting is live on the employer's own page before any work; warning signs (age, reposts, generic text, layoffs) shown as observations, never accusations. |
+| [career-ops-hq/career-ops](https://github.com/career-ops-hq/career-ops) | [modes/apply.md](https://github.com/career-ops-hq/career-ops/blob/eaa74c4b0d55/modes/apply.md) | `eaa74c4b0d55` | MIT | yes | The knock-out question check before drafting answers. |
+| [career-ops-hq/career-ops](https://github.com/career-ops-hq/career-ops) | [modes/followup.md](https://github.com/career-ops-hq/career-ops/blob/eaa74c4b0d55/modes/followup.md) | `eaa74c4b0d55` | MIT | yes | Follow-ups that lead with something concrete, never "just checking in", and stop after two. |
+| [career-ops-hq/career-ops](https://github.com/career-ops-hq/career-ops) | [AGENTS.md](https://github.com/career-ops-hq/career-ops/blob/eaa74c4b0d55/AGENTS.md) | `eaa74c4b0d55` | MIT | yes | Treating posting and recruiter text as untrusted; never running code a recruiter sends. |
+| [srikar0805/career-agent](https://github.com/srikar0805/career-agent) | [skills/job-hunt/SKILL.md](https://github.com/srikar0805/career-agent/blob/2a1a2b9a9529/skills/job-hunt/SKILL.md) | `2a1a2b9a9529` | MIT | yes | The strong / stretch / weak / blocked buckets; reporting the pattern across the shortlist; saving the full posting text; flagging an earlier rejection at the same employer. |
+| [advaithsarva/linkedin-jobs-skill](https://github.com/advaithsarva/linkedin-jobs-skill) | [skills/linkedin-jobs/SKILL.md](https://github.com/advaithsarva/linkedin-jobs-skill/blob/51a6fa1f053b/skills/linkedin-jobs/SKILL.md) | `51a6fa1f053b` | MIT |  | Quoting pay exactly with its source; "unconfirmed" is not "fake". |
+| [vmarafetti/right-fit](https://github.com/vmarafetti/right-fit) | [SKILL.md](https://github.com/vmarafetti/right-fit/blob/8ca471541301/SKILL.md) | `8ca471541301` | MIT |  | Showing what was skipped and why. |
+| [proficientlyjobs/proficiently-claude-skills](https://github.com/proficientlyjobs/proficiently-claude-skills) | [skills/job-search/SKILL.md](https://github.com/proficientlyjobs/proficiently-claude-skills/blob/9bc1f6fd7af5/skills/job-search/SKILL.md) | `9bc1f6fd7af5` | none stated |  | Reading listing pages without whole-page text; resolving each job to the employer's own link; saving lasting preferences from feedback; noting connections at the company. |
+| [proficientlyjobs/proficiently-claude-skills](https://github.com/proficientlyjobs/proficiently-claude-skills) | [skills/tailor-resume/SKILL.md](https://github.com/proficientlyjobs/proficiently-claude-skills/blob/9bc1f6fd7af5/skills/tailor-resume/SKILL.md) | `9bc1f6fd7af5` | none stated |  | Tailoring limits: titles and dates unchanged, no roles dropped, two pages at most. |
+| [rwtibbs/open-to-work](https://github.com/rwtibbs/open-to-work) | [SKILL.md](https://github.com/rwtibbs/open-to-work/blob/e6f7f5aaa220/SKILL.md) | `e6f7f5aaa220` | MIT |  | Growing the answer bank only with answers the user confirmed; checking pages after export. |
+| [alabenkhlifa/JobHunter](https://github.com/alabenkhlifa/JobHunter) | [job-hunter.skill.md](https://github.com/alabenkhlifa/JobHunter/blob/ef49f6fac64d/job-hunter.skill.md) | `ef49f6fac64d` | Apache-2.0 |  | Never carrying a board's pay estimate as the employer's figure. |
+| [areeves9/daily-job-search](https://github.com/areeves9/daily-job-search) | [SKILL.md](https://github.com/areeves9/daily-job-search/blob/e92625317674/SKILL.md) | `e92625317674` | MIT |  | Saying so when nothing good turned up, instead of padding. |
+| [wexxwuther/job-hunter](https://github.com/wexxwuther/job-hunter) | [job-hunter/SKILL.md](https://github.com/wexxwuther/job-hunter/blob/8c03dd4c6b7a/job-hunter/SKILL.md) | `8c03dd4c6b7a` | MIT |  |  |
+| [amanattar/resume-tailoring-skill](https://github.com/amanattar/resume-tailoring-skill) | [SKILL.md](https://github.com/amanattar/resume-tailoring-skill/blob/998ee7e4b70b/SKILL.md) | `998ee7e4b70b` | MIT |  |  |
+| [ComposioHQ/awesome-claude-skills](https://github.com/ComposioHQ/awesome-claude-skills) | [tailored-resume-generator/SKILL.md](https://github.com/ComposioHQ/awesome-claude-skills/blob/be2a406907db/tailored-resume-generator/SKILL.md) | `be2a406907db` | none stated |  |  |
+| [mayankjoshii/claude-job-skill](https://github.com/mayankjoshii/claude-job-skill) | [SKILL.md](https://github.com/mayankjoshii/claude-job-skill/blob/f0d29e4f608a/SKILL.md) | `f0d29e4f608a` | none stated |  |  |
+| [yanliudesign/offer-toolkit-skill](https://github.com/yanliudesign/offer-toolkit-skill) | [job-search-skill/SKILL.md](https://github.com/yanliudesign/offer-toolkit-skill/blob/3b85d2e1b836/job-search-skill/SKILL.md) | `3b85d2e1b836` | MIT |  |  |
+
+Considered, not adopted: filling and submitting forms in the browser (Justin submits himself), a weighted 1–5 score (three buckets read faster on a three-job list), repeated ATS keyword-scoring passes (terms are mirrored only where they're true), scheduled daily runs and Gmail scanning for rejections (he runs it on demand), and interview prep and outcome-learning modes (out of scope for now).
+
+## music-creation
+
+music-creation is what four songwriting skill collections agree on. This is an original condensed synthesis, not independent validation of the upstream methods. The 2026-11-14 cut removed it, and it returned on 2026-11-16 as it stood before, made model-invocable with trigger phrases in its description and without its evals and Codex settings, per AGENTS.md. The sources weren't re-read for the return; the rows moved here from the skill's old `SOURCES.md`.
+
+All four were reviewed on 2026-10-25 at the pinned commits, so the pins are the versions actually read.
+
+| Source | Path | Pin | License | Track | Contributed |
+| --- | --- | --- | --- | --- | --- |
+| [bitwize-music-studio/claude-ai-music-skills](https://github.com/bitwize-music-studio/claude-ai-music-skills) (B) | [whole repo](https://github.com/bitwize-music-studio/claude-ai-music-skills/tree/597d928fb2c8) | `597d928fb2c8` | CC0-1.0 | yes | Lyric writing/revision, voice review, Suno packaging, album cohesion. |
+| [jtydhr88/music-composition-skills](https://github.com/jtydhr88/music-composition-skills) (C) | [whole repo](https://github.com/jtydhr88/music-composition-skills/tree/5d5d22803517) | `5d5d22803517` | MIT | yes | Motifs, melody, harmony, groove, arrangement, generation handoff. |
+| [jtydhr88/lyric-writing-skills](https://github.com/jtydhr88/lyric-writing-skills) (L) | [whole repo](https://github.com/jtydhr88/lyric-writing-skills/tree/d2c3c780afea) | `d2c3c780afea` | MIT | yes | Intent, imagery, lyric structure, rhyme, language-specific prosody. |
+| [melodic-software/claude-code-plugins](https://github.com/melodic-software/claude-code-plugins) (M) | [plugins/songwriting](https://github.com/melodic-software/claude-code-plugins/tree/aa42c27ed277/plugins/songwriting) | `aa42c27ed277` | MIT | yes | Coaching, object writing, rhyme, prosody, form, diagnosis, Suno. |
+
+The review downloaded 346 text files spanning instructions, references, and notices. It inventoried entrypoints and examined representative core instructions and relevant reference sections; it was not a line-by-line audit of every document. No upstream scripts were executed. Operational and release modules were screened for scope rather than incorporated wholesale.
+
+### Convergence prioritized
+
+| Principle | Supporting source locations |
+| --- | --- |
+| Intent and existing constraints | B album-conceptualizer; C mc-workflow; L lw-song-intent; M workflow. |
+| Natural stress, phrasing, singability | B lyric-writer; C mc-melody and mc-vocal-direction; L lw-english; M meter-prosody. |
+| Memorable focus and hook placement | B lyric-writer; C mc-arrangement-arch and mc-development; L lw-structure; M song-form. |
+| Section purpose, contrast, development | B lyric-writer and lyric-refiner; C mc-arrangement-arch; L lw-structure; M song-form and diagnose. |
+| Specific voice and coherent imagery | B lyric-writer and voice-checker; L lw-imagery and lw-narrative; M object-writing and metaphor. C supplies the musical counterpart. |
+| Rhyme serving meaning and phrasing | B lyric-writer/craft-reference.md; L lw-rhyme; M rhyme and rhyme-strategy. |
+| Targeted revision | B lyric-refiner and voice-checker; C mc-ai-tell-audit; L lw-ai-tell-audit; M diagnose. |
+| Separate words from musical instructions | B suno-engineer; C mc-render-compile; L lw-workflow handoff; M suno. |
+
+Agreement is not independent empirical evidence: C and L share an author, while L and M draw substantially on Pat Pattison. Count shared teachers as shared lineage rather than independent confirmation.
+
+Composition detail comes mainly from C; coaching particularly from M/L; optional album planning mainly from B. These complement the common core without pretending all projects cover them equally. Suno is a main workflow and scope is songs, arrangements, and optional album planning by explicit user choice.
+
+### Differences resolved
+
+- Replace fixed word, syllable, section, and genre quotas with actual phrasing and relevant platform constraints.
+- Make chorus variation, asymmetry, subtraction, and rhyme breaks purposeful options, not compulsory anti-AI devices.
+- Allow direct, atmospheric, and instrumental work without compulsory narratives or photographable anchors.
+- Examine voice and specificity without forbidden-word lists, AI-authorship verdicts, or numerical acceptance thresholds.
+- Match lexical stress to actual musical emphasis rather than always beats one and three.
+- Put the defining Suno priority early without a universal prompt-order recipe.
+- Resolve obvious pronunciation from context; ask about meaningful ambiguity.
+- Verify changeable Suno controls rather than preserving conflicting version-specific instructions.
+- Use compact plans rather than mandatory schemas, approval gates, model tiers, or upstream plugin dependencies.
+- Exclude mixing/mastering, artwork, marketing, distribution, and release operations according to the user's scope.
+
+No book passages, commercial lyrics, or exhaustive upstream reference corpora are bundled. The notices follow. Upstream corpus claims and numerical thresholds were not independently reproduced and are not inherited as rules.
+
+### Notices
+
+music-creation synthesizes guidance from the four projects above. Original wording and focused procedures replace the upstream corpora. Book and song quotations are not included.
+
+Bitwize publishes its repository under CC0 1.0: https://creativecommons.org/publicdomain/zero/1.0/
+
+The following upstream MIT notices are retained for adaptations. Their licenses do not relicense third-party books, lyrics, or quotations mentioned upstream.
+
+#### composition
+
+```text
+MIT License
+
+Copyright (c) 2026 Terry Jia
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
+
+#### lyrics
+
+```text
+MIT License
+
+Copyright (c) 2026 Terry Jia
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
+
+#### melodic
+
+```text
+MIT License
+
+Copyright (c) 2026 Melodic Software
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
 
 ## newsroom
 
@@ -141,6 +350,26 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
+## prospect
+
+prospect had no upstream skill: it follows Stone Dragon Media's own outreach rules. These cold-outreach and prospecting skills were reviewed against it, led by coreyhaines31's cold-email and prospecting (the latter's `references/local-prospecting.md` is the closest match). The 2026-11-14 cut removed it, and it returned on 2026-11-16 as it stood before, made model-invocable with trigger phrases in its description and without its evals and Codex settings, per AGENTS.md. The sources weren't re-read for the return; the rows moved here from the skill's old `SOURCES.md`.
+
+Pins are the commits reviewed on 2026-11-11. **Track** marks the sources worth checking for updates; the rest are credited only. No text was copied.
+
+| Source | Path | Pin | License | Track | Contributed |
+| --- | --- | --- | --- | --- | --- |
+| [coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills) | [skills/cold-email/SKILL.md](https://github.com/coreyhaines31/marketingskills/blob/1f837447b20b/skills/cold-email/SKILL.md) | `1f837447b20b` | MIT | yes | One low-friction ask, by default the offer to send notes; short plain subject lines. |
+| [coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills) | [skills/prospecting/SKILL.md](https://github.com/coreyhaines31/marketingskills/blob/1f837447b20b/skills/prospecting/SKILL.md) | `1f837447b20b` | MIT | yes | Preferring an engaged owner; recording where each contact was published. |
+| [humanizerai/agent-skills](https://github.com/humanizerai/agent-skills) | [skills/cold-email/SKILL.md](https://github.com/humanizerai/agent-skills/blob/307912e3acdc/skills/cold-email/SKILL.md) | `307912e3acdc` | MIT |  | The word-count ceiling. |
+| [anthropics/knowledge-work-plugins](https://github.com/anthropics/knowledge-work-plugins) | [sales/skills/draft-outreach/SKILL.md](https://github.com/anthropics/knowledge-work-plugins/blob/877a617b435e/sales/skills/draft-outreach/SKILL.md) | `877a617b435e` | Apache-2.0 |  | The word-count ceiling. |
+| [mbfinotti/sales-skills](https://github.com/mbfinotti/sales-skills) | [skills/sales-outreach-personalization/SKILL.md](https://github.com/mbfinotti/sales-skills/blob/b2ed3628695e/skills/sales-outreach-personalization/SKILL.md) | `b2ed3628695e` | MIT |  |  |
+| [mbfinotti/sales-skills](https://github.com/mbfinotti/sales-skills) | [skills/cold-email-deliverability/SKILL.md](https://github.com/mbfinotti/sales-skills/blob/b2ed3628695e/skills/cold-email-deliverability/SKILL.md) | `b2ed3628695e` | MIT |  |  |
+| [louisblythe/sales-skills](https://github.com/louisblythe/sales-skills) | [skills/outbound-prospecting/SKILL.md](https://github.com/louisblythe/sales-skills/blob/e0f13a6eb41b/skills/outbound-prospecting/SKILL.md) | `e0f13a6eb41b` | none stated |  |  |
+| [louisblythe/sales-skills](https://github.com/louisblythe/sales-skills) | [skills/follow-up-discipline/SKILL.md](https://github.com/louisblythe/sales-skills/blob/e0f13a6eb41b/skills/follow-up-discipline/SKILL.md) | `e0f13a6eb41b` | none stated |  |  |
+| [techking007/agency-client-audit-skill](https://github.com/techking007/agency-client-audit-skill) | [skills/agency-client-audit/SKILL.md](https://github.com/techking007/agency-client-audit-skill/blob/77807aa5006a/skills/agency-client-audit/SKILL.md) | `77807aa5006a` | MIT |  |  |
+
+Considered, not adopted: opening with the observation before Justin's introduction (most sources do; left for the owner to decide), 3 to 5 follow-ups (one is deliberate for a local agency), and secondary sending domains with warmup (advice for bulk senders).
+
 ## release
 
 release had no upstream skill. It replaced patch and minor, which followed the owner's own `vX.Y.Z - Summary` release convention, and these release and changelog skills were reviewed against those on 2026-11-11. Their pins are the commits reviewed then. The section moved here from the old skills' shared `SOURCES.md` when they were removed. The 2026-11-15 rewrite brought back from the old skills the checks the replacement had dropped: fetching origin's tags, the preflight stops, the changelog rules, and the version-file details. The sources weren't re-read for it. On 2026-11-16 an audit against Anthropic's [The Complete Guide to Building Skills for Claude](https://resources.anthropic.com/hubfs/The-Complete-Guide-to-Building-Skill-for-Claude.pdf) moved the survey (the stop checks, sorting commits by bump, the tag clash and version-file checks) into `scripts/next_version.py`, following its advice to bundle a script for checks the model does unreliably. It wasn't taken from the sources below.
@@ -160,6 +389,41 @@ release had no upstream skill. It replaced patch and minor, which followed the o
 | [vercel-labs/autoship](https://github.com/vercel-labs/autoship) | [skills/autoship/SKILL.md](https://github.com/vercel-labs/autoship/blob/0ebe9fdfb743/skills/autoship/SKILL.md) | `0ebe9fdfb743` | Apache-2.0 |  |  |
 
 Considered, not adopted: creating a GitHub Release (the owner's releases are tags only), watching the tag's CI run, and matching tag signing.
+
+## seo-audit
+
+seo-audit is what the most-installed SEO skills agree on. Where they disagree, the skill follows Google's current documentation. The 2026-11-14 cut removed it, and it returned on 2026-11-16 as it stood before, made model-invocable with trigger phrases in its description and without its evals and Codex settings, per AGENTS.md. The sources weren't re-read for the return; the rows moved here from the skill's old `SOURCES.md`.
+
+Pins were backfilled on 2026-11-11 from each repo's latest commit, after the skill was written. They mark where to start watching for changes, not the exact version that was read. **Track** marks the sources worth checking for updates; the rest are credited only.
+
+| Source | Path | Pin | License | Track | Contributed |
+| --- | --- | --- | --- | --- | --- |
+| [coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills) | [skills/seo-audit/SKILL.md](https://github.com/coreyhaines31/marketingskills/blob/1f837447b20b/skills/seo-audit/SKILL.md) | `1f837447b20b` | MIT |  |  |
+| [addyosmani/web-quality-skills](https://github.com/addyosmani/web-quality-skills) | [skills/seo/SKILL.md](https://github.com/addyosmani/web-quality-skills/blob/afa8da942115/skills/seo/SKILL.md) | `afa8da942115` | MIT |  |  |
+| [AgriciDaniel/claude-seo](https://github.com/AgriciDaniel/claude-seo) | [skills/seo/SKILL.md](https://github.com/AgriciDaniel/claude-seo/blob/cca7e4a26799/skills/seo/SKILL.md) | `cca7e4a26799` | MIT |  |  |
+| [firecrawl/skills](https://github.com/firecrawl/skills) | [skills/workflows/firecrawl-seo-audit/SKILL.md](https://github.com/firecrawl/skills/blob/667d3f7fe804/skills/workflows/firecrawl-seo-audit/SKILL.md) | `667d3f7fe804` | ISC |  |  |
+| [ReScienceLab/opc-skills](https://github.com/ReScienceLab/opc-skills) | [skills/seo-geo/SKILL.md](https://github.com/ReScienceLab/opc-skills/blob/d7865b345b8d/skills/seo-geo/SKILL.md) | `d7865b345b8d` | Apache-2.0 |  |  |
+| [zubair-trabzada/geo-seo-claude](https://github.com/zubair-trabzada/geo-seo-claude) | [geo/SKILL.md](https://github.com/zubair-trabzada/geo-seo-claude/blob/989cae01e8eb/geo/SKILL.md) | `989cae01e8eb` | MIT |  |  |
+| [anthropics/knowledge-work-plugins](https://github.com/anthropics/knowledge-work-plugins) | [marketing/skills/seo-audit/SKILL.md](https://github.com/anthropics/knowledge-work-plugins/blob/877a617b435e/marketing/skills/seo-audit/SKILL.md) | `877a617b435e` | Apache-2.0 |  |  |
+| [affaan-m/ECC](https://github.com/affaan-m/ECC) | [skills/seo/SKILL.md](https://github.com/affaan-m/ECC/blob/d2ef2680594f/skills/seo/SKILL.md) | `d2ef2680594f` | MIT |  |  |
+| [sanity-io/agent-toolkit](https://github.com/sanity-io/agent-toolkit) | [skills/seo-aeo-best-practices/SKILL.md](https://github.com/sanity-io/agent-toolkit/blob/3ed3a143f8d3/skills/seo-aeo-best-practices/SKILL.md) | `3ed3a143f8d3` | MIT |  |  |
+| [aaron-he-zhu/seo-geo-claude-skills](https://github.com/aaron-he-zhu/seo-geo-claude-skills) | [optimize/technical-seo-checker/SKILL.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/3a1578a63cdd/optimize/technical-seo-checker/SKILL.md) | `3a1578a63cdd` | Apache-2.0 |  |  |
+| [Bhanunamikaze/Agentic-SEO-Skill](https://github.com/Bhanunamikaze/Agentic-SEO-Skill) | [SKILL.md](https://github.com/Bhanunamikaze/Agentic-SEO-Skill/blob/445c46c268d9/SKILL.md) | `445c46c268d9` | MIT |  |  |
+| [squirrelscan/skills](https://github.com/squirrelscan/skills) | [skills/audit-website/SKILL.md](https://github.com/squirrelscan/skills/blob/29f17762cc1c/skills/audit-website/SKILL.md) | `29f17762cc1c` | MIT | yes | The fix loop. |
+| [aleclindz/seo-skill-bench](https://github.com/aleclindz/seo-skill-bench) | [whole repo](https://github.com/aleclindz/seo-skill-bench/tree/95e7256ffb8c) | `95e7256ffb8c` | MIT | yes | The "look before you recommend" rule: skills lost the most points for "fixing" things that were already fine. |
+
+Other sources:
+
+- [Google Search Central documentation](https://developers.google.com/search/docs): the tiebreaker when the skills disagree. It has no commit to pin, so recheck the pages the skill relies on when you review it.
+
+## sprite
+
+sprite adapts its prompt structure from a post, not a repo, so there is nothing to pin. The 2026-11-14 cut removed it, and it returned on 2026-11-16 as it stood before, made model-invocable with trigger phrases in its description and without its evals and Codex settings, per AGENTS.md. The sources weren't re-read for the return; its credits moved here from the skill's old `SOURCES.md`.
+
+Other sources:
+
+- **The Sprite Wizard's "prompt bible"** on r/aigamedev (post URL not recorded). The prompt structure comes from it: a logical pixel grid with an exact nearest-neighbor enlargement, a ranked detail budget, and the AI-cliché blocklist with its "don't make it plain" guard.
+- **[Sprite Grid](https://thespritewizard.itch.io/sprite-grid)**, The Sprite Wizard's processor for generated art. `sprite_clean.py` plays the same role here.
 
 ## title
 
