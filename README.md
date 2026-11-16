@@ -64,10 +64,11 @@ skills/
     assets/         # optional: templates the skill fills in
 ```
 
-Most skills are a single `SKILL.md`. Some carry helper scripts for checks that are easy to get wrong by reading. They need Python 3 (standard library only), and each skill does the check by hand without it.
+Most skills are a single `SKILL.md`. Some carry helper scripts for checks that are easy to get wrong by reading, or reference files read only on the runs that need them. They need Python 3 (standard library only), and each skill does the check by hand without it.
 
 - `daily-news`: `scripts/open_packet.py` opens the day's packet folder and snapshots the site, `scripts/check_packet.py` checks the finished packet against the skill's rules, and `assets/review-template.md` is the editor's review layout.
 - `humanize`: `scripts/scan.py` counts the listed AI words, stock phrases, dashes, and sentence-length spread, with line numbers.
+- `issue`: `scripts/candidates.py` applies the skip rules to the open issues and ranks the rest. Branch and batch mode live in `references/`, read only on those runs.
 - `newsroom`: `scripts/ap_lint.py` flags weekdays that don't match their dates and the mechanical AP slips (months, times, numerals, abbreviations, loaded words).
 - `release`: `scripts/next_version.py` runs the pre-release checks and sorts the commits since the last tag by the bump each calls for.
 - `update-docs`: `scripts/doc_links.py` checks links and anchors, plus a privacy-policy checklist it reads only when a repo has one.
