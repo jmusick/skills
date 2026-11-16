@@ -1,6 +1,6 @@
 # Issue template
 
-Write every issue for someone who hasn't seen this conversation, this audit, or the other issues. `/issue` will refuse an issue with no clear done state, and `/issue`'s batch mode uses the files in scope to keep parallel issues from colliding, so both sections are required.
+Write every issue for someone who hasn't seen this conversation, this audit, or the other issues: `/issue` works it cold.
 
 ## Title
 
@@ -11,7 +11,7 @@ An imperative sentence that names the change and where it lands: "Merge the User
 ```markdown
 ## Before you start
 
-Written against `<short commit SHA>`. Run `git diff --stat <short commit SHA>..HEAD -- <each path in Files in scope>`. If a file in scope has changed, compare it with the excerpts under Problem. If they no longer match, stop and comment on this issue rather than adapting the plan.
+Found by /improve-codebase at `<short commit SHA>`. Run `git diff --stat <short commit SHA>..HEAD -- <each path in Files in scope>`. If a file in scope has changed, compare it with the excerpts under Problem. If they no longer match, stop and comment on this issue rather than adapting the plan.
 
 ## Problem
 
@@ -51,18 +51,14 @@ Out of scope: <things that look related but must not change, such as a public AP
 
 Comment on this issue instead of improvising if:
 
-- the code at the cited lines no longer matches Problem;
 - the change needs a file outside Files in scope;
 - <the assumption this proposal rests on turns out false, e.g. "a caller outside this repo uses the old method">.
-
-Found by /improve-codebase at <short commit SHA>.
 ```
 
 ## Rules
 
-- Leave out sections that truly don't apply (a deletion has no new interface), but never leave out Before you start, Files in scope, Done when, or Stop and ask.
+- Leave out sections that truly don't apply (a deletion has no new interface), but never leave out Before you start, Files in scope (`/issue`'s batch mode uses it to keep parallel issues from colliding), Done when (`/issue` refuses an issue without a clear done state), or Stop and ask.
 - For a Low-confidence finding, file an investigation: title it "Investigate whether …", make Proposed change what to check and where, and make Done when "the finding is confirmed and a fix issue is filed, or ruled out with the reason in a comment". Leave out Keeping behavior the same.
-- Never paste a secret, even partly. Cite its location and kind.
 - Quote no more code than the reader needs to recognize the spot.
 - For a tests-first issue, Done when lists the new tests and says they pass against the current, unchanged code. If writing them turns up a bug, they pin the current behavior anyway and the bug gets its own issue, because callers may depend on it.
 - For a merge or deepening, say in Keeping behavior the same how the new module gets tested, by what it depends on: in-process code is tested directly through its interface; a dependency with a local stand-in (an in-memory database, a temp folder) uses the stand-in; a remote or third-party service goes behind an interface with a fake for tests. Old unit tests on the merged pieces are deleted once tests at the new interface cover them; don't keep both layers.

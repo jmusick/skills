@@ -1,8 +1,8 @@
 # What to look for
 
-Work through the sections that fit the scope. Each section lists what to flag, what usually isn't a problem, and tools that help. A tool's output is a lead: open the code before it becomes a finding.
+Work through the sections that fit the scope. Each section lists what to flag, what usually isn't a problem, and tools that help.
 
-Run a listed tool only if it's already installed or in the project's dependencies. For the `npx` ones, write `npx --no <tool>`, which refuses to download a package the project doesn't have.
+Run a listed tool only if it's already installed or in the project's dependencies. Write the `npx` ones as `npx --no <tool>`: plain `npx` downloads and runs a package the project doesn't have, which is installing unvetted code.
 
 ## Severity
 
@@ -43,7 +43,7 @@ Check this first. Every other fix depends on it.
 ## 3. Duplication and consistency
 
 - Flag: the same logic in three or more places; copy-paste with small variations (the variation is usually a missing parameter); several ways to do one thing (two HTTP clients, three date helpers, four error types for one failure); a new helper written next to an existing one that does the same job.
-- **Hand-rolled machinery.** A home-made parser, date or path helper, retry loop, CLI argument parser, or HTTP wrapper doing what the standard library or a dependency already in the manifest does ("vanilla reimplementation"). Name what would replace it and what would be deleted. A new dependency isn't the fix (see SKILL.md). A small owned version of a tiny job, or one that's deliberate for security or speed, is fine.
+- **Hand-rolled machinery.** A home-made parser, date or path helper, retry loop, CLI argument parser, or HTTP wrapper doing what the standard library or a dependency already in the manifest does ("vanilla reimplementation"). Name what would replace it and what would be deleted. A small owned version of a tiny job, or one that's deliberate for security or speed, is fine.
 - **The repo's own rules.** Code that breaks a rule AGENTS.md, CONTRIBUTING, or a design doc states about the code (every command has a test, errors go through one helper, handlers split past a size). The evidence is the rule plus the line that breaks it.
 - Usually fine: two similar blocks that change for different reasons; duplicated test setup that keeps each test readable.
 
@@ -56,18 +56,17 @@ Check this first. Every other fix depends on it.
 
 ## 5. Types and contracts
 
-- Flag: `any`, `as` casts, `# type: ignore`, `@ts-ignore`, and untyped dicts at module boundaries; optional parameters or fields that hide a real invariant; silent fallbacks that paper over an unclear contract; input from users, files, or the network used without validation.
+- Flag: `any`, `as` casts, `# type: ignore`, `@ts-ignore`, and untyped dicts at module boundaries; optional parameters or fields that hide a real invariant; silent fallbacks that paper over an unclear contract; guards against states the code can't reach ("phantom bugs"), which hide the real contract instead of protecting it; input from users, files, or the network used without validation.
 - Usually fine: a cast at a well-marked interop edge with a comment saying why.
 - Tools: `tsc --noEmit`, `mypy`, `pyright`.
 
 ## 6. Correctness and errors
 
-Bugs you can show by reading the hotspots, not a bug hunt across the repo. Diffs belong to `/code-review`.
+Bugs you can show by reading the code in scope, not a bug hunt across the repo. Diffs belong to `/code-review`.
 
 - Flag errors: errors swallowed where the caller needed to know, inconsistent error shapes from one module, outbound calls with no timeout, unbounded retries, unclosed resources, failures on a critical path that leave no log or error report, and nested catches that return null or a default so a failure looks like success ("defensive programming theatre").
 - Flag correctness: an async result that's never awaited or checked; check-then-act on shared state; several writes that must land together with no transaction; a retried operation (webhook, queue job) that isn't idempotent; a `switch` or enum `default` that silently does nothing; a non-null assertion on a value that can be null; off-by-one or empty-collection cases.
 - Flag things declared but never wired up: a config option nothing reads, a CLI flag that does nothing, a registry or `switch` that handles four of five types. Users get quietly wrong or missing output.
-- Guards against states the code can't reach ("phantom bugs") aren't safety: they hide the real contract. Report them under Types and contracts.
 - Usually fine: a broad catch at the top of a process that logs and exits, or a deliberate best-effort path with a comment saying so.
 
 ## 7. Tests
@@ -93,7 +92,7 @@ Only with evidence that the code is on a hot path (a request handler, a loop ove
 
 A quick pass, not a security review. For a full one, point the user at `/security-review`.
 
-- Flag: hardcoded secrets (cite the location and kind, never the value), SQL or shell built by string concatenation with outside input, missing authorization checks on a route that has them elsewhere, `*` CORS on an authenticated API, homemade crypto.
+- Flag: hardcoded secrets, SQL or shell built by string concatenation with outside input, missing authorization checks on a route that has them elsewhere, `*` CORS on an authenticated API, homemade crypto.
 - Usually fine: test fixtures with obviously fake keys, a local-dev default documented as such.
 
 ## 11. Docs
