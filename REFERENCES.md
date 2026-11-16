@@ -15,7 +15,7 @@ commit and release replaced the patch and minor skills on 2026-11-14. Those two 
 
 ## daily-news
 
-daily-news replaced daily-budget, which the 2026-11-14 cut removed along with its scripts, reference files and the newsroom skill it drafted with. daily-budget had no upstream skill: it followed Firelands Current's own sourcing notes, and these journalism and news-monitoring skills were reviewed against it on 2026-11-11, when its verification rules were already stricter than theirs. Their pins are the commits reviewed then. The rows moved here from daily-budget's `SOURCES.md` when daily-news was written on 2026-11-16. The sources weren't re-read for it: the new skill folds the old reference files into one `SKILL.md` and hands publishing to the paper's own `packet.mjs`, both the owner's own conventions.
+daily-news replaced daily-budget, which the 2026-11-14 cut removed along with its scripts, reference files and the newsroom skill it drafted with. daily-news drafts with the rewritten newsroom, which has its own section below. daily-budget had no upstream skill: it followed Firelands Current's own sourcing notes, and these journalism and news-monitoring skills were reviewed against it on 2026-11-11, when its verification rules were already stricter than theirs. Their pins are the commits reviewed then. The rows moved here from daily-budget's `SOURCES.md` when daily-news was written on 2026-11-16. The sources weren't re-read for it: the new skill folds the old reference files into one `SKILL.md` and hands publishing to the paper's own `packet.mjs`, both the owner's own conventions.
 
 | Source | Path | Pin | License | Track | Contributed |
 | --- | --- | --- | --- | --- | --- |

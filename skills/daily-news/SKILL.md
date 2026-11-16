@@ -1,6 +1,6 @@
 ---
 name: daily-news
-description: Runs Firelands Current's daily news budget. Sweeps the paper's sources for new stories, events and updates to published stories, verifies them, drafts the best few, and writes a dated review packet (review.md and packet.json) for the editor. With --unattended it also imports the packet into local dev, syncs it to production and queues the Facebook posts. Use when the user types /daily-news, or asks to run the daily news, the news budget or today's story sweep, or to find today's stories for Firelands Current. Don't use it unasked, and never run --unattended unless the user names it.
+description: Runs Firelands Current's daily news budget. Sweeps the paper's sources for new stories, events and updates to published stories, verifies them, drafts the best few with the newsroom skill, and writes a dated review packet (review.md and packet.json) for the editor. With --unattended it also imports the packet into local dev, syncs it to production and queues the Facebook posts. Use when the user types /daily-news, or asks to run the daily news, the news budget or today's story sweep, or to find today's stories for Firelands Current. Don't use it unasked, and never run --unattended unless the user names it.
 ---
 A news budget is the day's list of stories. Find what's new, verify it, draft the best of it, and hand the editor a packet they can approve in a few minutes. Accuracy beats volume: three solid stories are a good day, and five unverified ones are a bad one.
 
@@ -54,7 +54,9 @@ Images are nice to have, not required; when two stories are otherwise even, pick
 
 ## 5. Draft
 
-Write each story to `drafts/<key>.md`: three headline options, a summary under 160 characters, the body in Markdown, and notes on what's unconfirmed. Follow the editorial rules in `news-sources.md` and the voice of the stories you read in step 1: a direct news lede, short paragraphs, the primary source linked inline, explicit attribution, and the practical details (time, place, cost, registration, accessibility). Write in the paper's own words, never a reworded version of another outlet's story. Don't invent anything a source doesn't give: a first name, an end time, a percentage, a reaction. Mark each gap `[NEED: ...]`; a story with one is `needs-check`, not `ready`.
+Write each story with the **newsroom** skill (`/newsroom` or `$newsroom`), so this file doesn't restate its rules. Give it the verified facts, the source links and the story type, and point it at `news-sources.md`'s editorial rules and the stories you read in step 1 as the house style. Run it in Write mode, then in Check mode on the result, and save its whole output (headlines, story, notes and flags) to `drafts/<key>.md`. Add a summary under 160 characters, and make sure the body links the primary source inline and gives the practical details: time, place, cost, registration, accessibility.
+
+Where newsroom would ask about a gap, look for the fact in the sources; if it isn't there, leave the `[NEED: ...]`. A story is `ready` only when it has no `[NEED:` and its Check flags are `NONE`, or every remaining flag is explained in its notes. Anything else is `needs-check`, and a `LEGAL_RISK` flag always waits for the editor.
 
 ## 6. Write the packet
 
@@ -87,7 +89,7 @@ If any mode fails, stop and report its output. Never rerun a mode that writes, e
 
 ## Unattended
 
-`--unattended` is the owner's go-ahead for **Going live**, given in advance: run steps 1 through 6 without asking, then every mode through `--verify --production`. Hold anything that would need a decision, rather than asking: a `needs-check` story, a conflict between sources, an image whose license you can't confirm, an update you can't verify against the live text. Held items go in `review.md`, not the manifest. If nothing is `ready`, write the packet and stop without importing. Report as in step 7, plus what went live, what was queued for Facebook, and what was held and why.
+`--unattended` is the owner's go-ahead for **Going live**, given in advance: run steps 1 through 6 without asking, then every mode through `--verify --production`. Hold anything that would need a decision, rather than asking: a `needs-check` story, a `LEGAL_RISK` flag, a conflict between sources, an image whose license you can't confirm, an update you can't verify against the live text. Held items go in `review.md`, not the manifest. If nothing is `ready`, write the packet and stop without importing. Report as in step 7, plus what went live, what was queued for Facebook, and what was held and why.
 
 ## Boundaries
 
