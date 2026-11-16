@@ -17,12 +17,24 @@ jobs:
     name: Baseline
     uses: jmusick/ci/.github/workflows/baseline.yml@a8ac9c292577382c63e5a38af58d38a4cd6f8504 # v0.3.0
 
+  skills:
+    name: Skill checks
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Check out
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Check the skills against the format and AGENTS.md
+        run: python3 scripts/check_skills.py
+
   # The one check to require in branch protection. It passes only when every job above passed, so
   # adding a job never means updating the protection rule.
   gate:
     name: CI gate
     if: always()
-    needs: [baseline]
+    needs: [baseline, skills]
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
