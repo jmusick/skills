@@ -8,6 +8,7 @@ Agent skills I write and use with Claude Code, Codex, and other agents that supp
 | --- | --- |
 | [commit](skills/commit/SKILL.md) | Commits the current work with [Conventional Commits](https://www.conventionalcommits.org) messages. |
 | [daily-news](skills/daily-news/SKILL.md) | Runs [Firelands Current](https://firelandscurrent.com)'s daily news budget: sweeps the paper's sources, verifies and drafts the best stories, and writes a review packet for the editor. Built for that paper's repo and its `packet.mjs` publishing tool. Needs `newsroom`. |
+| [design-taste](skills/design-taste/SKILL.md) | Audits, polishes, or builds web UI so it stops reading as AI-generated: a dated registry of generated-design tells, an accessibility and typography floor, motion timing, and a two-round screenshot critique. Uses Anthropic's `frontend-design` to set direction for new pages when it's installed. |
 | [humanize](skills/humanize/SKILL.md) | Rewrites or audits text so it stops reading as AI-generated, keeping its meaning, facts, and voice. Built on Wikipedia's [Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing). |
 | [issue](skills/issue/SKILL.md) | Picks an open GitHub issue, works it, reviews it, pauses for you to test it, and commits the change so the issue closes when it's released. It can also work on its own branch with a PR, on several issues in parallel, or unattended. Needs `commit`; uses `update-docs` and Claude Code's `/code-review` when present. |
 | [newsroom](skills/newsroom/SKILL.md) | Writes, edits, and checks news stories and headlines in AP style, following your publication's house style when the project has one, with story-type playbooks and editor flags. |
@@ -24,6 +25,9 @@ Each skill runs with no options. These change what it does. Type them after the 
 | commit | `/commit <files>` | Commits only the named files and leaves the rest uncommitted. |
 | daily-news | `--unattended` | Runs without stopping to ask, then imports the packet into local dev, syncs it to production and queues the Facebook posts. Anything that would need a decision is held for the editor instead. |
 | daily-news | `--date YYYY-MM-DD` | Builds the packet for that day instead of today. |
+| design-taste | "audit", "review", "flag only", or "does this look AI?" | Reports findings with file and line, and changes nothing. The default when pointed at existing UI. |
+| design-taste | "polish" or "fix" | Fixes in place with the smallest changes that clear the findings, keeping the project's components, tokens, and identity. |
+| design-taste | "build" or "redesign" | Sets a direction for a new page or screen first, then builds to the floor and runs the critique. |
 | humanize | "audit", "scan", "flag only", or "is this AI?" | Lists each AI-writing pattern it finds, with a fix, without rewriting. It never guesses who wrote the text. |
 | humanize | a file path | Edits the prose in that file in place, leaving code, commands, and frontmatter alone. |
 | issue | `/issue 42` | Works issue 42, or resumes it if an earlier run left your PR open. With no number, it picks the most important open issue it can finish. |
@@ -67,12 +71,13 @@ skills/
 Most skills are a single `SKILL.md`. Some carry helper scripts for checks that are easy to get wrong by reading, or reference files read only on the runs that need them. They need Python 3 (standard library only), and each skill does the check by hand without it.
 
 - `daily-news`: `scripts/open_packet.py` opens the day's packet folder and snapshots the site, `scripts/check_packet.py` checks the finished packet against the skill's rules, and `assets/review-template.md` is the editor's review layout.
+- `design-taste`: `scripts/lint_tells.py` flags quality-floor misses and the mechanical tells in front-end source. The tells registry, the full floor, the motion rules, and build-mode direction live in `references/`, read when a step calls for them.
 - `humanize`: `scripts/scan.py` counts the listed AI words, stock phrases, dashes, and sentence-length spread, with line numbers.
 - `issue`: `scripts/candidates.py` applies the skip rules to the open issues and ranks the rest. Branch and batch mode live in `references/`, read only on those runs.
 - `newsroom`: `scripts/ap_lint.py` flags weekdays that don't match their dates and the mechanical AP slips (months, times, numerals, abbreviations, loaded words).
 - `release`: `scripts/next_version.py` runs the pre-release checks and sorts the commits since the last tag by the bump each calls for.
 - `update-docs`: `scripts/doc_links.py` checks links and anchors, plus a privacy-policy checklist it reads only when a repo has one.
 
-Each skill is one self-contained folder, so it can be copied anywhere on its own. The sources a skill was built from are credited in [REFERENCES.md](REFERENCES.md) rather than in the skill's folder. Two skills depend on another: `issue` commits through `commit`, and `daily-news` writes its stories with `newsroom`, so install each pair together. `issue` also runs `update-docs` and Claude Code's built-in `/code-review` when they're installed, and checks by hand when they're not. None turns off model invocation, so your agent can pick any of them up from plain English as well as from `/<name>` (Claude Code) or `$<name>` (Codex).
+Each skill is one self-contained folder, so it can be copied anywhere on its own. The sources a skill was built from are credited in [REFERENCES.md](REFERENCES.md) rather than in the skill's folder. Two skills depend on another: `issue` commits through `commit`, and `daily-news` writes its stories with `newsroom`, so install each pair together. `issue` also runs `update-docs` and Claude Code's built-in `/code-review` when they're installed, and checks by hand when they're not, and `design-taste` lets Anthropic's `frontend-design` set the direction for new pages when it's installed. None turns off model invocation, so your agent can pick any of them up from plain English as well as from `/<name>` (Claude Code) or `$<name>` (Codex).
 
 `commit` and `release` are meant as a pair: commit each piece of work as you go, then run `release` when you want to ship what's built up. Each works on its own too, since `release` reads any Conventional Commits history.
