@@ -25,7 +25,7 @@ A finding you can only infer, with no line that shows the cost, stays Medium sev
 
 Check this first. Every other fix depends on it.
 
-- Flag: no test command, a red test suite or build on the default branch, a linter or typechecker that's configured but not run in CI, tests that are skipped or quarantined with no reason, CI that doesn't run on pull requests.
+- Flag: no test command, a red test suite or build on the default branch, a linter or typechecker that's configured but not run in CI, tests that are skipped or quarantined with no reason, CI that doesn't run on pull requests, and no AGENTS.md, CLAUDE.md, or CONTRIBUTING that names the build and test commands, since the agent working each filed issue has to find them.
 - Usually fine: a small script or prototype repo with no tests, when its README says so. Report it as a question, not a defect.
 
 ## 2. Structure
@@ -37,18 +37,21 @@ Check this first. Every other fix depends on it.
 - **Special-case growth.** One-off flags, nullable modes, and `if` branches bolted onto a busy function. Often a missing type or a missing separate path.
 - **Size.** Files over roughly 500 lines or functions over roughly 80 are worth a look, not automatically a finding. Ask whether they hold more than one concept. Generated files, data tables, and test fixtures are fine.
 - **Cycles.** Circular imports between modules.
-- Tools: `npx --no madge --circular src` (JS/TS), `pydeps --show-cycles` (Python), `go vet ./...`.
+- Tools: `npx --no madge --circular src` or `npx --no fallow architecture --cycles` (JS/TS), `pydeps --show-cycles` (Python), `go vet ./...`.
 
 ## 3. Duplication and consistency
 
 - Flag: the same logic in three or more places; copy-paste with small variations (the variation is usually a missing parameter); several ways to do one thing (two HTTP clients, three date helpers, four error types for one failure); a new helper written next to an existing one that does the same job.
+- **Hand-rolled machinery.** A home-made parser, date or path helper, retry loop, CLI argument parser, or HTTP wrapper doing what the standard library or a dependency already in the manifest does ("vanilla reimplementation"). Name what would replace it and what would be deleted. A new dependency isn't the fix (see SKILL.md). A small owned version of a tiny job, or one that's deliberate for security or speed, is fine.
+- **The repo's own rules.** Code that breaks a rule AGENTS.md, CONTRIBUTING, or a design doc states about the code (every command has a test, errors go through one helper, handlers split past a size). The evidence is the rule plus the line that breaks it.
 - Usually fine: two similar blocks that change for different reasons; duplicated test setup that keeps each test readable.
 
 ## 4. Dead code
 
-- Flag: unused code and dependencies, feature flags that are always on or off, compatibility shims and fallbacks with no remaining caller.
+- Flag: unused code and dependencies, feature flags that are always on or off, compatibility shims and fallbacks with no remaining caller, commented-out blocks with no note saying why they're kept.
+- Agent-written code piles up its own kind: options and modes no user asked for, "extensible" mechanisms nothing extends, retry and fallback paths nobody can explain, and long files that read like a log of one request after another. Ask whether a user would notice if it disappeared.
 - Before calling something dead, search for dynamic uses: string-based lookups, reflection, plugin registries, framework conventions (routes, migrations, entry points named in config), public API a library exports for others.
-- Tools: `npx --no knip` (JS/TS), `vulture` (Python), `cargo machete` or `cargo udeps` (Rust), `staticcheck` (Go), `npx --no depcheck`.
+- Tools: `npx --no knip` or `npx --no fallow dead-code` (JS/TS), `vulture` (Python), `cargo machete` or `cargo udeps` (Rust), `staticcheck` (Go), `npx --no depcheck`.
 
 ## 5. Types and contracts
 
@@ -60,8 +63,10 @@ Check this first. Every other fix depends on it.
 
 Bugs you can show by reading the hotspots, not a bug hunt across the repo. Diffs belong to `/code-review`.
 
-- Flag errors: errors swallowed where the caller needed to know, inconsistent error shapes from one module, outbound calls with no timeout, unbounded retries, unclosed resources.
+- Flag errors: errors swallowed where the caller needed to know, inconsistent error shapes from one module, outbound calls with no timeout, unbounded retries, unclosed resources, failures on a critical path that leave no log or error report, and nested catches that return null or a default so a failure looks like success ("defensive programming theatre").
 - Flag correctness: an async result that's never awaited or checked; check-then-act on shared state; several writes that must land together with no transaction; a retried operation (webhook, queue job) that isn't idempotent; a `switch` or enum `default` that silently does nothing; a non-null assertion on a value that can be null; off-by-one or empty-collection cases.
+- Flag things declared but never wired up: a config option nothing reads, a CLI flag that does nothing, a registry or `switch` that handles four of five types. Users get quietly wrong or missing output.
+- Guards against states the code can't reach ("phantom bugs") aren't safety: they hide the real contract. Report them under Types and contracts.
 - Usually fine: a broad catch at the top of a process that logs and exits, or a deliberate best-effort path with a comment saying so.
 
 ## 7. Tests
@@ -72,7 +77,7 @@ Bugs you can show by reading the hotspots, not a bug hunt across the repo. Diffs
 
 ## 8. Dependencies and config
 
-- Flag: known vulnerabilities, dependencies nothing uses, two libraries doing one job, a major version far behind on a package that still gets security fixes only on newer lines, environment variables read in code but not documented, defaults that differ between environments without a reason.
+- Flag: critical or high advisories in code that runs or ships (not every line `npm audit` prints), dependencies nothing uses, two libraries doing one job, a major version far behind on a package that still gets security fixes only on newer lines, environment variables read in code but not documented, defaults that differ between environments without a reason.
 - Report a major upgrade as its own issue with what breaks, not as a quick fix.
 - Tools: `npm audit` / `pnpm audit`, `pip-audit`, `cargo audit`, `govulncheck`, `npx --no depcheck`.
 
@@ -80,7 +85,7 @@ Bugs you can show by reading the hotspots, not a bug hunt across the repo. Diffs
 
 Only with evidence that the code is on a hot path (a request handler, a loop over user data, a render path).
 
-- Flag: N+1 queries, blocking I/O in async code, unbounded caches.
+- Flag: N+1 queries, blocking I/O in async code, unbounded caches, queries or list endpoints with no limit or pagination.
 - Don't flag: micro-optimizations, or anything you can't connect to a path that runs often.
 
 ## 10. Security hygiene

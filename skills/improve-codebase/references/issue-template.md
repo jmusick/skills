@@ -40,7 +40,7 @@ Out of scope: <things that look related but must not change, such as a public AP
 
 ## Keeping behavior the same
 
-<How to prove nothing changed: the existing tests that cover this code, or the tests to add first, and an existing test file to model new tests on. If this issue depends on a tests issue, say so here and below.>
+<How to prove nothing changed: the existing tests that cover this code, or the tests to add first, and an existing test file to model new tests on. "Nothing" includes the errors callers see, the order of side effects, and public names, not just return values. If this issue depends on a tests issue, say so here and below.>
 
 ## Notes
 
@@ -64,4 +64,5 @@ Found by /improve-codebase at <short commit SHA>.
 - For a Low-confidence finding, file an investigation: title it "Investigate whether …", make Proposed change what to check and where, and make Done when "the finding is confirmed and a fix issue is filed, or ruled out with the reason in a comment". Leave out Keeping behavior the same.
 - Never paste a secret, even partly. Cite its location and kind.
 - Quote no more code than the reader needs to recognize the spot.
-- For a tests-first issue, Done when lists the new tests and says they pass against the current, unchanged code.
+- For a tests-first issue, Done when lists the new tests and says they pass against the current, unchanged code. If writing them turns up a bug, they pin the current behavior anyway and the bug gets its own issue, because callers may depend on it.
+- For a merge or deepening, say in Keeping behavior the same how the new module gets tested, by what it depends on: in-process code is tested directly through its interface; a dependency with a local stand-in (an in-memory database, a temp folder) uses the stand-in; a remote or third-party service goes behind an interface with a fake for tests. Old unit tests on the merged pieces are deleted once tests at the new interface cover them; don't keep both layers.
