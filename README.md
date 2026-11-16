@@ -8,10 +8,28 @@ Agent skills I write and use with Claude Code, Codex, and other agents that supp
 | --- | --- |
 | [commit](skills/commit/SKILL.md) | Commits the current work with [Conventional Commits](https://www.conventionalcommits.org) messages. |
 | [humanize](skills/humanize/SKILL.md) | Rewrites or audits text so it stops reading as AI-generated, keeping its meaning, facts, and voice. Built on Wikipedia's [Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing). |
-| [issue](skills/issue/SKILL.md) | Picks an open GitHub issue, works it, reviews it, pauses for you to test it, and commits the change so the issue closes when it's released. Add `--branch` to work it in its own worktree and open a PR, list several issues to work them in parallel with subagents, or add `--no-test` to run unattended. Needs `commit`; uses `update-docs` and Claude Code's `/code-review` when present. |
+| [issue](skills/issue/SKILL.md) | Picks an open GitHub issue, works it, reviews it, pauses for you to test it, and commits the change so the issue closes when it's released. It can also work on its own branch with a PR, on several issues in parallel, or unattended. Needs `commit`; uses `update-docs` and Claude Code's `/code-review` when present. |
 | [release](skills/release/SKILL.md) | Cuts a release: works out the version bump from the Conventional Commits since the last tag, then tags and pushes. When nothing calls for a version, it still pushes the pending commits. |
 | [title](skills/title/SKILL.md) | Renames the session to match what was actually done in it. |
 | [update-docs](skills/update-docs/SKILL.md) | Checks docs like README.md and AGENTS.md against the code, fixes what's no longer true, and proposes cleanups for stale or duplicated docs. |
+
+## Options
+
+Each skill runs with no options. These change what it does. Type them after the command (`/` in Claude Code, `$` in Codex), or say them in plain English. `release` has no options.
+
+| Skill | Option | What it does |
+| --- | --- | --- |
+| commit | `/commit <files>` | Commits only the named files and leaves the rest uncommitted. |
+| humanize | "audit", "scan", "flag only", or "is this AI?" | Lists each AI-writing pattern it finds, with a fix, without rewriting. It never guesses who wrote the text. |
+| humanize | a file path | Edits the prose in that file in place, leaving code, commands, and frontmatter alone. |
+| issue | `/issue 42` | Works issue 42, or resumes it if an earlier run left your PR open. With no number, it picks the most important open issue it can finish. |
+| issue | `/issue 12 15 18` | Works those issues in parallel, one subagent per issue in its own worktree. |
+| issue | `--batch [N]` | Picks a batch of up to N issues (default 4) and works them in parallel. |
+| issue | `--branch` | Works in its own worktree on a new branch and opens a PR, leaving your checkout alone. You review and merge it. |
+| issue | `--no-test` | Runs unattended: skips the local-dev test pause and every other stop to ask. Pairs with `/loop /issue --no-test` for a backlog. |
+| title | `/title <title>` | Uses that exact title as written. |
+| title | `/title <guidance>` | Picks the title itself, following the guidance (`shorter`, `focus on the deploy fix`). |
+| update-docs | `/update-docs <files>` | Checks only the named docs and skips the organization review. |
 
 ## Install
 

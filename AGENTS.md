@@ -7,7 +7,7 @@ CI (`.github/workflows/ci.yml`) calls the shared [jmusick/ci](https://github.com
 ## Layout
 
 - `skills/<name>/SKILL.md`: one folder per skill. The folder name must match the `name` in the frontmatter. Each skill is currently this one file, with no scripts, references, evals, or Codex settings.
-- `README.md`: the public index. Keep its skills table in sync when you add, rename, or remove a skill.
+- `README.md`: the public index. Keep its skills table in sync when you add, rename, or remove a skill, and its options table in sync with every argument, flag, or mode a skill accepts.
 - `REFERENCES.md`: the outside sources each skill was built from, one section per skill, with pins to diff from. Credit sources here, not in the skill's folder, and update the section when a skill changes what it takes from them.
 
 ## Writing a skill
