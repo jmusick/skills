@@ -1,6 +1,7 @@
 ---
 name: daily-news
 description: Runs Firelands Current's daily news budget. Sweeps the paper's sources for new stories, events and updates to published stories, verifies them, drafts the best few with the newsroom skill, and writes a dated review packet (review.md and packet.json) for the editor. With --unattended it also imports the packet into local dev, syncs it to production and queues the Facebook posts. Use when the user types /daily-news, or asks to run the daily news, the news budget or today's story sweep, or to find today's stories for Firelands Current. Don't use it unasked, and never run --unattended unless the user names it.
+compatibility: Built for the firelands-current repository and its project library. Needs Node with wrangler, pdftotext, and a signed-in browser for social sources. Its helper scripts use Python 3, and each has a by-hand fallback.
 ---
 A news budget is the day's list of stories. Find what's new, verify it, draft the best of it, and hand the editor a packet they can approve in a few minutes. Accuracy beats volume: three solid stories are a good day, and five unverified ones are a bad one.
 
@@ -18,9 +19,11 @@ Work from the `firelands-current` repository. The project library is at `../../P
 
 ## 1. Open the packet
 
+Run `python <this skill's folder>/scripts/open_packet.py --date <date>` from the repository. It does items 1 to 3 below, writes the snapshot in the shape `scripts/editorial/manifest-from-research.mjs` reads, prints the counts and lists item 3 asks for, and names the newest earlier `review.md`. Without Python, do the items by hand:
+
 1. Create `editorial/<date>/` in the library, with `drafts/`, `evidence/` and `images/`. If the folder already has a `packet.json` or `local-import.json`, stop: that day has a run in progress, and the tool won't adopt it.
-2. Snapshot the site to `evidence/existing-content.json` with read-only `npx wrangler d1 execute DB --local --json --command "SELECT ..."` queries: `news_articles` (slug, headline, summary, section, community, status, featured, published_at, lead_media_id), `events` (slug, title, category, starts_on, start_time, venue, community, status) and `media` (id, filename, alt, caption, credit, created_at). If there's no local database, run `npm run db:migrate:local` and retry. Everything after this depends on the snapshot.
-3. From it, note stories from the last 21 days (don't repeat them), sections with fewer than three current stories (they need stories most), events in the next 30 days (don't list one twice), and the newest library photos. Read three recent stories in full for voice.
+2. Snapshot the site to `evidence/existing-content.json` with read-only `npx wrangler d1 execute DB --local --json --command "SELECT ..."` queries: `news_articles` (slug, headline, summary, section, community, status, featured, published_at, lead_media_id), `events` (slug, title, category, starts_on, start_time, venue, community, status) and `media` (id, filename, alt, caption, credit, created_at). If there's no local database, run `npm run db:migrate:local` and retry. Write it as one JSON object, `{"taken", "date", "articles", "events", "media"}`, since the paper's tools read `articles` from it. Everything after this depends on the snapshot.
+3. From it, note stories from the last 21 days (don't repeat them), sections with fewer than three current stories (they need stories most), events in the next 30 days (don't list one twice), and the newest library photos. Then read three recent stories in full for voice.
 4. Open the newest earlier `review.md` in `editorial/`. Its held leads and follow-ups are today's first leads.
 
 ## 2. Sweep and scout
@@ -64,15 +67,9 @@ Write every file as UTF-8. On Windows a default-encoding write turns curly quote
 
 **`packet.json`**: the manifest from `editorial-tools.md`, with only `ready` items in it. Set `publish_window.until` to the end of the budget date, the author from `news-sources.md`, and `expect` to the counts you mean, so a dropped story fails loudly. Take section keys from `SECTIONS` in `src/lib/news.ts` and event categories from `CATEGORIES` in `src/lib/events.ts`. Times are 24-hour `HH:MM` Eastern, and `null` when the source gives none. Get update baselines and reused-photo facts from `packet-facts.mjs` rather than computing them. List the featured stories you recommend (new photo stories, best first), with the ones they replace unfeatured. Never put a `[NEED:` marker in it.
 
-**`review.md`**: decisions first, evidence after. Leave out any section that would be empty:
-- An opening paragraph: what you compared against (counts), what you propose, and that nothing has been imported or published.
-- **First action**: an urgent update or time-sensitive item, with the replacement copy.
-- **Best new stories**: a table of priority, headline linked to its draft, why today, and readiness and image status, then a short paragraph per story on what's verified, what isn't and the trap to avoid.
-- **Featured**, **Potential calendar additions** (date and time, place, cost and remaining checks), **Image opportunities**, **Useful new sources**.
-- **Held leads and source checks**: what didn't make it and why. This is tomorrow's starting list.
-- **Sources swept**: every source you opened, with the time and result, including the ones with nothing new and the ones not reached.
+**`review.md`**: start from `assets/review-template.md` in this skill's folder, which sets the editor's layout: decisions first, evidence after. Replace every `<...>`, and leave out any section that would be empty. The opening paragraph says what you compared against, what you propose, and that nothing has been imported or published. **Held leads** is tomorrow's starting list, and **Sources swept** lists every source you opened, including the ones with nothing new and the ones not reached. Write dates in the editor's style (`Oct. 14`, `Wednesday`) and link every source.
 
-Write dates in the editor's style (`Oct. 14`, `Wednesday`) and link every source.
+Then run `python <this skill's folder>/scripts/check_packet.py <packet folder>` and fix what it finds. `packet.mjs` checks the manifest's structure; this checks this skill's rules, which reading misses on a long packet: summary and alt-text lengths, alt text that repeats the caption, file-photo captions, events already over, the publish window, weekdays that don't match their dates, encoding damage, and links in `review.md`. Without Python, check those by eye.
 
 ## 7. Report
 
@@ -89,7 +86,7 @@ If any mode fails, stop and report its output. Never rerun a mode that writes, e
 
 ## Unattended
 
-`--unattended` is the owner's go-ahead for **Going live**, given in advance: run steps 1 through 6 without asking, then every mode through `--verify --production`. Hold anything that would need a decision, rather than asking: a `needs-check` story, a `LEGAL_RISK` flag, a conflict between sources, an image whose license you can't confirm, an update you can't verify against the live text. Held items go in `review.md`, not the manifest. If nothing is `ready`, write the packet and stop without importing. Report as in step 7, plus what went live, what was queued for Facebook, and what was held and why.
+`--unattended` is the owner's go-ahead for **Going live**, given in advance: run steps 1 through 6 without asking, then every mode through `--verify --production`. Hold anything that would need a decision, rather than asking: a `needs-check` story, a `LEGAL_RISK` flag, a conflict between sources, an image whose license you can't confirm, an update you can't verify against the live text. Held items go in `review.md`, not the manifest. Don't go live while `check_packet.py` still has hits: fix each one or hold its item. If nothing is `ready`, write the packet and stop without importing. Report as in step 7, plus what went live, what was queued for Facebook, and what was held and why.
 
 ## Boundaries
 
