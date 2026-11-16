@@ -67,6 +67,7 @@ skills/
 Most skills are a single `SKILL.md`. Some carry helper scripts for checks that are easy to get wrong by reading. They need Python 3 (standard library only), and each skill does the check by hand without it.
 
 - `humanize`: `scripts/scan.py` counts the listed AI words, stock phrases, dashes, and sentence-length spread, with line numbers.
+- `newsroom`: `scripts/ap_lint.py` flags weekdays that don't match their dates and the mechanical AP slips (months, times, numerals, abbreviations, loaded words).
 - `release`: `scripts/next_version.py` runs the pre-release checks and sorts the commits since the last tag by the bump each calls for.
 - `update-docs`: `scripts/doc_links.py` checks links and anchors, plus a privacy-policy checklist it reads only when a repo has one.
 

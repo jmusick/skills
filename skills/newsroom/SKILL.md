@@ -85,6 +85,8 @@ Run this on every draft, yours or the user's, in this order, and recheck step 1 
 4. **Sourcing and fairness:** claims are attributed, contested ones have a second source, and the right of reply was offered.
 5. **Voice and style:** neutral wording, no tells, and house and AP rules.
 
+Then run `python <this skill's folder>/scripts/ap_lint.py <file> --date <publication date>` on the copy (`-` reads stdin). It catches what slips past reading: a weekday that doesn't match its date, and the mechanical rules above (months, times, percent, numerals, state and street abbreviations, loaded words, dash rate, lede and paragraph length, headline form). Each hit is a lead to judge, not a fix to apply, because it can't read context, and house style wins where they disagree. Without Python, check those by eye.
+
 ## Output
 
 In Write and Edit mode, return these sections in this order:
