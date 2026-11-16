@@ -14,7 +14,7 @@ A model predicts the most likely next word, so it regresses to the mean: the res
 ## Modes
 
 - **Rewrite** (default): follow the process at the end.
-- **Detect**: the user says "audit", "scan", "flag only", or asks "is this AI?". Quote each pattern found with its fix in a few words, and don't rewrite. Never give a verdict on who wrote it: people distinguish AI text from human text at about chance, and detectors have real error rates. Named patterns are evidence the user can check; a guess is not.
+- **Detect**: the user says "audit", "scan", "flag only", or asks "is this AI?". Run the scan from Process step 2, then quote each pattern found with its fix in a few words, and don't rewrite. Never give a verdict on who wrote it: people distinguish AI text from human text at about chance, and detectors have real error rates. Named patterns are evidence the user can check; a guess is not.
 - **File**: the user names a file. Read the whole current file from disk first, even one written this session, since an earlier copy in context may be stale. Edit only the prose in place with targeted changes, leave code, commands, paths, frontmatter, and data alone, and say which sections you didn't cover.
 
 ## Hard rules
@@ -97,7 +97,7 @@ Don't swap the tells for a new stock voice: no fake candor ("I'll be honest"), i
 ## Process
 
 1. Read the whole text. Note its genre, audience, and the voice traits worth keeping.
-2. Mark the tells, at the level of paragraph shape and document structure as well as sentences, and note any substance problems to flag.
+2. Mark the tells, at the level of paragraph shape and document structure as well as sentences, and note any substance problems to flag. For more than a few paragraphs, first run `python <this skill's folder>/scripts/scan.py <file>` (or `-` with the text on stdin). It counts what reading misses, with line numbers: the literal vocabulary lists and their rate per 1,000 words, stock phrases, dashes, sentence-length spread, formatting, residue, and placeholders. Its counts are leads, not a verdict: it can't tell a literal sense or a quotation from a tell, and it can't see structure or meaning, so still read for everything above. Without Python, scan by eye.
 3. Rewrite. Keep sentences and structure that already work, and prefer cutting to adding. When a sentence has several tells, rewrite the sentence instead of swapping words one at a time.
-4. Check the draft against the source: has a fact been added or dropped, or a distinctive phrase made generic? Then rescan for the tells that most often survive (contrasts, closers, triads, -ing tails, dashes, bold labels, and any "serves as" you introduced) and fix what's left once.
+4. Check the draft against the source: has a fact been added or dropped, or a distinctive phrase made generic? Then rescan (rerun the script if you used it) for the tells that most often survive (contrasts, closers, triads, -ing tails, dashes, bold labels, and any "serves as" you introduced) and fix what's left once.
 5. Return the final text once, then a short "What changed" list, one bullet per kind of change, and any flags. Name the concrete changes ("cut four -ing tails", "replaced 'serves as' with 'is'"), not "improved clarity and flow while preserving meaning", and don't list what you left alone. In file mode, report the changes instead of pasting the file back.
