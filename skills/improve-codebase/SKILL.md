@@ -13,10 +13,10 @@ This skill reports and files issues. It never edits code. Findings are cheap to 
 
 - `/improve-codebase` audits the whole repo, weighted toward the files that change most.
 - `/improve-codebase <path>` audits one directory or package.
-- `/improve-codebase <focus>` audits one section of `references/checks.md`: `baseline` (1), `architecture` or `structure` (2), `duplication` (3), `dead-code` (4), `types` (5), `errors` (6), `tests` (7), `deps` (8), `performance` (9), or `security` (10). Docs go to `/update-docs`.
+- `/improve-codebase <focus>` audits one section of `references/checks.md`: `baseline` (1), `architecture` or `structure` (2), `duplication` (3), `dead-code` (4), `types` (5), `correctness` or `errors` (6), `tests` (7), `deps` (8), `performance` (9), or `security` (10). Docs go to `/update-docs`.
 - A path and a focus combine: `/improve-codebase src/api tests` audits the tests section in `src/api` only.
 - A bare word that is a focus name is the focus, even if a folder has that name. The user writes `tests/` or `./tests` to mean the folder.
-- `quick` (anywhere in the arguments) limits the audit to the top 10 hotspots and reports only high-confidence findings.
+- `quick` (anywhere in the arguments) limits the audit to the top 10 hotspots and reports only High-confidence findings.
 
 ## Hard rules
 
@@ -71,13 +71,13 @@ Walk the scoped code with the categories in `references/checks.md`. Read it now.
 
 Explore the way a new maintainer would, and note where you hit friction: where understanding one concept means opening many files, where a change would have to be made in several places, where a test would be hard to write.
 
-For a large repo, split the audit across parallel read-only subagents (Explore agents in Claude Code), one per category group or package. They don't inherit this file, so each prompt needs: the absolute path to `references/checks.md` and which sections to read, the recon facts (languages, key directories, what to skip, the decisions you found in step 1), an instruction to return findings only with `path:line` evidence, and rules 6 and 7 above word for word. Use up to four subagents. With `quick` or on a small repo, audit directly.
+For a large repo, split the audit across parallel read-only subagents (Explore agents in Claude Code), one per category group or package. They don't inherit this file, so each prompt needs: the absolute path to `references/checks.md` and which sections to read, always including Severity, Confidence, and Finding format; the recon facts (languages, key directories, what to skip, the decisions you found in step 1); an instruction to return findings only, each in the Finding format; and rules 6 and 7 above word for word. Use up to four subagents. With `quick` or on a small repo, audit directly.
 
 ### 4. Vet
 
 Before anything reaches the user, check each candidate:
 
-1. **Open the cited code yourself.** Fix wrong lines, drop wrong findings.
+1. **Open the cited code yourself.** Fix wrong lines, drop wrong findings, and set each survivor's confidence by the levels in `references/checks.md`. A subagent's confidence is its guess, not yours.
 2. **Is it on purpose?** Look for a decision record, an explaining comment, a lint suppression with a reason, or a closed issue. If something looks bad but you conclude it's fine, put it on the "looks bad but is fine" list with the reason. That list proves you looked. It lasts past this chat only if the user has it recorded in step 6.
 3. **Is there a smaller fix?** If deleting something gets most of the benefit of restructuring it, propose the deletion.
 4. **Is it really one problem?** Merge findings that share a root cause into one, with every location listed.
@@ -90,10 +90,10 @@ Report in chat, most important first:
 1. **Summary.** One paragraph: the codebase's overall state as you found it, the top three improvements, and what you didn't audit.
 2. **Findings table**, at most 10 rows, ranked by severity and then by payoff for the effort:
 
-   | # | Severity | Finding | Evidence | Fix | Effort |
-   | --- | --- | --- | --- | --- | --- |
+   | # | Severity | Confidence | Finding | Evidence | Fix | Effort |
+   | --- | --- | --- | --- | --- | --- | --- |
 
-   Evidence is `path:line` plus what you saw. Effort is S (under an hour), M (a day or less), or L (bigger: split it into several issues when you file). Severity levels are defined in `references/checks.md`.
+   Evidence is `path:line` plus what you saw. Effort is S (under an hour), M (a day or less), or L (bigger: split it into several issues when you file). Severity and confidence levels are defined in `references/checks.md`. With `quick`, keep only High confidence.
 3. **Order.** Which findings depend on others, e.g. "#4 needs the tests from #2 first."
 4. **Looks bad but is fine.** Things you considered and dropped, with the reason. If you dropped nothing, write "nothing dropped".
 5. **Not checked**, and why (a tool missing, a package skipped, a check too slow).
@@ -101,7 +101,7 @@ Report in chat, most important first:
 
 If more than 10 findings survived vetting, keep the best 10 and give the count of the rest in one line. Leave docs drift to `/update-docs`: name it in one row instead of filing issues for each doc. If the codebase is in good shape, say so and stop. Padding the list to look thorough is the failure this skill exists to prevent.
 
-Then ask which findings to file, and whether to record the "looks bad but is fine" list so later runs skip it. Suggest the top findings, and wait. If no user can answer (an unattended run), file nothing and end with the report.
+Then ask which findings to file, and whether to record the "looks bad but is fine" list so later runs skip it. Suggest the top findings, and wait. When the user turns a finding down for a reason that would still hold next run (it's deliberate, or they accept the cost), offer to add it to that record with their reason, or the next run will propose it again. Skip reasons that won't last, like "not now". If no user can answer (an unattended run), file nothing and end with the report.
 
 ### 6. File issues
 
@@ -109,7 +109,8 @@ For each finding the user picks, write one issue with `references/issue-template
 
 - **One PR per issue.** Split an L finding into ordered issues, file them in order, and link each one's dependencies with a `Depends on #N` line. `/issue` won't start an issue while one it depends on is still open.
 - **Labels.** Add `improve-codebase` to every issue, so later runs can find them. Create it if missing (`gh label create improve-codebase --description "Found by /improve-codebase"`). Use the repo's existing labels for kind (bug, enhancement, refactor, tech-debt) and priority. If the repo has no priority labels, put the severity in the body; don't invent a label scheme without asking. Add the repo's needs-decision label, if it has one, when the fix needs the maintainer's call.
+- **Low confidence.** File it as an investigation, as `references/issue-template.md` describes, not as a fix.
 - **Public repos.** If step 1 found the repo public, get the user's explicit OK before filing any security finding, because anyone can read the issue before the fix ships.
-- **Kept-as-is record.** If the user wants the "looks bad but is fine" list kept, file it as one issue titled `Reviewed by /improve-codebase: kept as is (<short SHA>)`, one bullet per item with `path:line` and the reason, labeled `improve-codebase`. Then close it with `gh issue close N --reason "not planned"`. Step 4 of later runs finds it and leaves those items alone. It isn't work, so leave it out of the `/issue` next step.
+- **Kept-as-is record.** If the user wants the "looks bad but is fine" list or their declined findings kept, file them as one issue titled `Reviewed by /improve-codebase: kept as is (<short SHA>)`, one bullet per item with `path:line` and the reason (the user's own, for a declined finding), labeled `improve-codebase`. Then close it with `gh issue close N --reason "not planned"`. Step 4 of later runs finds it and leaves those items alone. It isn't work, so leave it out of the `/issue` next step.
 
 File with `gh issue create --title ... --body-file <temp file> --label ...`, using a temp file for the body so quoting doesn't mangle it. End with the URL of each new issue and the next step: `/issue N` for one, `/issue N M ...` to work several as a batch.

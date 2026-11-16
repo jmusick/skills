@@ -11,6 +11,16 @@ Run a listed tool only if it's already installed or in the project's dependencie
 - **Medium:** a real cost in code that changes sometimes. A pass-through layer, inconsistent ways of doing one thing, loose types at a boundary, an unused dependency.
 - **Low:** a small, contained cleanup. A dead helper, one magic value, a stale flag.
 
+## Confidence
+
+Severity says how much a finding costs; confidence says how sure you are it's real. Set it after you open the code yourself (SKILL.md step 4).
+
+- **High:** you read the code and the cost is certain from what's in the repo.
+- **Medium:** a strong signal that rests on something you couldn't confirm, such as a caller outside the repo, runtime config, or how often a path runs.
+- **Low:** a smell worth a look. It gets filed as an investigation, not a fix (see `issue-template.md`).
+
+A finding you can only infer, with no line that shows the cost, stays Medium severity or below.
+
 ## 1. Verification baseline
 
 Check this first. Every other fix depends on it.
@@ -46,9 +56,12 @@ Check this first. Every other fix depends on it.
 - Usually fine: a cast at a well-marked interop edge with a comment saying why.
 - Tools: `tsc --noEmit`, `mypy`, `pyright`.
 
-## 6. Errors and resilience
+## 6. Correctness and errors
 
-- Flag: errors swallowed where the caller needed to know, inconsistent error shapes from one module, outbound calls with no timeout, unbounded retries, unclosed resources.
+Bugs you can show by reading the hotspots, not a bug hunt across the repo. Diffs belong to `/code-review`.
+
+- Flag errors: errors swallowed where the caller needed to know, inconsistent error shapes from one module, outbound calls with no timeout, unbounded retries, unclosed resources.
+- Flag correctness: an async result that's never awaited or checked; check-then-act on shared state; several writes that must land together with no transaction; a retried operation (webhook, queue job) that isn't idempotent; a `switch` or enum `default` that silently does nothing; a non-null assertion on a value that can be null; off-by-one or empty-collection cases.
 - Usually fine: a broad catch at the top of a process that logs and exits, or a deliberate best-effort path with a comment saying so.
 
 ## 7. Tests
@@ -92,3 +105,19 @@ These come up in generic advice and aren't findings without evidence from this r
 - A coverage percentage target.
 - Renames across the codebase for taste.
 - Formatting or style nits. If formatting is inconsistent, the finding is "add the formatter to CI", once.
+
+## Finding format
+
+Every candidate finding, from a subagent or your own pass, comes back in this shape, so findings merge and vet the same way:
+
+```markdown
+### <Short imperative title>
+
+- Evidence: `path:line`, one sentence on what's there. Repeat for the 2–5 strongest locations; add "and ~N similar" if it's wider.
+- Cost: what this code pays now (churn, repeated fixes, a test that can't be written, a bug).
+- Severity: Critical | High | Medium | Low
+- Confidence: High | Medium | Low
+- Effort: S | M | L, for the fix including its tests.
+- Decided?: any decision record, explaining comment, or suppression with a reason you found nearby, or "none found".
+- Fix sketch: one to three sentences, enough to judge the effort.
+```

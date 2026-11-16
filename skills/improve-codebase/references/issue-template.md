@@ -9,6 +9,10 @@ An imperative sentence that names the change and where it lands: "Merge the User
 ## Body
 
 ```markdown
+## Before you start
+
+Written against `<short commit SHA>`. Run `git diff --stat <short commit SHA>..HEAD -- <each path in Files in scope>`. If a file in scope has changed, compare it with the excerpts under Problem. If they no longer match, stop and comment on this issue rather than adapting the plan.
+
 ## Problem
 
 <What's wrong, in two or three sentences, with the evidence: `path:line` for each location and a short excerpt (under ~15 lines) of the current code.>
@@ -19,7 +23,7 @@ An imperative sentence that names the change and where it lands: "Merge the User
 
 ## Proposed change
 
-<The direction, not the full code: what goes away, what merges, where logic moves, what the new interface looks like if there is one. Name the existing helper or pattern to reuse, with its path. Mention the smaller alternative if one was considered.>
+<The direction, not the full code: what goes away, what merges, where logic moves, what the new interface looks like if there is one. Name the existing helper or pattern to reuse, with its path, and one file that already does this the way the repo wants, to match. Mention the smaller alternative if one was considered.>
 
 ## Files in scope
 
@@ -36,20 +40,28 @@ Out of scope: <things that look related but must not change, such as a public AP
 
 ## Keeping behavior the same
 
-<How to prove nothing changed: the existing tests that cover this code, or the tests to add first. If this issue depends on a tests issue, say so here and below.>
+<How to prove nothing changed: the existing tests that cover this code, or the tests to add first, and an existing test file to model new tests on. If this issue depends on a tests issue, say so here and below.>
 
 ## Notes
 
 - Depends on #N <if any; one line per issue, in this exact wording, because `/issue` reads it and waits until #N is closed>
 - Risk: <what could go wrong>
-- Stop and ask on the issue if <the condition that would make the proposed change wrong, e.g. "a caller outside this repo uses the old method">.
+
+## Stop and ask
+
+Comment on this issue instead of improvising if:
+
+- the code at the cited lines no longer matches Problem;
+- the change needs a file outside Files in scope;
+- <the assumption this proposal rests on turns out false, e.g. "a caller outside this repo uses the old method">.
 
 Found by /improve-codebase at <short commit SHA>.
 ```
 
 ## Rules
 
-- Leave out sections that truly don't apply (a deletion has no new interface), but never leave out Files in scope or Done when.
+- Leave out sections that truly don't apply (a deletion has no new interface), but never leave out Before you start, Files in scope, Done when, or Stop and ask.
+- For a Low-confidence finding, file an investigation: title it "Investigate whether …", make Proposed change what to check and where, and make Done when "the finding is confirmed and a fix issue is filed, or ruled out with the reason in a comment". Leave out Keeping behavior the same.
 - Never paste a secret, even partly. Cite its location and kind.
 - Quote no more code than the reader needs to recognize the spot.
 - For a tests-first issue, Done when lists the new tests and says they pass against the current, unchanged code.

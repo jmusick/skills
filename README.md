@@ -38,8 +38,8 @@ Each skill runs with no options. These change what it does. Type them after the 
 | humanize | "audit", "scan", "flag only", or "is this AI?" | Lists each AI-writing pattern it finds, with a fix, without rewriting. It never guesses who wrote the text. |
 | humanize | a file path | Edits the prose in that file in place, leaving code, commands, and frontmatter alone. |
 | improve-codebase | `/improve-codebase <path>` | Audits one directory or package instead of the whole repo. |
-| improve-codebase | `/improve-codebase <focus>` | Audits one area: `baseline`, `architecture`, `duplication`, `dead-code`, `types`, `errors`, `tests`, `deps`, `performance`, or `security`. Combines with a path. |
-| improve-codebase | `quick` | Checks only the top 10 hotspots and reports only high-confidence findings. |
+| improve-codebase | `/improve-codebase <focus>` | Audits one area: `baseline`, `architecture`, `duplication`, `dead-code`, `types`, `correctness` (or `errors`), `tests`, `deps`, `performance`, or `security`. Combines with a path. |
+| improve-codebase | `quick` | Checks only the top 10 hotspots and reports only High-confidence findings. |
 | improve-skills | `/improve-skills <name or path> ...` | Reviews only the named skills or folders. |
 | improve-skills | `quick` | Runs only the scripted checks, routing, and structure review. |
 | improve-skills | `eval` | Also runs the changed skills' evals, where a repo has them. They're billed model runs, so they're off by default. |
