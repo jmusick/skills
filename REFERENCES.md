@@ -39,6 +39,25 @@ These anti-AI-writing skills supplement the article; most of them descend from i
 | [Aboudjem/humanizer-skill](https://github.com/Aboudjem/humanizer-skill) | [skills/humanizer/SKILL.md](https://github.com/Aboudjem/humanizer-skill/blob/a58df0653675/skills/humanizer/SKILL.md) | `a58df0653675` | MIT |  | Markdown that won't render, and docs that narrate a change. |
 | [MohamedAbdallah-14/unslop](https://github.com/MohamedAbdallah-14/unslop) | [skills/unslop/SKILL.md](https://github.com/MohamedAbdallah-14/unslop/blob/5e955765a78c/skills/unslop/SKILL.md) | `5e955765a78c` | MIT |  | Change style, not stance: no added warmth or agreement. |
 
+## issue
+
+issue had no upstream skill. These issue-to-PR skills were reviewed against it on 2026-11-11, and their pins are the commits reviewed then. The section moved here from the skill's old `SOURCES.md`, which the 2026-11-14 cut to a single file removed. The 2026-11-15 rewrite restored the picking rules, sizing, review, local-dev test, branch, batch, unattended, and failure-path steps, along with the report. The sources weren't re-read for it. The old file also credited jssblck/agents and tobi/qmd, for the version bump and tagging the old skill did itself. That work belongs to release now, so those rows sit in its section. addyosmani/agent-skills appears under commit too.
+
+| Source | Path | Pin | License | Track | Contributed |
+| --- | --- | --- | --- | --- | --- |
+| [open-mercato/skills](https://github.com/open-mercato/skills) | [skills/om-auto-fix-issue/SKILL.md](https://github.com/open-mercato/skills/blob/951342107718/skills/om-auto-fix-issue/SKILL.md) | `951342107718` | MIT | yes | Reproducing a bug before fixing it, and stopping when it's already fixed. |
+| [fandhe-ai/agent-cli-skills](https://github.com/fandhe-ai/agent-cli-skills) | [skills/implement-issue/SKILL.md](https://github.com/fandhe-ai/agent-cli-skills/blob/de592144c879/skills/implement-issue/SKILL.md) | `de592144c879` | none stated | yes | Tracking out-of-scope findings; quoting fresh check results. |
+| [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills) | [skills/git-workflow-and-versioning/SKILL.md](https://github.com/addyosmani/agent-skills/blob/301b02b12bff/skills/git-workflow-and-versioning/SKILL.md) | `301b02b12bff` | MIT |  | Listing what was deliberately left alone. |
+| [mattpocock/skills](https://github.com/mattpocock/skills) | [skills/engineering/wayfinder/SKILL.md](https://github.com/mattpocock/skills/blob/4ae2317ddb22/skills/engineering/wayfinder/SKILL.md) | `4ae2317ddb22` | MIT |  | Keeping out-of-scope work visible instead of doing it. |
+| [giuseppe-trisciuoglio/developer-kit](https://github.com/giuseppe-trisciuoglio/developer-kit) | [plugins/developer-kit-core/skills/github-issue-workflow/SKILL.md](https://github.com/giuseppe-trisciuoglio/developer-kit/blob/fe73fb33a09e/plugins/developer-kit-core/skills/github-issue-workflow/SKILL.md) | `fe73fb33a09e` | MIT |  |  |
+| [github/awesome-copilot](https://github.com/github/awesome-copilot) | [skills/make-repo-contribution/SKILL.md](https://github.com/github/awesome-copilot/blob/eaaffd5d020b/skills/make-repo-contribution/SKILL.md) | `eaaffd5d020b` | MIT |  |  |
+| [code-yeongyu/oh-my-openagent](https://github.com/code-yeongyu/oh-my-openagent) | [.agents/skills/work-with-pr/SKILL.md](https://github.com/code-yeongyu/oh-my-openagent/blob/cabdb895e65b/.agents/skills/work-with-pr/SKILL.md) | `cabdb895e65b` | see repo |  |  |
+| [sentimony/agentic-workflow](https://github.com/sentimony/agentic-workflow) | [skills/resolve-issue/SKILL.md](https://github.com/sentimony/agentic-workflow/blob/8ec5ecb13ddc/skills/resolve-issue/SKILL.md) | `8ec5ecb13ddc` | MIT |  |  |
+| [affaan-m/ecc](https://github.com/affaan-m/ecc) | [skills/github-ops/SKILL.md](https://github.com/affaan-m/ecc/blob/d2ef2680594f/skills/github-ops/SKILL.md) | `d2ef2680594f` | MIT |  |  |
+| [openai/skills](https://github.com/openai/skills) | [skills/.curated/gh-address-comments/SKILL.md](https://github.com/openai/skills/blob/49f948faa925/skills/.curated/gh-address-comments/SKILL.md) | `49f948faa925` | none stated |  |  |
+
+Considered, not adopted: a gate where the user approves the requirements before any coding. The local-dev test pause already gives the user that check, closer to the commit.
+
 ## release
 
 release had no upstream skill. It replaced patch and minor, which followed the owner's own `vX.Y.Z - Summary` release convention, and these release and changelog skills were reviewed against those on 2026-11-11. Their pins are the commits reviewed then. The section moved here from the old skills' shared `SOURCES.md` when they were removed. The 2026-11-15 rewrite brought back from the old skills the checks the replacement had dropped: fetching origin's tags, the preflight stops, the changelog rules, and the version-file details. The sources weren't re-read for it.
