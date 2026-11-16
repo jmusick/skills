@@ -111,7 +111,7 @@ SOFTWARE.
 
 ## release
 
-release had no upstream skill. It replaced patch and minor, which followed the owner's own `vX.Y.Z - Summary` release convention, and these release and changelog skills were reviewed against those on 2026-11-11. Their pins are the commits reviewed then. The section moved here from the old skills' shared `SOURCES.md` when they were removed. The 2026-11-15 rewrite brought back from the old skills the checks the replacement had dropped: fetching origin's tags, the preflight stops, the changelog rules, and the version-file details. The sources weren't re-read for it.
+release had no upstream skill. It replaced patch and minor, which followed the owner's own `vX.Y.Z - Summary` release convention, and these release and changelog skills were reviewed against those on 2026-11-11. Their pins are the commits reviewed then. The section moved here from the old skills' shared `SOURCES.md` when they were removed. The 2026-11-15 rewrite brought back from the old skills the checks the replacement had dropped: fetching origin's tags, the preflight stops, the changelog rules, and the version-file details. The sources weren't re-read for it. On 2026-11-16 an audit against Anthropic's [The Complete Guide to Building Skills for Claude](https://resources.anthropic.com/hubfs/The-Complete-Guide-to-Building-Skill-for-Claude.pdf) moved the survey (the stop checks, sorting commits by bump, the tag clash and version-file checks) into `scripts/next_version.py`, following its advice to bundle a script for checks the model does unreliably. It wasn't taken from the sources below.
 
 | Source | Path | Pin | License | Track | Contributed |
 | --- | --- | --- | --- | --- | --- |

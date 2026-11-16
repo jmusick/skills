@@ -1,23 +1,24 @@
 ---
 name: release
 description: Cuts a release of the current repo, working out the semver bump (major, minor, or patch) from the Conventional Commits since the last tag, then tags and pushes. When no commit calls for a new version, it still pushes the branch, without a tag. Use when the user types /release or asks to cut, ship, tag, or publish a release or new version. Don't use it unasked, since it pushes.
+compatibility: Needs git and push access to the remote. The survey script uses Python 3 when it's installed.
 ---
 Cut the next version from the commits since the last tag. Running the skill is the go-ahead to commit, tag, and push, so don't confirm along the way, except for a major bump. If the repo's AGENTS.md or CLAUDE.md has a release section, follow it where it differs from these steps.
 
 ## 1. Survey
 
-Run `git fetch origin --tags` first. Origin's tags are the record of what's been released, and local tags can lag behind them.
+Run this skill's survey from the repo root: `python <this skill's folder>/scripts/next_version.py` (`--no-fetch` offline). It fetches origin's tags first, because they're the record of what's been released and local tags can lag behind them. Then it prints the stop conditions below, the latest tag and its style, the commits since it sorted by the bump each calls for, the next version, any clash with origin's tags, the version files, and the changelog. Reading a long log for `!` and `BREAKING CHANGE:` footers misses some, so trust its sorting, but it decides nothing: act on what it prints as these steps say. Without Python, do the same by hand: `git fetch origin --tags`, find the latest `vX.Y.Z` tag, and read `git log <tag>..HEAD` with bodies.
 
 Stop and tell the user, before changing anything, if:
 - HEAD is detached, or a merge, rebase, or cherry-pick is in progress.
 - The branch is behind its upstream. Don't pull, rebase, or merge to catch up: how to reconcile is the user's call.
 - There are uncommitted changes. Offer to commit them first as Conventional Commits, so the release holds only typed, committed work.
 
-Find the latest `vX.Y.Z` tag and list the commits since it (`git log <tag>..HEAD`). With no commits since it, say there's nothing to release and stop.
+With no commits since the latest tag, say there's nothing to release and stop.
 
 ## 2. Pick the bump
 
-Take the bump from the highest-ranking commit: `!` after the type or a `BREAKING CHANGE:` footer is major, `feat` is minor, `fix` or `perf` is patch. Commits that aren't Conventional (older free-form subjects, merged PR titles) still count: read their diffs and rank them by what changed for users. Fixes and tweaks are a patch, something users couldn't do before is a minor, and anything that breaks existing use (a removed or renamed feature, changed behavior people rely on) is a major.
+Take the bump from the highest-ranking commit: `!` after the type or a `BREAKING CHANGE:` footer is major, `feat` is minor, `fix` or `perf` is patch. Commits that aren't Conventional (older free-form subjects, merged PR titles, types the script doesn't know) still count, and the script lists them under "needs your judgment": read their diffs (`git show <sha>`) and rank them by what changed for users. Fixes and tweaks are a patch, something users couldn't do before is a minor, and anything that breaks existing use (a removed or renamed feature, changed behavior people rely on) is a major.
 
 - **Major:** confirm with the user first. A new major, or 1.0.0 from 0.x, is their call.
 - **Nothing but other types** (`chore`, `docs`, `ci`, ...): there's no version to cut. Still push the branch, with no tag and the push rules in step 5, so the pending commits go out. Report that nothing needed a release and what was pushed, and stop.
@@ -48,7 +49,7 @@ Run the project's checks (test, lint, build: whatever AGENTS.md or CLAUDE.md, `p
 
 Commit the version files and changelog as `chore(release): vX.Y.Z`. If nothing needed updating, skip the commit and tag the current one.
 
-Tag `vX.Y.Z` in the style of the existing tags: lightweight (`git tag vX.Y.Z`), or annotated with the release commit's subject as the message (`git tag -a vX.Y.Z -m "chore(release): vX.Y.Z"`). `git cat-file -t <latest tag>` prints `tag` for an annotated one and `commit` for a lightweight one.
+Tag `vX.Y.Z` in the style of the existing tags, which the survey prints: lightweight (`git tag vX.Y.Z`), or annotated with the release commit's subject as the message (`git tag -a vX.Y.Z -m "chore(release): vX.Y.Z"`). By hand, `git cat-file -t <latest tag>` prints `tag` for an annotated one and `commit` for a lightweight one.
 
 Push the branch, then the tag (`git push origin <branch>`, then `git push origin vX.Y.Z`). Add `-u` if the branch has no upstream yet.
 - If a push is rejected, stop and tell the user. Don't force-push, rebase, or merge.
