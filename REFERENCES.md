@@ -50,3 +50,18 @@ title had no upstream skill. These session- and tab-renaming skills were reviewe
 | [piusn/skills-plugin-marketplace](https://github.com/piusn/skills-plugin-marketplace) | [skills/session-rename/SKILL.md](https://github.com/piusn/skills-plugin-marketplace/blob/0cc4b509539b/skills/session-rename/SKILL.md) | `0cc4b509539b` | none stated |  |  |
 
 Considered, not adopted: renaming a Claude Code CLI session by appending to its JSONL transcript (trifle-labs) or through a hook (goern). Both depend on internal formats, so the skill still suggests `/rename`.
+
+## update-docs
+
+update-docs draws on these docs-maintenance skills. Their pins were backfilled on 2026-11-11 from each repo's latest commit, after the skill was written, so they mark where to start watching rather than the exact version read. The section moved here from the skill's old `SOURCES.md` when the skill was cut to a single file. The 2026-11-15 rewrite restored the organization review, the agent-notes and privacy-policy checks, the contradiction check, and the report format, which the cut had dropped. The sources weren't re-read for it.
+
+| Source | Path | Pin | License | Track | Contributed |
+| --- | --- | --- | --- | --- | --- |
+| [anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official) | [plugins/claude-md-management/skills/claude-md-improver/SKILL.md](https://github.com/anthropics/claude-plugins-official/blob/e37d307bd9f8/plugins/claude-md-management/skills/claude-md-improver/SKILL.md) | `e37d307bd9f8` | Apache-2.0 | yes | Anthropic's claude-md-improver. |
+| [getsentry/skills](https://github.com/getsentry/skills) | [skills/agents-md/SKILL.md](https://github.com/getsentry/skills/blob/e94f22214528/skills/agents-md/SKILL.md) | `e94f22214528` | Apache-2.0 |  |  |
+| [amElnagdy/guard-skills](https://github.com/amElnagdy/guard-skills) | [skills/docs-guard/SKILL.md](https://github.com/amElnagdy/guard-skills/blob/ffa26036b7b5/skills/docs-guard/SKILL.md) | `ffa26036b7b5` | MIT | yes | Checking each doc statement as a claim. |
+| [giuseppe-trisciuoglio/developer-kit](https://github.com/giuseppe-trisciuoglio/developer-kit) | [plugins/developer-kit-core/skills/docs-updater/SKILL.md](https://github.com/giuseppe-trisciuoglio/developer-kit/blob/fe73fb33a09e/plugins/developer-kit-core/skills/docs-updater/SKILL.md) | `fe73fb33a09e` | MIT |  |  |
+| ruchernchong's sync-docs | | not found | | | No public ruchernchong repo has a sync-docs skill now, so this can't be pinned. |
+| [iliaal/ai-skills](https://github.com/iliaal/ai-skills) | [skills/md-docs/SKILL.md](https://github.com/iliaal/ai-skills/blob/6e16f4a0798f/skills/md-docs/SKILL.md) | `6e16f4a0798f` | MIT |  |  |
+| [tartinerlabs/skills](https://github.com/tartinerlabs/skills) | [plugins/tooling/skills/update-project/SKILL.md](https://github.com/tartinerlabs/skills/blob/e9d405714501/plugins/tooling/skills/update-project/SKILL.md) | `e9d405714501` | MIT |  |  |
+| [laurigates/claude-plugins](https://github.com/laurigates/claude-plugins) | [documentation-plugin/skills/docs-sync/SKILL.md](https://github.com/laurigates/claude-plugins/blob/34a98323c289/documentation-plugin/skills/docs-sync/SKILL.md) | `34a98323c289` | MIT | yes | Catalog and count drift. |
