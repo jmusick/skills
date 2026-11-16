@@ -8,7 +8,7 @@ Agent skills I write and use with Claude Code, Codex, and other agents that supp
 | --- | --- |
 | [commit](skills/commit/SKILL.md) | Commits the current work with [Conventional Commits](https://www.conventionalcommits.org) messages. |
 | [humanize](skills/humanize/SKILL.md) | Rewrites or audits text so it stops reading as AI-generated, keeping its meaning, facts, and voice. Built on Wikipedia's [Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing). |
-| [issue](skills/issue/SKILL.md) | Picks an open GitHub issue, works it, and commits the change so the issue closes when it's released. Add `--branch` to work it on its own branch and open a PR instead. Needs `commit`. |
+| [issue](skills/issue/SKILL.md) | Picks an open GitHub issue, works it, reviews it, pauses for you to test it, and commits the change so the issue closes when it's released. Add `--branch` to work it in its own worktree and open a PR, list several issues to work them in parallel with subagents, or add `--no-test` to run unattended. Needs `commit`; uses `update-docs` and Claude Code's `/code-review` when present. |
 | [release](skills/release/SKILL.md) | Cuts a release: works out the version bump from the Conventional Commits since the last tag, then tags and pushes. When nothing calls for a version, it still pushes the pending commits. |
 | [title](skills/title/SKILL.md) | Renames the session to match what was actually done in it. |
 | [update-docs](skills/update-docs/SKILL.md) | Checks docs like README.md and AGENTS.md against the code, fixes what's no longer true, and proposes cleanups for stale or duplicated docs. |
@@ -37,6 +37,6 @@ skills/
     SKILL.md        # frontmatter (name, description) + instructions
 ```
 
-Each skill is one self-contained folder, so it can be copied anywhere on its own. The sources a skill was built from are credited in [REFERENCES.md](REFERENCES.md) rather than in the skill's folder. Only `issue` depends on another skill: it commits through `commit`, so install both. None turns off model invocation, so your agent can pick any of them up from plain English as well as from `/<name>` (Claude Code) or `$<name>` (Codex).
+Each skill is one self-contained folder, so it can be copied anywhere on its own. The sources a skill was built from are credited in [REFERENCES.md](REFERENCES.md) rather than in the skill's folder. Only `issue` depends on another skill: it commits through `commit`, so install both. It also runs `update-docs` and Claude Code's built-in `/code-review` when they're installed, and checks by hand when they're not. None turns off model invocation, so your agent can pick any of them up from plain English as well as from `/<name>` (Claude Code) or `$<name>` (Codex).
 
 `commit` and `release` are meant as a pair: commit each piece of work as you go, then run `release` when you want to ship what's built up. Each works on its own too, since `release` reads any Conventional Commits history.
