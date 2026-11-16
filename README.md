@@ -7,6 +7,7 @@ Agent skills I write and use with Claude Code, Codex, and other agents that supp
 | Skill | What it does |
 | --- | --- |
 | [commit](skills/commit/SKILL.md) | Commits the current work with [Conventional Commits](https://www.conventionalcommits.org) messages. |
+| [daily-news](skills/daily-news/SKILL.md) | Runs [Firelands Current](https://firelandscurrent.com)'s daily news budget: sweeps the paper's sources, verifies and drafts the best stories, and writes a review packet for the editor. Built for that paper's repo and its `packet.mjs` publishing tool. |
 | [humanize](skills/humanize/SKILL.md) | Rewrites or audits text so it stops reading as AI-generated, keeping its meaning, facts, and voice. Built on Wikipedia's [Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing). |
 | [issue](skills/issue/SKILL.md) | Picks an open GitHub issue, works it, reviews it, pauses for you to test it, and commits the change so the issue closes when it's released. It can also work on its own branch with a PR, on several issues in parallel, or unattended. Needs `commit`; uses `update-docs` and Claude Code's `/code-review` when present. |
 | [release](skills/release/SKILL.md) | Cuts a release: works out the version bump from the Conventional Commits since the last tag, then tags and pushes. When nothing calls for a version, it still pushes the pending commits. |
@@ -20,6 +21,8 @@ Each skill runs with no options. These change what it does. Type them after the 
 | Skill | Option | What it does |
 | --- | --- | --- |
 | commit | `/commit <files>` | Commits only the named files and leaves the rest uncommitted. |
+| daily-news | `--unattended` | Runs without stopping to ask, then imports the packet into local dev, syncs it to production and queues the Facebook posts. Anything that would need a decision is held for the editor instead. |
+| daily-news | `--date YYYY-MM-DD` | Builds the packet for that day instead of today. |
 | humanize | "audit", "scan", "flag only", or "is this AI?" | Lists each AI-writing pattern it finds, with a fix, without rewriting. It never guesses who wrote the text. |
 | humanize | a file path | Edits the prose in that file in place, leaving code, commands, and frontmatter alone. |
 | issue | `/issue 42` | Works issue 42, or resumes it if an earlier run left your PR open. With no number, it picks the most important open issue it can finish. |

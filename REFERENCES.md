@@ -13,6 +13,23 @@ commit and release replaced the patch and minor skills on 2026-11-14. Those two 
 | [samber/cc-skills](https://github.com/samber/cc-skills) | [skills/conventional-git/SKILL.md](https://github.com/samber/cc-skills/blob/50a33836b20f/skills/conventional-git/SKILL.md) | `50a33836b20f` | MIT |  |  |
 | [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills) | [skills/git-workflow-and-versioning/SKILL.md](https://github.com/addyosmani/agent-skills/blob/301b02b12bff/skills/git-workflow-and-versioning/SKILL.md) | `301b02b12bff` | MIT |  |  |
 
+## daily-news
+
+daily-news replaced daily-budget, which the 2026-11-14 cut removed along with its scripts, reference files and the newsroom skill it drafted with. daily-budget had no upstream skill: it followed Firelands Current's own sourcing notes, and these journalism and news-monitoring skills were reviewed against it on 2026-11-11, when its verification rules were already stricter than theirs. Their pins are the commits reviewed then. The rows moved here from daily-budget's `SOURCES.md` when daily-news was written on 2026-11-16. The sources weren't re-read for it: the new skill folds the old reference files into one `SKILL.md` and hands publishing to the paper's own `packet.mjs`, both the owner's own conventions.
+
+| Source | Path | Pin | License | Track | Contributed |
+| --- | --- | --- | --- | --- | --- |
+| [jamditis/claude-skills-journalism](https://github.com/jamditis/claude-skills-journalism) | [journalism-core/skills/source-verification/SKILL.md](https://github.com/jamditis/claude-skills-journalism/blob/e1f38cb11521/journalism-core/skills/source-verification/SKILL.md) | `e1f38cb11521` | MIT | yes | Recording when each source was checked. |
+| [claude-office-skills/skills](https://github.com/claude-office-skills/skills) | [news-monitor/SKILL.md](https://github.com/claude-office-skills/skills/blob/9c4c7d5cd281/news-monitor/SKILL.md) | `9c4c7d5cd281` | MIT |  | Listing every source monitored in the digest. |
+| [jamditis/claude-skills-journalism](https://github.com/jamditis/claude-skills-journalism) | [journalism-core/skills/fact-check-workflow/SKILL.md](https://github.com/jamditis/claude-skills-journalism/blob/e1f38cb11521/journalism-core/skills/fact-check-workflow/SKILL.md) | `e1f38cb11521` | MIT |  |  |
+| [jamditis/claude-skills-journalism](https://github.com/jamditis/claude-skills-journalism) | [research-toolkit/skills/page-monitoring/SKILL.md](https://github.com/jamditis/claude-skills-journalism/blob/e1f38cb11521/research-toolkit/skills/page-monitoring/SKILL.md) | `e1f38cb11521` | MIT |  |  |
+| [jamditis/claude-skills-journalism](https://github.com/jamditis/claude-skills-journalism) | [journalism-core/skills/editorial-workflow/SKILL.md](https://github.com/jamditis/claude-skills-journalism/blob/e1f38cb11521/journalism-core/skills/editorial-workflow/SKILL.md) | `e1f38cb11521` | MIT |  |  |
+| [jamditis/claude-skills-journalism](https://github.com/jamditis/claude-skills-journalism) | [journalism-core/skills/social-media-intelligence/SKILL.md](https://github.com/jamditis/claude-skills-journalism/blob/e1f38cb11521/journalism-core/skills/social-media-intelligence/SKILL.md) | `e1f38cb11521` | MIT |  |  |
+| [anthropics/knowledge-work-plugins](https://github.com/anthropics/knowledge-work-plugins) | [sales/skills/daily-briefing/SKILL.md](https://github.com/anthropics/knowledge-work-plugins/blob/877a617b435e/sales/skills/daily-briefing/SKILL.md) | `877a617b435e` | Apache-2.0 |  |  |
+| [bytedance/deer-flow](https://github.com/bytedance/deer-flow) | [skills/public/newsletter-generation/SKILL.md](https://github.com/bytedance/deer-flow/blob/fc7c7e012c44/skills/public/newsletter-generation/SKILL.md) | `fc7c7e012c44` | MIT |  |  |
+
+Considered, not adopted: RSS and change-detection monitoring for each source.
+
 ## humanize
 
 The baseline is Wikipedia's [Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing), maintained by WikiProject AI Cleanup. humanize follows its catalog and caveats, so re-read it first when updating the skill: the page dates each sign, and signs move to its "Historical indicators" section as models change.
