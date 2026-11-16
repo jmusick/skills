@@ -8,7 +8,7 @@ CI (`.github/workflows/ci.yml`) runs that check and calls the shared [jmusick/ci
 
 ## Layout
 
-- `skills/<name>/SKILL.md`: one folder per skill. The folder name must match the `name` in the frontmatter. commit and title are this one file, and music-creation adds only `references/`. The rest add `scripts/`, and some `references/` or `assets/`; README's Layout section lists them. No skill has evals or Codex settings.
+- `skills/<name>/SKILL.md`: one folder per skill. The folder name must match the `name` in the frontmatter. commit and title are this one file, music-creation adds only `references/`, and interview adds only `references/` and `assets/`. The rest add `scripts/`, and some `references/` or `assets/`; README's Layout section lists them. No skill has evals or Codex settings.
 - `scripts/check_skills.py`: the repo's own check, run by CI. It isn't part of any skill.
 - `README.md`: the public index. Keep its skills table in sync when you add, rename, or remove a skill, and its options table in sync with every argument, flag, or mode a skill accepts.
 - `REFERENCES.md`: the outside sources each skill was built from, one section per skill, with pins to diff from. Credit sources here, not in the skill's folder, and update the section when a skill changes what it takes from them.

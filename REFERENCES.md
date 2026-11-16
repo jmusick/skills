@@ -2,7 +2,7 @@
 
 The sources each skill was built from, kept in one file so credits stay out of the skill folders. Add a section here when a skill draws on outside material.
 
-In each table, **Pin** marks where the source stood when it was read, so a later check can diff from there. **Track** marks the sources worth checking for updates; the rest are credited only. **Contributed** names the rules that came from that one source; rules most sources share have no owner. Only newsroom and music-creation adapt text from sources, so their notices sit in their sections here instead of in NOTICE files.
+In each table, **Pin** marks where the source stood when it was read, so a later check can diff from there. **Track** marks the sources worth checking for updates; the rest are credited only. **Contributed** names the rules that came from that one source; rules most sources share have no owner. Only newsroom, music-creation, and interview adapt text from sources, so their notices sit in their sections here instead of in NOTICE files.
 
 ## commit
 
@@ -141,6 +141,54 @@ Pins were backfilled on 2026-11-11 from each repo's latest commit, after the ski
 | [tradermonty/claude-trading-skills](https://github.com/tradermonty/claude-trading-skills) | [skills/dual-axis-skill-reviewer/SKILL.md](https://github.com/tradermonty/claude-trading-skills/blob/163ceb48968c/skills/dual-axis-skill-reviewer/SKILL.md) | `163ceb48968c` | MIT |  |  |
 | [expo/skills](https://github.com/expo/skills) | [.claude/skills/expo-skill-eval/SKILL.md](https://github.com/expo/skills/blob/a9e5bd3fa00b/.claude/skills/expo-skill-eval/SKILL.md) | `a9e5bd3fa00b` | MIT |  |  |
 | [dboeckli/ai-agent-skills](https://github.com/dboeckli/ai-agent-skills) | [.claude/skills/skill-best-practices/SKILL.md](https://github.com/dboeckli/ai-agent-skills/blob/ab99d0c7b12e/.claude/skills/skill-best-practices/SKILL.md) | `ab99d0c7b12e` | MIT |  |  |
+
+## interview
+
+interview was written on 2026-11-16 from what these interview and spec skills agree on, starting from Matt Pocock's `grill-me`. Each source was read at its pin that day. All of them agree on these points: look things up instead of asking, ask only what changes the build, ask in dependency order, never build during the interview, end on coverage rather than a question count, and never present a guess as the user's decision. Six choices where they split were put to the owner, who picked: rounds over one question at a time (Pocock); the question tool with a numbered-text fallback; an open "why" question before any options (obra); a spec that records how-decisions as well as what and why; a file in the repo with an offer to file issues; and a fresh-reader builder check (obra) over a red-team pass (Sorbh) or none (Pocock). The issue split hands off to `issue` in this repo, and that hand-off is the owner's own design.
+
+| Source | Path | Pin | License | Track | Contributed |
+| --- | --- | --- | --- | --- | --- |
+| [mattpocock/skills](https://github.com/mattpocock/skills) | [skills/productivity/grilling/SKILL.md](https://github.com/mattpocock/skills/blob/5863806dd4e1/skills/productivity/grilling/SKILL.md) | `5863806dd4e1` | MIT | yes | The design tree, rounds that ask the whole frontier, a recommendation on every question worded so "yes" accepts it, facts looked up by a background subagent while decisions wait for the user, and ending on confirmation. Its [docs/productivity/grill-me.md](https://github.com/mattpocock/skills/blob/5863806dd4e1/docs/productivity/grill-me.md): questions talk can't settle go to a prototype, "I don't know" is a real answer, and an oversized tree means splitting the scope. |
+| [mattpocock/skills](https://github.com/mattpocock/skills) | [skills/engineering/to-spec/SKILL.md](https://github.com/mattpocock/skills/blob/5863806dd4e1/skills/engineering/to-spec/SKILL.md) | `5863806dd4e1` | MIT | yes | No file paths or code in the spec unless a snippet records a decision, the project's own nouns, and a spec that says something the user never said is a defect (from its docs page). |
+| [obra/superpowers](https://github.com/obra/superpowers) | [skills/brainstorming/SKILL.md](https://github.com/obra/superpowers/blob/22f0b463e7a5/skills/brainstorming/SKILL.md) | `22f0b463e7a5` | MIT | yes | Asking why first with an open question because options steer, the opening restatement, anti-goals, reading whether the user wants the how, laying out two or three approaches, labeling the agent's calls, the hard gate on building, and the builder check with its three piles. Its [builder-check-prompt.md](https://github.com/obra/superpowers/blob/22f0b463e7a5/skills/brainstorming/builder-check-prompt.md) is adapted in `references/builder-check.md`; notice below. |
+| [github/spec-kit](https://github.com/github/spec-kit) | [templates/commands/clarify.md](https://github.com/github/spec-kit/blob/edec7946375e/templates/commands/clarify.md) | `edec7946375e` | MIT | yes | The coverage list the agent checks itself against without reading it out, and asking only what materially changes the build. Its [spec template](https://github.com/github/spec-kit/blob/edec7946375e/templates/spec-template.md): prioritized scenarios that can each be built alone, Given/When/Then acceptance, and checkable goals. |
+| [Sorbh/interview-me](https://github.com/Sorbh/interview-me) | [skills/interview-me/SKILL.md](https://github.com/Sorbh/interview-me/blob/ad9e1a886396/skills/interview-me/SKILL.md) | `ad9e1a886396` | MIT |  | Reading a GitHub issue with its comments as the input, splitting the scope past about eight areas, and the decisions table. |
+| [enzed/skills](https://github.com/enzed/skills) | [interview/SKILL.md](https://github.com/enzed/skills/blob/dda28ad3fb5f/interview/SKILL.md) | `dda28ad3fb5f` | none stated |  | Thariq Shihipar's widely shared "interview me with AskUserQuestion, then write the spec" prompt, as a skill: exploring the code first, and non-obvious questions only. |
+| [blencorp/lisa](https://github.com/blencorp/lisa) | [commands/plan.md](https://github.com/blencorp/lisa/blob/ea4bb125620d/commands/plan.md) | `ea4bb125620d` | none stated |  | Stopping once the spec is written. |
+| [grp06/useful-codex-skills](https://github.com/grp06/useful-codex-skills) | [grill-me/SKILL.md](https://github.com/grp06/useful-codex-skills/blob/70eddd8ad596/grill-me/SKILL.md) | `70eddd8ad596` | MIT |  | Playing back each settled decision before the next question. |
+| [kipperacademy/skillpper](https://github.com/kipperacademy/skillpper) | [grill-me/SKILL.md](https://github.com/kipperacademy/skillpper/blob/718ee6dbb463/grill-me/SKILL.md) | `718ee6dbb463` | none stated |  | Rounds sized to the question tool's limit, with the recommended option first. |
+| [nklmilojevic/claude-spec-interviewer](https://github.com/nklmilojevic/claude-spec-interviewer) | [commands/spec-interview.md](https://github.com/nklmilojevic/claude-spec-interviewer/blob/dc77ada87c3a/commands/spec-interview.md) | `dc77ada87c3a` | none stated |  |  |
+| [Yeachan-Heo/oh-my-claudecode](https://github.com/Yeachan-Heo/oh-my-claudecode) | [skills/deep-interview/SKILL.md](https://github.com/Yeachan-Heo/oh-my-claudecode/blob/dec7e4188c0e/skills/deep-interview/SKILL.md) | `dec7e4188c0e` | MIT |  |  |
+
+Considered, not adopted: numeric ambiguity scores and thresholds (oh-my-claudecode), a cap of five questions (spec-kit), security hard blocks and an opt-in red-team pass, saved interview state, drift checks, and an HTML preview (Sorbh), writing the spec after every answer (spec-kit, Lisa), and a fixed persona of relentless grilling. The user's own words decide when to stop instead.
+
+### Notice
+
+`references/builder-check.md` adapts obra's builder-check prompt.
+
+```text
+MIT License
+
+Copyright (c) 2025 Jesse Vincent
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
 
 ## issue
 
