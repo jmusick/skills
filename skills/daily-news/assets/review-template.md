@@ -10,7 +10,7 @@
 
 | Priority | Headline | Why today | Readiness and image |
 | --- | --- | --- | --- |
-| 1 | [<headline>](drafts/<key>.md) | <deadline, readers affected, thin section> | <ready or needs-check>; <image status> |
+| 1 | <headline, linked to drafts/<key>.md> | <deadline, readers affected, thin section> | <ready or needs-check>; <image status> |
 
 **<Short name>:** <What's verified and from which primary source, what isn't, and the trap to avoid.>
 
@@ -24,7 +24,7 @@
 
 | Event | Date and time | Place | Cost, registration and access |
 | --- | --- | --- | --- |
-| [<event>](<source>) | <Weekday, Mon. D, time> | <venue, address, community> | <cost; registration; access; remaining checks> |
+| <event, linked to its source> | <Weekday, Mon. D, time> | <venue, address, community> | <cost; registration; access; remaining checks> |
 
 ## Image opportunities
 
@@ -44,4 +44,4 @@
 
 | Source | Time | Result |
 | --- | --- | --- |
-| [<source>](<url>) | <HH:MM Eastern> | <what it turned up, or nothing new, or not reached and why> |
+| <source, linked> | <HH:MM Eastern> | <what it turned up, or nothing new, or not reached and why> |
