@@ -59,7 +59,11 @@ Claude Code reads `~/.claude/skills/`, Codex reads `~/.codex/skills/`.
 skills/
   <skill-name>/
     SKILL.md        # frontmatter (name, description) + instructions
+    scripts/        # optional: code the skill runs
+    references/     # optional: docs the skill reads only when it needs them
 ```
+
+Most skills are a single `SKILL.md`. `update-docs` also has a link checker (`scripts/doc_links.py`, Python 3, standard library only; without Python it checks links by hand) and a privacy-policy checklist it reads only when a repo has one.
 
 Each skill is one self-contained folder, so it can be copied anywhere on its own. The sources a skill was built from are credited in [REFERENCES.md](REFERENCES.md) rather than in the skill's folder. Two skills depend on another: `issue` commits through `commit`, and `daily-news` writes its stories with `newsroom`, so install each pair together. `issue` also runs `update-docs` and Claude Code's built-in `/code-review` when they're installed, and checks by hand when they're not. None turns off model invocation, so your agent can pick any of them up from plain English as well as from `/<name>` (Claude Code) or `$<name>` (Codex).
 

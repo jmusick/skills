@@ -1,6 +1,6 @@
 # References
 
-The sources each skill was built from, kept in one file so the skills themselves stay a single `SKILL.md`. Add a section here when a skill draws on outside material.
+The sources each skill was built from, kept in one file so credits stay out of the skill folders. Add a section here when a skill draws on outside material.
 
 In each table, **Pin** marks where the source stood when it was read, so a later check can diff from there. **Track** marks the sources worth checking for updates; the rest are credited only. **Contributed** names the rules that came from that one source; rules most sources share have no owner. Only newsroom adapts text from a source, so its MIT notice sits in its section here instead of in a NOTICE file.
 
@@ -152,7 +152,7 @@ Considered, not adopted: renaming a Claude Code CLI session by appending to its 
 
 ## update-docs
 
-update-docs draws on these docs-maintenance skills. Their pins were backfilled on 2026-11-11 from each repo's latest commit, after the skill was written, so they mark where to start watching rather than the exact version read. The section moved here from the skill's old `SOURCES.md` when the skill was cut to a single file. The 2026-11-15 rewrite restored the organization review, the agent-notes and privacy-policy checks, the contradiction check, and the report format, which the cut had dropped. The sources weren't re-read for it.
+update-docs draws on these docs-maintenance skills. Their pins were backfilled on 2026-11-11 from each repo's latest commit, after the skill was written, so they mark where to start watching rather than the exact version read. The section moved here from the skill's old `SOURCES.md` when the skill was cut to a single file. The 2026-11-15 rewrite restored the organization review, the agent-notes and privacy-policy checks, the contradiction check, and the report format, which the cut had dropped. The sources weren't re-read for it. On 2026-11-16 an audit against Anthropic's [The Complete Guide to Building Skills for Claude](https://resources.anthropic.com/hubfs/The-Complete-Guide-to-Building-Skill-for-Claude.pdf) moved link checking into `scripts/doc_links.py` (its advice: bundle a script for checks where "code is deterministic; language interpretation isn't") and the privacy-policy check into `references/privacy-policy.md`, with a new list of tracking and third-party signatures. Neither was taken from the sources below.
 
 | Source | Path | Pin | License | Track | Contributed |
 | --- | --- | --- | --- | --- | --- |

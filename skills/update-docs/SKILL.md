@@ -31,7 +31,7 @@ Treat each statement as a claim and verify it by reading the code or running a r
 - **Versions and requirements:** runtimes, dependencies, and platforms match the manifests and CI.
 - **Catalogs and counts:** tables of skills, commands, endpoints, or env vars match what's on disk both ways, nothing listed that's gone and nothing on disk that's missing, and their descriptions match the source (frontmatter, help text).
 - **Config:** env vars, keys, and defaults match the code that reads them.
-- **Links:** relative links and anchors resolve. Don't fetch external links unless asked.
+- **Links:** relative links and anchors resolve. Run this skill's script from the repo root, `python <this skill's folder>/scripts/doc_links.py`, adding the doc paths on a limited run. It lists broken links and anchors (including wrong-case paths that work on Windows and macOS but break on GitHub), and on a full run, docs nothing links to. Rebuilding GitHub's heading slugs by eye is error-prone, so trust the script over reading. Without Python, open each target. Don't fetch external links unless asked.
 - **Examples:** code samples use functions, options, and output that still exist.
 - **Stated rules:** checkable claims hold ("no build step", "standard library only").
 - **Gaps:** a user-facing feature, command, or top-level folder no doc mentions where a reader would look for it.
@@ -46,10 +46,7 @@ Agent notes are lists of work, so check each item against the code and history. 
 
 ## 5. Check the privacy policy
 
-A privacy policy is a promise to users, so check it against what the code does: analytics and tracking SDKs, cookies and local storage, third-party APIs that get user data, form fields and accounts, logging, error reporting, retention, and the contact address.
-
-- **Fix directly** the factual lists the code settles, like naming a service the code now sends data to or dropping one it no longer uses. Change the "last updated" date only when the content changes.
-- **Flag, don't edit,** anything that changes a commitment (what's collected, shared, sold, or kept, and for how long) or that the code can't confirm. Give the evidence (file:line) and suggested wording. The user, and maybe a lawyer, decides.
+If the repo has a privacy policy, read `references/privacy-policy.md` and follow it. It lists where tracking, third-party services, and stored data show up in code, so the check doesn't rest on remembering every SDK. Fix the factual lists the code settles; flag any change to a commitment (what's collected, shared, sold, or kept) for the user.
 
 ## 6. Review organization
 
@@ -59,7 +56,7 @@ Skip this on a limited run. Look for:
 - **Duplication:** the same content in two places that will drift apart. Keep it where a reader looks first, or where more docs already link, and link from the other. AGENTS.md may restate a few rules agents must see without following a link.
 - **Misplaced content:** long reference material in the README that belongs in `docs/`, run steps buried in a design doc, or human-only background in AGENTS.md, which loads into every agent session and should hold only what an agent can't learn from the code.
 - **Shape:** one doc covering unrelated topics (split it), or several tiny docs on one topic (merge them).
-- **Findability:** docs nothing links to, a `docs/` folder with many files and no index, a README that never points to `docs/`.
+- **Findability:** docs nothing links to (the script's second list; code may still load one, so check with `--to` before calling it unused), a `docs/` folder with many files and no index, a README that never points to `docs/`.
 
 If the docs as a whole are scattered, also propose a target layout: a short tree of what lives where. Don't propose one for its own sake; a small repo with a good README is already organized.
 
@@ -104,5 +101,5 @@ Do only the numbers the user approved.
 
 - Move tracked files with `git mv` so history follows them.
 - When merging, keep everything from the source that isn't already in the target, then delete the source.
-- After any move, merge, or delete, search the repo for links and mentions of the old path and fix them, including in AGENTS.md and code comments that point at docs.
+- After any move, merge, or delete, run `doc_links.py --to <old path>` to list links and mentions of the old path anywhere in the repo, including AGENTS.md and code comments, and fix each one. Then rerun it with no arguments to confirm nothing is broken.
 - Report what you applied in the same format, and offer to commit it all as `docs:`.
