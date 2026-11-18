@@ -12,7 +12,7 @@ Justin is still employed at Optum, so the search is discreet. He submits every a
 
 ## Modes
 
-- **Search** (default): `/job-search`, optionally with a focus ("/job-search tech lead", "/job-search local", "/job-search Civista"). Run steps 1–5. A `local` focus, or one naming a local employer, adds those employers' career pages (step 2).
+- **Search** (default): `/job-search`, optionally with a focus ("/job-search tech lead", "/job-search local", "/job-search Civista"). Run steps 1–5.
 - **Draft**: `/job-search draft <job>`, or he picks a job from a shortlist. The job is a record file, a URL, or a company name. Read [references/materials.md](references/materials.md) and follow it.
 - **Update**: he reports news about a job ("I applied to Acme", "ClearCaptions rejected me", "Acme wants an interview Tuesday"). Find the record with `jobs.py match`, update `status`, `updated` (and `applied` when he applied), and add a History line. Then stop.
 - **Status**: `/job-search status`. Run step 6.
@@ -22,13 +22,13 @@ Justin is still employed at Optum, so the search is discreet. He submits every a
 
 Everything lives in `C:\Users\JD\projects\jm\job-search\` unless he names another folder. None of it belongs anywhere public: it holds his home address, phone, and resume.
 
-- `preferences.md`: roles, location rule, pay floor, employers to skip, ranking, local employers to check. Read it at the start of every search; it overrides anything here that disagrees.
+- `preferences.md`: roles, location rule, pay floor, employers to skip, ranking, local employers to check. It overrides anything here that disagrees.
 - `application-answers.md`: his standard answers for application forms, his work history, and approved written answers.
 - `resume/justin-musick-resume.docx` and `.pdf`: the master resume. The only source of facts about his experience.
 - `jobs/<company>-<role>.md`: one record per posting he has seen.
 - `applications/<company>-<role>/`: what was prepared for one application.
 
-Run the script as `python <this skill's directory>/scripts/jobs.py`, or with `python3` if `python` isn't found. `jobs.py slug --company C --role R` gives the file and folder name for a new record.
+Run the script as `python <this skill's directory>/scripts/jobs.py`. `jobs.py slug --company C --role R` gives the file and folder name for a new record.
 
 A record:
 

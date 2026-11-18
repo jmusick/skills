@@ -4,13 +4,13 @@ Prepare everything one application needs so Justin can review it and submit it h
 
 ## 1. Load the job
 
-Find the record with `jobs.py match`. A URL or company with no record goes through steps 3 and 4 of the search first: check it against the records, find the employer's posting, look for knock-outs, judge the fit, and write the record.
+Find the record with `jobs.py match`. A URL or company with no record goes through steps 3 and 4 of the search first, then gets a record.
 
 If the record was found more than three days ago, open the employer's posting again: if it has closed, set `status: closed`, tell him, and stop. Then read the record's posting text, `application-answers.md`, and the master resume.
 
 ## 2. See what the application asks
 
-Read the application form when it's visible without signing in or starting an application: its questions, which uploads it takes, and whether it has a spot for a cover letter. Don't click Apply on LinkedIn or Indeed to find out (see the rules in SKILL.md), and don't create an account on an employer's site to see the form. Where the form is hidden, prepare for the usual questions (work authorization, sponsorship, years of experience with the posting's main tools, salary, start date, relocation, how he heard about the job) and say the real form may ask more.
+Read the application form when it's visible without signing in or starting an application: its questions, which uploads it takes, and whether it has a spot for a cover letter. Don't click Apply on LinkedIn or Indeed to find out (see the rules in SKILL.md). Where the form is hidden, prepare for the usual questions (work authorization, sponsorship, years of experience with the posting's main tools, salary, start date, relocation, how he heard about the job) and say the real form may ask more.
 
 **Knock-out check.** Before drafting, look for questions that screen people out automatically: a yes/no on a bachelor's degree, a minimum number of years, willingness to work on-site or relocate, a salary cap. If his true answer could get him rejected, stop and show him the question and his answer. Ask whether to go ahead. Never shade an answer to get past a filter: a false yes on a degree surfaces in the background check.
 
