@@ -3,7 +3,7 @@ name: issue
 description: Picks an open GitHub issue (or the ones the user names), works it, reviews it, pauses for the user to test it, and commits it as a Conventional Commit that closes the issue when it's released. Works on the default branch by default, on its own branch with a PR when asked, or on several issues at once with subagents. Use when the user types /issue, gives an issue number, or asks to work, fix, or pick up an issue, a batch of issues, or the next one in the backlog. Don't use it unasked.
 compatibility: Needs git and an authenticated GitHub CLI (gh). The issue picker uses Python 3 when it's installed, and batch mode needs subagents.
 ---
-Take an issue from open to committed. Shipping is the release skill's job: on the default branch the commit's `Closes #N` closes the issue when release pushes it, so don't push, tag, or release here. Stop only where this file says to. Each stop protects something hard to undo: a commit the user never tried, or someone else's work.
+Take an issue from open to committed. Shipping is the release skill's job: the commit's `Closes #N` closes the issue when release pushes it, so on the default branch don't push, tag, or release. Stop only where this file says to. Each stop protects something hard to undo: a commit the user never tried, or someone else's work.
 
 Arguments:
 - `/issue 42` works issue 42, or resumes it if an earlier run left your PR open. A bare `/issue` picks one.
@@ -53,10 +53,9 @@ Compare by tier (haiku < sonnet < opus < fable; gpt-6-luna < gpt-6.1-sol < gpt-6
 
 ## 4. Do the work
 
-1. Read AGENTS.md / CLAUDE.md and follow the repo's conventions.
-2. Write concrete acceptance criteria. Review, the test checklist, and the commit check against them.
-3. For a bug, reproduce it first, as a failing test where the repo has tests for that code. If it doesn't reproduce, stop: something may already have fixed it. Say what you tried and ask whether to close the issue or keep digging.
-4. Make the change, plus tests where the repo has them, and run its checks (test, lint, build).
+1. Write concrete acceptance criteria. Review, the test checklist, and the commit check against them.
+2. For a bug, reproduce it first, as a failing test where the repo has tests for that code. If it doesn't reproduce, stop: something may already have fixed it. Say what you tried and ask whether to close the issue or keep digging.
+3. Make the change, plus tests where the repo has them, and run its checks (test, lint, build).
 
 Ask about any decision the issue doesn't settle. Leave out-of-scope problems you notice alone and list them under **Noticed** in the report, since fixing them widens the commit past what the issue asked for.
 
@@ -81,7 +80,7 @@ Stop here on every run unless `--no-test` was passed. Review catches broken code
 
 ## 7. Commit
 
-Commit only this run's files with the commit skill, with `Closes #N` in the footer. Pick the type by what changes for users, not by the issue's label. On the default branch, stop here: don't push or release.
+Commit only this run's files with the commit skill, with `Closes #N` in the footer. Pick the type by what changes for users, not by the issue's label.
 
 ## Unattended (`--no-test`)
 
