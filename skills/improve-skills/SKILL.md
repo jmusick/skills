@@ -33,7 +33,7 @@ Find the few changes that would make each skill fire when it should, get followe
    python <this skill's directory>/scripts/check_skills.py [paths]
    ```
 
-   Use `python3` if `python` isn't found. With no paths it searches the current directory. It prints JSON with each skill's size, invocation settings, eval count, and mechanical issues. Keep this output: step 7 compares against it.
+   With no paths it searches the current directory. It prints JSON with each skill's size, invocation settings, eval count, and mechanical issues. Keep this output: step 7 compares against it.
 3. If it finds no skills, say where you looked (and any `missing_paths` it lists) and stop. If neither `python` nor `python3` runs, do the routing and structure checks by hand and list the checker under "Not checked".
 
 Done when you have the target list, each skill's invocation mode, and the house rules that apply.

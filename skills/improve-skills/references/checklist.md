@@ -1,6 +1,6 @@
 # Skill review checklist
 
-Apply every section to every skill under review. The checker covers the spec's mechanical rules (frontmatter limits, size, links, nesting, contents lists, unreferenced files), so this list covers what it can't judge.
+The checker covers the spec's mechanical rules (frontmatter limits, size, links, nesting, contents lists, unreferenced files), so this list covers what it can't judge.
 
 Contents: 1. Routing · 2. Knowledge delta · 3. Structure · 4. Instructions · 5. Form matches the failure · 6. Scripts · 7. Evals · 8. Across skills · Severity · Often fine
 
