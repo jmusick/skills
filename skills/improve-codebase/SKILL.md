@@ -44,8 +44,6 @@ These decide what makes the list:
 
 ### 1. Orient
 
-Read before you judge. Opinions formed before you understand the system produce bad audits.
-
 - Read the README, AGENTS.md or CLAUDE.md, CONTRIBUTING, the manifests (`package.json`, `pyproject.toml`, `go.mod`, `Cargo.toml`, ...), the CI config, and the directory layout.
 - Read any decision records (`docs/adr/`, `docs/decisions/`), glossaries, and design docs. They tell you what's deliberate. Note the rules these docs and AGENTS.md state about the code, such as "every command has a test"; step 3 checks the code against them.
 - Find the exact build, test, lint, and typecheck commands. Run them if they're quick and only write to ignored folders. Record what passed, what failed, and what doesn't exist. A missing or red baseline is usually finding #1.
@@ -61,7 +59,7 @@ python <this skill's directory>/scripts/hotspots.py            # whole repo
 python <this skill's directory>/scripts/hotspots.py --path src # one folder
 ```
 
-Use `python3` if `python` isn't found. It prints JSON: the files touched by the most recent commits, how many of those commits look like fixes, each file's size, the largest source files, and `cold_large_files`: large files that rarely change, with when each last changed. Lockfiles, changelogs, vendored code, build output, and docs and data files are left out. Add `--include-docs` when docs or config are what the repo ships. If `shallow` is true, the history is cut off: say so under Not checked and lean on the large files list.
+It prints JSON: the files touched by the most recent commits, how many of those commits look like fixes, each file's size, the largest source files, and `cold_large_files`: large files that rarely change, with when each last changed. Lockfiles, changelogs, vendored code, build output, and docs and data files are left out. Add `--include-docs` when docs or config are what the repo ships. If `shallow` is true, the history is cut off: say so under Not checked and lean on the large files list.
 
 Start with files that are both large and frequently changed, or frequently fixed. Restructuring code nobody touches pays off slowly, so structure and duplication findings weight toward the hotspots. High churn alone isn't a problem; it may just be active work.
 

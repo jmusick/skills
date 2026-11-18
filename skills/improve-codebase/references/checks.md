@@ -105,9 +105,7 @@ These come up in generic advice and aren't findings without evidence from this r
 
 - A rewrite, a new framework, or a new language.
 - Microservices, a plugin system, dependency injection everywhere, or a design pattern by name, with no current pain it removes.
-- Splitting files into many smaller ones by line count alone.
 - Comments or docstrings everywhere.
-- A coverage percentage target.
 - Renames across the codebase for taste.
 - Formatting or style nits. If formatting is inconsistent, the finding is "add the formatter to CI", once.
 
