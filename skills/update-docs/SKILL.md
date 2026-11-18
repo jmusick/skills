@@ -46,11 +46,11 @@ Agent notes are lists of work, so check each item against the code and history. 
 
 ## 5. Check the privacy policy
 
-If the repo has a privacy policy, read `references/privacy-policy.md` and follow it. It lists where tracking, third-party services, and stored data show up in code, so the check doesn't rest on remembering every SDK. Fix the factual lists the code settles; flag any change to a commitment (what's collected, shared, sold, or kept) for the user.
+If the repo has a privacy policy, read `references/privacy-policy.md` and follow it. It lists where tracking, third-party services, and stored data show up in code, so the check doesn't rest on remembering every SDK.
 
 ## 6. Review organization
 
-Skip this on a limited run. Look for:
+Look for:
 
 - **Docs no longer needed:** about a removed feature, superseded by another doc, an empty stub, or a finished notes file. Give the reason and the evidence.
 - **Duplication:** the same content in two places that will drift apart. Keep it where a reader looks first, or where more docs already link, and link from the other. AGENTS.md may restate a few rules agents must see without following a link.
@@ -66,7 +66,7 @@ Make the smallest edit that makes each doc true, and keep its voice, structure, 
 
 - Flag what you can't verify instead of guessing. A guess written into docs is worse than a gap, because readers trust it.
 - Remove docs for things that no longer exist instead of hedging them.
-- Follow the repo's conventions (bullet style, heading case, wrapping), and use one term for one thing across all docs, the one the code uses.
+- Use one term for one thing across all docs, the one the code uses.
 
 ## 8. Report and propose
 
