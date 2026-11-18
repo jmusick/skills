@@ -14,7 +14,7 @@ Find what stops search engines from crawling, indexing, and understanding a site
 
 ## Hard rules
 
-1. **Look before you recommend.** Never say "add X" until you've confirmed X is missing from the server's HTML and, when you can render the page, from the rendered page too. A plain fetch can't see tags added by JavaScript, so a raw-HTML miss is a lead, not a finding, until the rendered page agrees.
+1. **Look before you recommend.** Never say "add X" until you've confirmed X is missing from the server's HTML and, when you can render the page, from the rendered page too. A plain fetch can't see tags added by JavaScript, so when only the rendered page has a tag, the finding is to move it into the server's HTML, at lower severity, not to add it.
 2. **Report only checks you ran.** Core Web Vitals need a lab or field tool (Lighthouse, PageSpeed Insights). Index status and Google-chosen canonicals need Search Console. Without those, write "not checked" rather than guessing.
 3. **No invented numbers.** No 0-100 health scores, traffic forecasts, or ranking-factor percentages. A score with made-up weights makes a site look measured when it wasn't.
 4. **Some settings are the owner's call.** Don't change which AI crawlers robots.txt allows, remove a `noindex`, or change canonical targets without asking. Each can be deliberate, and a wrong change can drop pages from search.
@@ -28,11 +28,11 @@ Find what stops search engines from crawling, indexing, and understanding a site
    python <skill-dir>/scripts/seo_check.py https://example.com --crawl 15
    python <skill-dir>/scripts/seo_check.py dist/
    ```
-   Use `python3` if `python` isn't found. Pass a built folder (dist/, build/, out/) when there's no server. Add `--links` to check internal links on a live site. The facts it prints for each page (title, canonical, JSON-LD types) are your evidence for what already exists.
-3. **Compare with the rendered page** when the checker says something is missing or the raw HTML is thin, using a browser tool if you have one: `document.title`, `document.querySelector('link[rel=canonical]')`, `document.querySelectorAll('script[type="application/ld+json"]')`. Google renders JavaScript, but link-preview bots and most AI crawlers don't, so tags that only exist after rendering are still a finding, at lower severity.
+   Pass a built folder (dist/, build/, out/) when there's no server. Add `--links` to check internal links on a live site. The facts it prints for each page (title, canonical, JSON-LD types) are your evidence for what already exists.
+3. **Compare with the rendered page** when the checker says something is missing or the raw HTML is thin, using a browser tool if you have one: `document.title`, `document.querySelector('link[rel=canonical]')`, `document.querySelectorAll('script[type="application/ld+json"]')`. Google renders JavaScript, but link-preview bots and most AI crawlers don't.
 4. **Walk the checklist** for what a script can't judge: whether titles fit each page's intent, thin or duplicate pages, pages competing for the same query, and internal linking.
 5. **Map each finding to its source**: the file and line that produce it, usually a layout or template rather than one page. One root cause is one finding, with every affected URL listed.
-6. **Report** in the format below. In fix mode, apply the fixes, re-run the same checks, and show what changed.
+6. **Report** in the format below.
 
 ## Checklist
 
@@ -40,7 +40,7 @@ Work in this order, because a page that can't be crawled or indexed gains nothin
 
 1. **Crawl and index:** robots.txt, sitemap, `noindex`, canonicals, redirects and real 404 status, HTTPS. The usual canonical bug is a layout that hard-codes one canonical for every page; unique pages point to themselves, with the host, scheme, and trailing slash the site serves. Title, canonical, robots, and JSON-LD belong in the server's HTML, not added later by JavaScript.
 2. **Technical:** viewport and mobile parity, readable lowercase hyphenated URLs used consistently, `<html lang>`. Core Web Vitals at the 75th percentile: LCP ≤ 2.5s, INP ≤ 200ms, CLS ≤ 0.1. Measure them; from code alone, only point out likely causes.
-3. **On-page:** titles, descriptions, headings, internal links within about three clicks of home, orphan pages, and images (descriptive alt, `alt=""` on decorative ones, dimensions set, compressed, lazy-loaded below the fold). Length figures (about 50-60 characters for a title, 150-160 for a description) are guides, not limits.
+3. **On-page:** titles, descriptions, headings, internal links within about three clicks of home, orphan pages, and images (descriptive alt, `alt=""` on decorative ones, dimensions set, compressed, lazy-loaded below the fold). Length guides: about 50-60 characters for a title, 150-160 for a description.
 4. **Content:** one intent per page with no two pages competing for a query, thin or near-duplicate pages, and who wrote it and who runs the site.
 5. **Structured data and previews:** JSON-LD that describes what's visible, uses the most specific type, and parses; Open Graph and `twitter:card` with an absolute `og:image`.
 6. **International** (only for sites in more than one language): hreflang on every variant, linked both ways, plus `x-default`. Each locale's page is its own canonical; never point one language's canonical at another.
@@ -65,7 +65,7 @@ Each of these appears in popular SEO advice and is retired, ignored, or unproven
 
 - **More than one `<h1>`.** Valid HTML, and not a failure on its own. Flag it when the main heading becomes unclear.
 - **Length guides.** Titles and descriptions are cut by pixel width and rewritten per query. Flag ones that are missing, duplicated, generic ("Home", "Vite App"), or far outside the guide, not ones a few characters over.
-- **Client-rendered sites.** Google renders JavaScript, eventually. Link previews and most AI crawlers don't. For a JavaScript-only SPA, the fix is to prerender or server-render the public routes, and the urgency depends on how much the site needs search and shared links.
+- **Client-rendered sites.** For a JavaScript-only SPA, the fix is to prerender or server-render the public routes, and the urgency depends on how much the site needs search and shared links.
 - **Small sites.** Crawl budget, faceted navigation, and log-file analysis matter on sites with tens of thousands of URLs. Don't raise them on a 30-page site.
 
 ## Report

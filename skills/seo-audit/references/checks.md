@@ -57,7 +57,6 @@ Check:
 - One `<link rel="canonical">` per page, with an absolute URL, in the server's HTML. If JavaScript adds a second one that disagrees, Google may use either.
 - Unique pages point to themselves. Variants (tracking parameters, sort orders, print views) point to the main page.
 - The canonical matches how the site really serves the page: the same scheme, host (www or not), and trailing slash as the URL that returns 200 and appears in the sitemap.
-- Paginated pages canonical to themselves, not to page 1.
 - Many pages sharing one canonical usually means a layout hard-codes it, often to the home page. That quietly asks Google to drop every other page, so it's Critical.
 
 ## Redirects and status codes
@@ -147,13 +146,13 @@ Only for sites with the same content in more than one language or region.
 - Every variant lists all the variants, itself included, and every link goes both ways. A link from A to B is ignored unless B links back to A.
 - Codes are an ISO 639-1 language plus an optional ISO 3166-1 region (`en`, `en-GB`, `pt-BR`). `en-UK` is invalid; use `en-GB`.
 - `x-default` points to the fallback page, often a language picker or the main language. It's recommended, not required.
-- Every target returns 200, is indexable, and is its own canonical. Each locale's canonical points to itself. Pointing every locale's canonical at the English page tells Google to drop the others.
+- Every target returns 200, is indexable, and is its own canonical. Pointing every locale's canonical at the English page tells Google to drop the others.
 - Pick one method (head links, HTTP headers, or the sitemap). If you use more than one, they have to agree.
 - Don't redirect visitors by IP or `Accept-Language`. Googlebot crawls mostly from the US without that header, so it would never see the other versions.
 
 ## AI crawlers
 
-Each company runs separate bots for training and for search, and robots.txt controls them separately. Report the current policy and let the user decide. Don't change it on your own.
+Each company runs separate bots for training and for search, and robots.txt controls them separately.
 
 | Bot | Company | What it's for | Blocking it |
 | --- | --- | --- | --- |
