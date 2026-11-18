@@ -9,7 +9,7 @@ Write and edit news the way a careful local editor would: accurate first, then c
 
 ## Before you write
 
-1. **Find the house style.** Look in the project for the publication's style guide or glossary (AGENTS.md, CLAUDE.md, a style or glossary file under `docs/`) and read it. Its rules override AP and the defaults here, and its glossary settles local names, spellings, and government titles. With no guide, use AP and these defaults, and mark local facts you can't confirm as `[NEED: ...]` rather than guessing.
+1. **Find the house style.** Look in the project for the publication's style guide or glossary (AGENTS.md, CLAUDE.md, a style or glossary file under `docs/`) and read it. Its rules override AP and the defaults here, and its glossary settles local names, spellings, and government titles. With no guide, use AP and these defaults.
 2. **Pick the story type** from the playbooks below.
 3. **List the facts you have:** who, what, when, where, why, how, and each quote with its speaker's full name and title. Ask only about gaps that block the lede. Mark the rest `[NEED: ...]`.
 
@@ -27,7 +27,7 @@ Modes: **Write** (default) drafts a story. **Edit** revises the user's draft and
 ## Structure
 
 - **Lede:** one sentence of 35 words or fewer with the most important verified fact and its effect on readers. Lead with the news, not the process: "Norwalk residents will pay ..." beats "City council met Tuesday ...". No question ledes, quote ledes, or background.
-- **Nut graf:** by paragraph 2 or 3 (paragraph 5 in a feature), say why this matters to local readers now. If you can't write it, the story isn't clear yet, so ask.
+- **Nut graf:** by paragraph 2 or 3, say why this matters to local readers now. If you can't write it, the story isn't clear yet, so ask.
 - **Inverted pyramid:** each paragraph matters less than the one above, with background woven in where it's needed. Cutting the bottom third should leave a story that stands.
 - **Paragraphs:** one to three sentences, one idea each. A new speaker starts a new paragraph.
 - **Quotes** carry opinion, emotion, and vivid language. Paraphrase plain facts.
@@ -51,11 +51,11 @@ Word counts are defaults that house style or the user can override.
 
 - **"Said," almost always:** "Smith said." Use "said Smith" only when a long title follows. "Claimed" and "admitted" imply judgment. Put attribution at the first natural pause, after the first sentence of a multi-sentence quote.
 - **Names:** full name and title on first reference, then last name alone, with no courtesy titles. Capitalize a formal title before a name ("Mayor Jane Smith"), and lowercase it after a name or alone ("Smith, the mayor").
-- **Crime and courts,** unless house style says otherwise: name suspects once they're formally charged, not when they're only arrested. Don't name juveniles unless they're charged or tried as adults. Never name sexual assault victims without their consent. Use a mug shot only with editor approval, for a serious violent crime or a public-safety need. Flag every story that accuses a named person of a crime as `LEGAL_RISK`.
+- **Crime and courts:** name suspects once they're formally charged, not when they're only arrested. Don't name juveniles unless they're charged or tried as adults. Never name sexual assault victims without their consent. Use a mug shot only with editor approval, for a serious violent crime or a public-safety need. Flag every story that accuses a named person of a crime as `LEGAL_RISK`.
 
 ## Style essentials
 
-House style wins, and these are the AP rules drafts break most. For an entry you're unsure of, say so and suggest checking the current AP Stylebook.
+These are the AP rules drafts break most. For an entry you're unsure of, say so and suggest checking the current AP Stylebook.
 
 - **Numbers:** spell out one through nine and use figures for 10 and up. Always use figures for ages, percentages (`5%`), money (`$1.2 million`), addresses, times, and votes (`5-2`). Spell out a number that starts a sentence. A change from 4% to 6% is 2 percentage points.
 - **Dates and times:** `Oct. 14` but `October 2026`, and never abbreviate March through July. Write `7 p.m.`, `noon`, and `midnight`, in the order time, day, date, place: "7 p.m. Tuesday, Oct. 14, at City Hall." Use the day of the week within seven days, and the date beyond that.
@@ -85,7 +85,7 @@ Run this on every draft, yours or the user's, in this order, and recheck step 1 
 4. **Sourcing and fairness:** claims are attributed, contested ones have a second source, and the right of reply was offered.
 5. **Voice and style:** neutral wording, no tells, and house and AP rules.
 
-Then run `python <this skill's folder>/scripts/ap_lint.py <file> --date <publication date>` on the copy (`-` reads stdin). It catches what slips past reading: a weekday that doesn't match its date, and the mechanical rules above (months, times, percent, numerals, state and street abbreviations, loaded words, dash rate, lede and paragraph length, headline form). Each hit is a lead to judge, not a fix to apply, because it can't read context, and house style wins where they disagree. Without Python, check those by eye.
+Then run `python <this skill's folder>/scripts/ap_lint.py <file> --date <publication date>` on the copy (`-` reads stdin). It catches what slips past reading: a weekday that doesn't match its date, and the mechanical rules above (months, times, percent, numerals, state and street abbreviations, loaded words, dash rate, lede and paragraph length, headline form). Each hit is a lead to judge, not a fix to apply, because it can't read context. Without Python, check those by eye.
 
 ## Output
 
