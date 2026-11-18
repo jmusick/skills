@@ -41,7 +41,7 @@ Then write it:
 - Use the language the conversation was held in, even if the code or this skill is in another.
 - If the session centered on one issue, PR, or ticket, include its number ("Fix #42 login redirect loop"). It's often the first thing the user searches for.
 - Two genuinely separate threads can be joined: "Add CSV export + fix date parsing". With more, name the one that took most of the session and mattered most to the result.
-- If the work ended unfinished, name what was being worked on and don't claim it was done. "Debugging flaky Playwright login test" is honest; "Fix flaky Playwright login test" isn't if it still fails.
+- If the work ended unfinished, name what was being worked on and don't claim it was done.
 - Keep secrets out: no tokens, passwords, API keys, private hostnames, client names under NDA, or personal contact details. Titles show in sidebars, on shared screens, and on synced devices, so a pasted credential that mattered to the work still stays out of the title.
 
 | Started as | Actually became | Title |
@@ -56,8 +56,7 @@ Then write it:
 ### Sessions that don't fit the pattern
 
 - **Barely started.** If little has happened beyond the first request, title it by that request, stated plainly. Don't invent an outcome.
-- **Questions and research, no code.** Name the subject or the answer, not the act of asking: "Why Postgres VACUUM blocks writes", not "Question about Postgres".
-- **A decision.** Name the choice made, or the choice still open ("Redis vs Memcached for sessions") if none was.
+- **An open decision.** Name the choice still open: "Redis vs Memcached for sessions".
 - **Asked again after a rename.** The user didn't like the last title. Take any guidance they gave, and otherwise try a different angle (a different anchor or a shorter form) rather than a near-copy of the one they rejected.
 
 ## 4. Rename and report
@@ -79,5 +78,3 @@ If there's no rename tool, you can't change the title yourself, so don't say or 
 - Claude Code CLI: run `/rename Fix circular import slowing Vite build`.
 - Codex app: rename the thread from its entry in the sidebar.
 - Anything else: use its rename option for the chat or thread.
-
-Keep the reply to that. The user asked for a title, not a recap of the session.
