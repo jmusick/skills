@@ -18,7 +18,7 @@ If the user asks for several businesses, run the loop once per business, each wi
 
 ## The outreach folder
 
-Records live in `C:\Users\JD\projects\stone-dragon-media\Outreach\` unless the user names another folder. Create it on first use. Run the scripts as `python <this skill's directory>/scripts/<script>`, or with `python3` if `python` isn't found.
+Records live in `C:\Users\JD\projects\stone-dragon-media\Outreach\` unless the user names another folder. Create it on first use. Run the scripts as `python <this skill's directory>/scripts/<script>`.
 
 - `sender.md`: Justin's details for signatures and forms: name, title, phone, the email address to send from (always stonedragonmedia@gmail.com), a mailing address for emails (see step 5), and which Facebook identity to message from. On a first run, or when a field the message needs is missing, ask for it once and save it. Don't guess any of it.
 - One file per business, `<town>-<business-slug>.md`:
@@ -99,7 +99,7 @@ Search firelandscurrent.com for the business's name first. If the paper is cover
 3. Facebook Message to its Page.
 4. Another channel the business publishes for inquiries, such as an Instagram DM or a LinkedIn company page.
 
-Use only addresses the business published, and note in the record where and when you saw the one you use, so the source is on file if anyone asks. Don't guess `info@` addresses or use email finders and data brokers: guesses bounce or reach the wrong person, and scraped lists are what make outreach spam. Never use Nextdoor, Yelp messaging or "Request a Quote," Google review replies or Business chat, public posts or comments, or a text to the business's phone. Those platforms ban solicitation, and a public pitch reads badly to the business's customers. If the only channel is the phone, write the record, give Justin the number and a two-line talking point, and stop.
+Use only addresses the business published, and note in the record where and when you saw the one you use, so the source is on file if anyone asks. Don't guess `info@` addresses or use email finders and data brokers: guesses bounce or reach the wrong person, and scraped lists are what make outreach spam. Never use Yelp messaging or "Request a Quote," Google review replies or Business chat, public posts or comments, or a text to the business's phone. Those platforms ban solicitation, and a public pitch reads badly to the business's customers. If the only channel is the phone, write the record, give Justin the number and a two-line talking point, and stop.
 
 ## 5. Write the message
 
@@ -153,5 +153,4 @@ End by telling Justin what was sent, where, and when a follow-up would be due (s
 
 SDM owns Firelands Current, a local news site. Advertising in it may be mentioned in one clause when the business sells to local customers and the paper's readers are its market: "We also run Firelands Current, the local news site, if you ever want to reach readers in the area." Keep the newsroom and sales separate, because the paper's credibility depends on readers believing coverage can't be bought:
 - Never mention a story the paper ran or might run about the business, and never suggest that advertising affects coverage.
-- Don't pitch a business the paper is covering in an active news story (step 4 checks).
 - Don't use anything learned through the newsroom (tips, sources, interviews) in a pitch.
