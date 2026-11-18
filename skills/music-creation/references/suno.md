@@ -62,12 +62,10 @@ Official starting points checked 2026-10-25:
 
 ## Iterate against evidence
 
-Use supplied audio or the user's listening report. Without audio access, do not invent listening impressions, timestamps, or measurements.
+Use supplied audio or the user's listening report.
 
 Judge compliance with the brief separately from musical effectiveness. A pleasing deviation can be worth keeping; literal compliance does not prove quality.
 
 Change the smallest useful variable or related group, holding other material steady for comparison. Keep prompts/settings associated with takes when a project log exists. When attempts repeatedly fail, reconsider the musical plan or a supported editing path rather than regenerating blindly.
 
 Starting hypotheses: rushed or missing words suggest density or competing instructions; vague genre suggests unclear instrument roles or groove; identical sections suggest missing contrast; generic vocals suggest imprecise register, articulation, or texture; abrupt endings suggest an overloaded section plan or duration mismatch. Treat these as experiments, not diagnoses established without listening.
-
-A package is not audio. Use generation tools only when available and within the user's authorized service actions and budget. Do not upload material, spend credits, or publish merely because drafting is complete. This skill supplies no renderer and requires no Suno integration.

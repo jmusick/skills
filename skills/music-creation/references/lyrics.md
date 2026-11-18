@@ -4,7 +4,7 @@ For coaching, offer one useful exercise or question. When asked to draft, write 
 
 ## Check sound and fit
 
-For English, distinguish lexical stress from sentence emphasis. Compare corresponding phrases for stress placement, pickups, durations, rests, and breathing. Equal syllable counts can conceal incompatible stresses. Do not infer exact bars from stress counts alone.
+For English, distinguish lexical stress from sentence emphasis. Compare corresponding phrases for stress placement, pickups, durations, rests, and breathing. Do not infer exact bars from stress counts alone.
 
 For fixed melodies, use supplied notation, timing, or the musician's phrasing as authority. Show the relevant stressed slots and preserve locked words or notes. Without a melody, offer text-level scansion and identify what remains to be sung or auditioned.
 
@@ -14,7 +14,7 @@ Use the requested language and dialect. Do not export English stress rules to ev
 
 ## Rhyme and repetition
 
-Judge rhyme by the intended pronunciation, not spelling. A repeated word is repetition rather than a new rhyme; either can be intentional, and unrhymed writing is legitimate. Keep repeated choruses when repetition strengthens them; suggest a final variation only when it adds something.
+Judge rhyme by the intended pronunciation, not spelling. A repeated word is repetition rather than a new rhyme; either can be intentional, and unrhymed writing is legitimate.
 
 ## Review and revise
 
