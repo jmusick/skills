@@ -1,6 +1,6 @@
 # Quality floor
 
-Every source skill holds a version of this floor. It's the work a careful designer ships without mentioning it. Each item is a check on the built result, not an intention, and `scripts/lint_tells.py` catches the mechanical ones.
+Each item is a check on the built result, not an intention, and `scripts/lint_tells.py` catches the mechanical ones.
 
 ## Contents
 

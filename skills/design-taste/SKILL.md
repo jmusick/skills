@@ -80,13 +80,13 @@ Build to this without announcing it, and check it on the result. When auditing, 
 
 ## Motion
 
-Before animating anything, read `references/motion.md`. It has the frequency rule (the more often the user sees something, the less it moves, and anything seen hundreds of times a day doesn't animate at all), durations, easing, recipes, and reduced-motion and performance rules. One orchestrated moment on a page beats effects scattered across every section.
+Before animating anything, read `references/motion.md`. It has the frequency rule (the more often the user sees something, the less it moves, and anything seen hundreds of times a day doesn't animate at all), durations, easing, recipes, and reduced-motion and performance rules.
 
 ## Critique loop
 
-In audit mode, run steps 1 to 3 and report what you'd fix instead of fixing it. Fixing and step 4 are for polish and build, since an audit changes nothing.
+In audit mode, run steps 1 to 3 and report what you'd fix instead of fixing it. Fixing and step 4 are for polish and build.
 
-1. **Lint the source.** Run `python <this skill's folder>/scripts/lint_tells.py <files or folder>` (use `python3` if `python` isn't found). It flags floor violations as `FAIL` and tells as `WARN`. Fix each `FAIL`. Treat each `WARN` as wrong unless you can defend it in one sentence. When the brief asks for a flagged device, pass `--allow <rule>` and note it in the report. The script reads source, not the rendered page, so a clean run is not a pass. Without Python, grep the source for the mechanical floor items (`outline: none` without `:focus-visible`, `<img>` without `alt`, `user-scalable=no`, `transition: all`, click handlers on `<div>`, motion without `prefers-reduced-motion`) and say the lint ran by hand.
+1. **Lint the source.** Run `python <this skill's folder>/scripts/lint_tells.py <files or folder>`. It flags floor violations as `FAIL` and tells as `WARN`. Fix each `FAIL`. Treat each `WARN` as wrong unless you can defend it in one sentence. When the brief asks for a flagged device, pass `--allow <rule>` and note it in the report. The script reads source, not the rendered page, so a clean run is not a pass. Without Python, grep the source for the mechanical floor items (`outline: none` without `:focus-visible`, `<img>` without `alt`, `user-scalable=no`, `transition: all`, click handlers on `<div>`, motion without `prefers-reduced-motion`) and say the lint ran by hand.
 2. **Capture.** Screenshot the full page at 1440px and 390px wide, plus the user's own viewport if you know it, with entrance motion settled or disabled so nothing reads as missing. Use whatever browser tool the environment has. Open every capture and confirm it shows what you think it shows.
 3. **Look.** Judge the pictures, not the code. Ask:
    - If someone left after the first screen, what would they remember an hour later? If the answer is a mood, the idea hasn't landed.
@@ -101,9 +101,6 @@ In audit mode, run steps 1 to 3 and report what you'd fix instead of fixing it. 
 These have no single right answer. Decide per project and say what you decided.
 
 - **Named fonts.** Lists of "premium" faces and lists of banned faces both exist, and every published list has become the next wave of tells within months. Don't use a list in either direction: choose a face whose character fits the subject, and avoid the one you'd pick for any project. To choose or pair faces, follow "Choosing and pairing type" in `references/direction.md`.
-- **How much motion.** There is no quota of moving elements, and per-section entrances are a tell. Use the frequency rule and the one-moment rule.
-- **Monospace, hairline rules, and numbering.** These are common on award-winning sites and are also what generators copy first. They're tells when they decorate and fine when they carry information: code, data, real tables, a real sequence.
-- **Restraint versus richness.** "Remove one accessory" and "a stripped page loses to a fuller one" are both true. Remove ornament, then add real content and scale until each screen is full.
 - **Small conventions.** Pure black versus near-black, sentence case versus Title Case, shadows versus borders for depth, square versus pill buttons. Follow the project's existing convention. The same detail done two ways in one project is a finding; a consistent choice is not.
 - **Asking versus deciding.** Ask when a missing fact blocks the work or the user wants to steer; otherwise decide, state the reading, and show a draft early.
 

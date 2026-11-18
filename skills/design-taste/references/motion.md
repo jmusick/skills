@@ -25,8 +25,6 @@ Ask two questions, in order.
 | Occasionally (menus, modals, drawers, toasts) | Standard animation |
 | Rarely (first load, onboarding, success, empty states) | Room for one expressive moment |
 
-Never animate a keyboard-initiated action. It's repeated so often that any motion makes the interface feel slow.
-
 **What is it for?** Valid answers:
 
 - **Feedback:** a button scales down on press, so the user knows the interface heard them.
@@ -110,7 +108,7 @@ Once one tooltip is open, open neighboring tooltips instantly with no delay and 
 
 ## 5. Entrances and exits
 
-- **One orchestrated moment** on a page (one load sequence or one reveal) lands better than effects scattered across every section. The same fade-and-rise on every section is a tell.
+- **One orchestrated moment** on a page (one load sequence or one reveal) lands better than effects scattered across every section.
 - **Content is visible by default.** If the script fails or is slow, nothing stays hidden.
 - **Stagger only infrequent entrances,** and only where order shows hierarchy: title, then text, then actions, 60 to 100ms apart, each rising 12 to 24px with opacity over about 300ms. Never stagger routine interactions.
 - **Exits are shorter and smaller than entrances:** about 150ms, a small fixed offset, never the full height of the container. Slide fully out only when the destination means something (a drawer closing into its edge). Remove instantly when motion adds no information.
@@ -136,5 +134,4 @@ Autoplaying motion longer than 5 seconds next to other content needs a pause con
 - Name the properties: `transition: transform 200ms, opacity 200ms`. Never `transition: all`; it animates things you didn't mean to and costs performance.
 - Add `will-change` only after you see first-frame stutter, and name the property you animate. Never `will-change: all`.
 - `scale()` scales children too. Scale a wrapper if the text inside shouldn't blur or grow.
-- Disable transitions during a theme switch, or every color animates at once and the switch smears.
 - Check motion at 10% speed in the browser's animation panel before calling it done.

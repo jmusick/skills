@@ -1,10 +1,8 @@
 # Tells: the dated registry
 
-A tell is a device that makes a page read as generated. Most began as good ideas on good sites. They became tells by being produced by default, everywhere, without a reason. That is why this registry is dated, and why it gives procedures instead of replacement products: every published "use this instead" list (fonts, palettes, components) became the next wave of tells.
+A tell is a device that makes a page read as generated. Most began as good ideas on good sites. They became tells by being produced by default, everywhere, without a reason.
 
 `scripts/lint_tells.py` catches the mechanical ones. The rest need eyes on a screenshot.
-
-Every entry is a default to avoid where the brief leaves the choice open. If the user or the brand asks for it, keep it and note it in the report.
 
 ## Contents
 
@@ -43,8 +41,6 @@ Every entry is a default to avoid where the brief leaves the choice open. If the
 | Glass panels, backdrop blur | Texture standing in for structure | Opaque surfaces one tone step from the ground | One specific effect, such as a sheet over live content |
 
 ## 3. Third wave (2025 to 2026): the fix that became the look
-
-The remedy published for the first two waves was "warm it up and make it editorial". Models adopted it wholesale and it's now the most recognizable generated look.
 
 | Tell | Why it reads as generated | Do instead | Fine when |
 | --- | --- | --- | --- |
