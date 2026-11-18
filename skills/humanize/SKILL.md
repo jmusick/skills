@@ -41,7 +41,7 @@ A model predicts the most likely next word, so it regresses to the mean: the res
 
 ## Language and grammar
 
-- **AI vocabulary, in clusters.** One word proves nothing; many together are among the strongest tells. Use the plain word. The lists are literal: synonyms aren't suspect, and a literal sense (an underscore character) doesn't count.
+- **AI vocabulary, in clusters.** Many together are among the strongest tells. Use the plain word. The lists are literal: synonyms aren't suspect, and a literal sense (an underscore character) doesn't count.
   - 2023 to 2025 models: delve, tapestry, testament, pivotal, crucial, intricate, interplay, meticulous, garner, bolster, underscore, showcase, enduring, vibrant, landscape (abstract), "Additionally," opening a sentence.
   - Newer models: enhance, highlight, emphasize, foster, leverage, multifaceted, align with, and since mid-2026 matters, clearer, practical, dependable, steady, quietly, prioritize, echoed, universally.
 - **Avoiding "is" and "has".** "serves as", "stands as", "functions as", "represents", "boasts", "features", "offers", "refers to" in a lead ("X refers to the..."). Write "is" or "has".
@@ -80,7 +80,7 @@ A model predicts the most likely next word, so it regresses to the mean: the res
 - Unfilled placeholders: `[Your Name]`, `INSERT_SOURCE_URL`, `2026-xx-xx`, `example.com/source1`. Flag them for the user to fill rather than inventing a value.
 - Citations you can't vouch for: a DOI or ISBN that may not resolve, a book cited for a specific claim with no page. Flag them; never repair one by inventing details.
 
-## What not to flag
+## Not tells
 
 - Perfect grammar, formal or academic prose, mixed casual and technical registers, bland prose, a few transition words, or unsourced content. None of these indicate AI, and formal tone in a formal venue is the human voice.
 - Human-sounding habits AI tends to sand off: plain "there is" and "it has", "very", "perhaps", "tends to", "in order to", "the fact that", and definite superlatives the source supports ("was the first"). Leave them. Prose with every filler word removed is its own fingerprint.
