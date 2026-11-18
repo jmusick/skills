@@ -1,6 +1,6 @@
 # Chomp Chomp Panic! sprite house rules
 
-A top-down 2D pixel-art kaiju game in Unity, set in a night-time Tokyo and a snowy New York. The repo's `AGENTS.md` ("Art pipeline") is the authority; read it first in case anything below has gone stale.
+A top-down 2D pixel-art kaiju game in Unity, set in a night-time Tokyo and a snowy New York.
 
 ## Contents
 - [Look](#look)
@@ -62,7 +62,6 @@ Nothing under `Assets/Art/` is edited by hand: a script in `ArtSource/` writes i
 | Frame sizes | `Assets/Art/<Group>/sprite_frames.json` (the spec's `frames_json`) |
 
 - The importer assigns sprites by file name: `<prefix>[_<variant>]_<clip>.png`, with clips idle, run/walk/side/fly, up, down, shoot, chomp, death. Get the name right or the sprite won't show up.
-- Don't commit prompt files (the repo's rule). Keep prompts in scratch space and quote them in the report instead.
 - Images are stored with Git LFS; `.png` already matches. Commit each asset's Unity `.meta` file with it once Unity has made one.
 - When the sprites replace a hand-drawn group, leave the old `build_<x>.py` in place until the user decides; say so in the report.
 

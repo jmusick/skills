@@ -17,7 +17,6 @@ Read [references/chomp-chomp-panic.md](references/chomp-chomp-panic.md) now for 
 
 - Find the game repo: the current directory if it holds `Assets/Art` and `ArtSource`, else `C:\Users\JD\source\chomp-chomp-panic`. Read its `AGENTS.md` "Art pipeline" section; it wins over this skill if they disagree.
 - Check the tools: `codex --version` and `codex login status`. Without Codex there's nothing to generate with; stop and tell the user how to install and log in.
-- Call the scripts with `python`, falling back to `python3`. They need only the standard library.
 - Each image is a real generation billed to the user's Codex plan and takes about a minute. Say how many you're about to make before a batch bigger than a few (a full kaiju is about 9: a model sheet, four clips, and four evolved clips).
 
 ## 1. Pin down the asset
@@ -60,7 +59,7 @@ python <skill>/scripts/codex_image.py --prompt-file <scratch>/croc_walk.txt --ou
 
 The script prints the saved path and Codex's reply, and exits non-zero if no image came back. If Codex saved more than one image, the extras are kept as `.alt1.png` and so on; pick the best. If it exits non-zero, show the user its message and retry that clip once; on a login, quota or rate-limit error, stop instead, because every attempt is billed.
 
-Look at every sheet (open the PNG) and judge it against "Judging a sheet" in the prompting guide. Reroll a failing sheet with one targeted change. Don't reroll for soft edges, off colors or a ragged outline; the cleanup fixes those.
+Look at every sheet (open the PNG) and judge it against "Judging a sheet" in the prompting guide. Reroll a failing sheet with one targeted change.
 
 ## 4. Clean up
 
