@@ -12,8 +12,8 @@ Errors (exit 1):
   - every file in a skill's scripts/, references/ and assets/ is named in its SKILL.md, and every
     such path SKILL.md names exists
   - Python scripts compile and import only the standard library
-  - README's skills table and options table, and REFERENCES.md's sections, name only skills on
-    disk, and the skills table lists every one
+  - README's skills table, its per-skill sections, and REFERENCES.md's sections name only skills
+    on disk, and the skills table and the per-skill sections list every one
 Warnings: unknown frontmatter keys, no REFERENCES.md section, SKILL.md over 500 lines or
 5,000 words (the guide's limits).
 Standard library only; Python 3.10+.
@@ -125,8 +125,11 @@ def check_index(skills):
         errors.append(f"README.md: skills table is missing {s}")
     for s in sorted(in_table - skills):
         errors.append(f"README.md: skills table lists {s}, which isn't in skills/")
-    for s in sorted({m for m in re.findall(r"^\|\s*([\w-]+)\s*\|\s*[`\"/]", readme, re.M)} - skills):
-        errors.append(f"README.md: options table names {s}, which isn't in skills/")
+    detail = set(re.findall(r"^### ([\w-]+)\s*$", readme, re.M))
+    for s in sorted(detail - skills):
+        errors.append(f"README.md: section {s} has no skill in skills/")
+    for s in sorted(skills - detail):
+        errors.append(f"README.md: no section for {s} under Options and files")
     with open(os.path.join(ROOT, "REFERENCES.md"), encoding="utf-8") as fh:
         sections = set(re.findall(r"^## ([\w-]+)\s*$", fh.read(), re.M))
     for s in sorted(sections - skills):
