@@ -11,7 +11,7 @@ The user owns every decision. Your job is to find the facts, show the choices, r
 
 ## Rules
 
-1. **Facts are yours, decisions are theirs.** Never ask what the request, the repo, the files, or a quick search can answer: look it up and say what you found. Hand slow lookups to a background subagent; only the questions that depend on its answer wait. Never answer a decision for the user, even one with an obvious answer: recommend it and let them accept.
+1. **Facts are yours, decisions are theirs.** Never ask what the request, the repo, the files, or a quick search can answer: look it up and say what you found. Hand slow lookups to a background subagent; only the questions that depend on its answer wait. Never settle a decision they haven't handed you, even one with an obvious answer: recommend it and let them accept.
 2. **Nothing gets built.** Reading and exploring are fine. Product code, scaffolding, installing dependencies, and starting an implementation skill are not, until the spec is approved and the user asks for the build. Models tend to collapse the interview into an outline and start building; the spec is the deliverable.
 3. **Only what they said is theirs.** Anything you fill in (a default, a guess, a call they handed you) goes in the spec labeled as your call, with the reason. A default they never heard is one they couldn't reject.
 4. **Ask only what changes what gets built.** If every answer leads to the same build, don't ask.
@@ -71,14 +71,14 @@ Recommended: <answer>, because <reason>.
 - constraints: time, budget, platform, existing code, people
 - how they'll know it works
 
-**The how.** Read from how they talk whether they want to decide the how. Someone who asks about trade-offs wants the options with your pick. Someone who talks only about outcomes is handing you the how: make those calls, state each in a line, and label them as yours. When the how has real choices, put two or three approaches to them as one question, grounded in what the project already uses, with your pick. When there's one sensible way, say so and why the others don't fit.
+**The how.** Read from how they talk whether they want to decide the how. Someone who asks about trade-offs wants the options with your pick. Someone who talks only about outcomes is handing you the how: make those calls and state each in a line. When the how has real choices, put two or three approaches to them as one question, grounded in what the project already uses, with your pick. When there's one sensible way, say so and why the others don't fit.
 
 **Questions talk can't settle.** How something should look or feel usually can't be answered by describing it. Instead of rephrasing, offer a quick text sketch or a throwaway mockup to react to, then record the answer in a line. Anything built for this is labeled throwaway.
 
 **Answers to handle:**
 
 - "I don't know": a real answer. Record it as an open question unless a prototype or lookup would settle it.
-- "You decide" or "just guess": make a concrete call and label it yours.
+- "You decide" or "just guess": make a concrete call.
 - "Wrap up", "that's enough", or similar: stop asking. Everything unsettled goes in Open questions.
 
 If the tree keeps growing (roughly eight or more major areas, or rounds that keep opening new areas instead of closing them), the scope is too big for one spec. Propose a split and agree on which part to finish first.
@@ -92,7 +92,7 @@ The interview is done when the frontier is empty: every branch visited, nothing 
 Fill in `assets/spec-template.md`. Read it now. Drop any section that doesn't apply rather than writing "N/A".
 
 - **Where.** Use the project's existing spec folder if it has one (`docs/specs/`, `specs/`, `docs/design/`). Otherwise `docs/specs/YYYY-MM-DD-<topic>.md` in a repo, or a sensible place outside one. Say where. The user's preference overrides both. Leave the file uncommitted.
-- **Their words.** Use the project's own nouns, not product-management boilerplate. A spec that says something they never said is wrong.
+- **Their words.** Use the project's own nouns, not product-management boilerplate.
 - **No stale detail.** Leave out file paths and code, which go stale fast. The exception is a snippet that records a decision more exactly than prose can, like a schema or a state machine.
 
 ## 6. Builder check
@@ -111,6 +111,6 @@ Update the spec with their answers. That's the only round the check produces.
 
 Give the spec's path, the calls you made for them to check, and any open questions. Then, if the project is a GitHub repo and `gh` works, offer to split the spec into issues for `/issue` to work.
 
-Only on a yes: read `assets/issue-template.md`, then file one issue per slice that can be built, tested, and shipped on its own, in build order. Each links its dependencies with `Depends on #N`. Use the repo's existing labels; don't invent a scheme. Write each body to a temp file and run `gh issue create --title "..." --body-file <file>`, so quoting doesn't mangle it. End with each issue's URL and the next step: `/issue N`, or `/issue N M ...` to work several at once.
+Only on a yes: read `assets/issue-template.md`, then file one issue per slice, in build order. Use the repo's existing labels; don't invent a scheme. Write each body to a temp file and run `gh issue create --title "..." --body-file <file>`, so quoting doesn't mangle it. End with each issue's URL and the next step: `/issue N`, or `/issue N M ...` to work several at once.
 
-Then stop. Building starts only when the user asks for it.
+Then stop.
