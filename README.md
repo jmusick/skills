@@ -69,7 +69,7 @@ Each skill runs with no options. These change what it does. Type them after the 
 | Option | What it does |
 | --- | --- |
 | `/improve-codebase <path>` | Audits one directory or package instead of the whole repo. |
-| `/improve-codebase <focus>` | Audits one area: `baseline`, `architecture`, `duplication`, `dead-code`, `types`, `correctness` (or `errors`), `tests`, `deps`, `performance`, or `security`. Combines with a path. |
+| `/improve-codebase <focus>` | Audits one area: `baseline`, `architecture` (or `structure`), `duplication`, `dead-code`, `types`, `correctness` (or `errors`), `tests`, `deps`, `performance`, or `security`. Combines with a path. |
 | `quick` | Checks only the top 10 hotspots, reports only High-confidence findings, and skips the cold-file pass and the second-opinion check. |
 
 **Files:** `scripts/hotspots.py` ranks files by how often git history says they change and break, and lists the large files that rarely change so they still get checked for risk. The audit checklist and the issue template live in `references/`.
@@ -114,6 +114,8 @@ Each skill runs with no options. These change what it does. Type them after the 
 | `/job-search <focus>` | Narrows the search to a role, `local`, or a named employer. `local` adds the area employers' career pages. |
 | `/job-search draft <job>` | Prepares the application for one job (a record, URL, or company name). |
 | `/job-search status` | Lists where each application stands and which have gone quiet. |
+| "I applied to Acme", "Acme rejected me" | Updates that job's record and stops. |
+| "no insurance companies", "raise the floor to $90k" | Saves the preference to `preferences.md`. |
 
 **Files:** `scripts/jobs.py` finds postings already seen, lists applications gone quiet, and names new records. Drafting an application lives in `references/materials.md`.
 
@@ -138,6 +140,7 @@ No options.
 | --- | --- |
 | `/prospect <town, industry, or business>` | Narrows the search to that town or industry, or researches the named business. |
 | `/prospect follow-up` | Sends the follow-ups that are due instead of a new first message. |
+| "Maple Street said no thanks" | Updates that business's record and stops. |
 
 **Files:** `scripts/outreach.py` finds existing records and lists follow-ups due, and `scripts/check_message.py` checks a drafted message's length, links, sign-off, and subject. SDM's services, channels, signals, and follow-ups live in `references/`.
 
