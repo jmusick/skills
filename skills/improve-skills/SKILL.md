@@ -45,7 +45,7 @@ Done when you have the target list, each skill's invocation mode, and the house 
    - Failures the user has described in this conversation.
    - Fix commits: run `git log --oneline -- <skill folder>`, then `git show <hash> -- <skill folder>` for each one that fixed something: what broke, and whether the fix holds or left a patch on top of a deeper problem.
    - Eval cases and graders, which say what the skill must keep doing.
-3. With more than four skills, split steps 2 and 3 across up to four general-purpose subagents, a few skills each. Give each the absolute path to this file, its skills, their checker output, and the house rules from step 1. Tell it to do steps 2 and 3 for those skills only (checklist sections 1 to 7), edit nothing, and return each finding with `path:line`, the cost and the fix, plus a keep or improve verdict with its reason. Apply section 8 and decide merge and retire verdicts yourself, since they need every skill in view.
+3. With more than four skills, split steps 2 and 3 across up to four general-purpose subagents, a few skills each. Give each the absolute path to this file, its skills, their checker output, and the house rules from step 1. Tell it to do steps 2 and 3 for those skills only (checklist sections 1 to 7), edit nothing, quote the text beside every `path:line` it cites so a wrong number shows up when you check, and return each finding with `path:line`, the cost and the fix, plus a keep or improve verdict with its reason. Apply section 8 and decide merge and retire verdicts yourself, since they need every skill in view.
 
 Done when you can state each skill's job and name its evidence, or say it has none.
 
