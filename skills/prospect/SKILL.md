@@ -57,7 +57,7 @@ Gather five to eight candidates with web search, Google Maps, and Facebook: loca
 
 **Facebook** turns up the strongest candidates: businesses whose only presence online is a Page. In Justin's signed-in Chrome, search Pages for the town and a category (`facebook.com/search/pages/?q=<category> <town>`) and look through the town's public community and buy-local groups for businesses people name. Then:
 - Search a few times, at a normal person's pace, and collect only names and Pages. Meta's terms restrict automated collection, and this is Justin's personal account.
-- Don't like, follow, join, comment, react, or message anyone, here or when sending. Those are public actions he didn't approve.
+- Don't like, follow, join, comment, or react, here or when sending, since those are public actions he didn't approve. The only messages you send are ones he approved, as in step 6.
 - Stay off Nextdoor entirely: its terms prohibit commercial prospecting, and a pitch built from neighbors' posts reads like surveillance.
 
 Leave out, without researching further:
